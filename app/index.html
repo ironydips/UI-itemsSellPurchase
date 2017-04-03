@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" ng-app="bathwaterApp">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Bathwater - Admin / Drivers</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Google Meta tag for sign-in -->
+    <meta name="google-signin-client_id" content="531188035829-e83na2d4nj50fu7baqc7q7mlqauboqvs.apps.googleusercontent.com">
+    <!-- Client Secret - hd_BmrDMTYm8G7d0fcxopJG2 -->
+    <!--  -->
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- BOWER Components Start-->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/angular-google-gapi/dist/angular-google-gapi.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/angular-images-resizer/src/resize.js"></script>
+    <script src="bower_components/angular-images-resizer/src/resize-service.js"></script>
+    <script src="bower_components/angularjs-datepicker/dist/angular-datepicker.js"></script>
+    <script src="css/angular-animate.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/ngToast/dist/ngToast.min.js"></script>
+    <script src="css/angular-bootstrap-lightbox/angular-bootstrap-lightbox.js"></script>
+
+
+    <!-- BOWER Components End-->
+
+    <!-- Project Related CSS start-->
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+        <link href="css/bhoechie-tab.css" rel="stylesheet">
+        <link href="css/responsive.css" rel="stylesheet">
+        <link href="css/global.css" rel="stylesheet">
+        <link href="css/angular-bootstrap-lightbox/angular-bootstrap-lightbox.css" rel="stylesheet">
+        <link href="bower_components/angularjs-datepicker/dist/angular-datepicker.css" rel="stylesheet">
+        <link href="bower_components/ngToast/dist/ngToast.min.css" rel="stylesheet">
+
+    <!-- Project Related CSS END -->
+
+
+
+    <!-- Project Related JS start-->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <script src ="js/angular-base64-upload.js"></script>
+    <!-- Project Related JS END-->
+
+    <!-- Angular Scripts Start-->
+    
+    <script src="app.module.js"></script>
+    <script src="app.config.js"></script>
+
+    <!--Manage Admin Scripts end-->
+
+    <script src="admin/admin-layout/admin-layout.module.js"></script>
+    <script src="admin/admin-layout/admin-layout.component.js"></script>
+
+    <script src="admin/admin-panel/admin-panel.module.js"></script>
+    <script src="admin/admin-panel/admin-panel.component.js"></script>
+
+    <script src="salesPurchase/sales-purchase-details/sales-purchase-details.module.js"></script>
+    <script src="salesPurchase/sales-purchase-details/sales-purchase-details.component.js"></script>
+
+    <script src="salesPurchase/salesPurchase-sub-panel/salesPurchase-sub-panel.module.js"></script>
+    <script src="salesPurchase/salesPurchase-sub-panel/salesPurchase-sub-panel.component.js"></script>
+
+    <!-- Angular Scripts End-->
+
+  </head>
+  <body>
+    <div ui-view></div>
+  </body>
+</html>
