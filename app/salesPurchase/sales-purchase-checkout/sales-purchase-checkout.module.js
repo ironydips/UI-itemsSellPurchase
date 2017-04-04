@@ -1,6 +1,6 @@
 (function(angular) {
 'use strict';
 
-angular.module('salesPurchase',[]);
+angular.module('salesPurchaseCheckout',[]);
 
 })(window.angular);

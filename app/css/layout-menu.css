@@ -1,0 +1,183 @@
+
+ul.pizzaList li {
+    float: left;
+    width: 25%;
+    margin: 30px 0 0;
+    padding: 0 5px
+}
+.pizzaBox {
+    float: left;
+    width: 100%;
+    padding: 15px 5px 85px;
+    position: relative;
+    border: 1px solid #fff;
+    overflow: hidden
+}
+.pizzaBox.active {
+    border: 1px solid #0079ae
+}
+.newitem {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    width: 54px
+}
+.pizzaBox h4 {
+    color: #0079ae;
+    padding: 0 0 12px;
+    font: 18px/25px TradeGothicLTStd-Bold;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+
+}
+.pizzaImg {
+    float: left;
+    width: 100%;
+    text-align: center
+}
+.pizzaImg figure {
+    float: left;
+    width: 100%
+}
+.pizzaImg figure img {
+    float: none;
+    vertical-align: top;
+    display: inline-block
+}
+.pizzaContent {
+    float: left;
+    width: 100%;
+    padding: 5px 0 0
+}
+.pizzaContent p {
+    font: 13px/13px Calibri;
+    text-align: center;
+    color: #5e5e5e
+}
+.pizzaBoxBottom {
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+    padding: 0 0 15px;
+    text-align: center
+}
+ul.pizzaList li ul.pizzaPrice {
+    float: left;
+    width: 100%
+}
+ul.pizzaList li ul.pizzaPrice li {
+    float: none;
+    text-align: left;
+    width: auto;
+    margin: 0 10px;
+    display: inline-block;
+    color: #6cc47d;
+    font: 14px/19px Calibri;
+    vertical-align: top
+}
+.contenthover {
+    visibility: hidden;
+    padding: 5px 0 10px;
+    z-index: 1;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: url(../images/overlay.png) repeat 0 0
+}
+ul.pizzaList li ul.contentText {
+    float: left;
+    width: 100%
+}
+ul.pizzaList li ul.contentText li {
+    float: left;
+    width: 100%;
+    color: #5e5e5e;
+    padding: 0 9%;
+    margin: 0;
+    font: 16px/25px TradeGothicLTStd-Bold
+}
+
+
+/* new */
+.ctnwrap { display: none!important; }
+.contenthover { background: #fff; }
+.crust { font-weight: bold; font-size: 14px; width: 50px; float: left; }
+.contenthover small { color: #0079ae; font-weight: bold; font-size: 14px; }
+.contenthover .form-control { width: 40%; height: 22px; display: inline; margin-bottom: 5px; }
+
+.contenthover button.size {
+    -webkit-animation-name: rotate;
+    -moz-animation-name: rotate;
+    animation-name: rotate;
+    animation-duration: 200ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    transition: all .3s ease-in-out .3s;
+}
+button.size {
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    box-shadow: none;
+    color: gray;
+    cursor: pointer;
+    display: inline-block;
+    height: 25px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    min-width: 25px;
+    padding: 0 5px;
+    vertical-align: top;
+}
+
+.contenthover button.size:hover, .contenthover button.size.selected {
+    -webkit-animation-name: rotate;
+    -moz-animation-name: rotate;
+    animation-name: rotate;
+    animation-duration: 200ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    transition: all .3s ease-in-out .3s;
+    transform: rotateZ(360deg);
+    -webkit-transform: rotateZ(360deg);
+    -moz-transform: rotateZ(360deg);
+    -o-transform: rotateZ(360deg);
+    background: #0aaf79;
+    border-radius: 50%;
+    color: #fff;
+    border: 1px solid #0aaf79;
+}
+
+
+.hoverCtn .cntGreen {
+    margin-top: 5px;
+    float: none;
+    vertical-align: top;
+    display: inline-block;
+}
+.cntGreen {
+    text-align: center;
+    background: #6cc47d;
+    min-width: 130px;
+    padding: 0 20px;
+    font: 13px/28px TradeGothicLTStd-Bold;
+    text-transform: uppercase;
+    color: #fff;
+    float: left;
+}
+
+.cntGreen {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: #559a63 0 3px 0;
+    -moz-box-shadow: #559a63 0 3px 0;
+    box-shadow: #559a63 0 3px 0;
+}
+
+.hoverCtn { text-align: center; }
+.crust-side { float: left; width: 79%; }

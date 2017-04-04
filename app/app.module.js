@@ -17,6 +17,7 @@ angular.module('bathwaterApp', [
 	'bootstrapLightbox',
 	'adminLayout',
 	'adminPanel',
-	'salesPurchase',
-	'salesPurchaseSubPanel'
+	// 'salesPurchase',
+	'salesPurchaseSubPanel',
+	'salesPurchaseCheckout'
 ]);

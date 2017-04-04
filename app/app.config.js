@@ -7,7 +7,7 @@ config(['$urlRouterProvider', '$stateProvider',
 
         
         // UI-Routing Config
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/salesPurchase/salesPurchaseDetails');
 
         $stateProvider
             .state('adminLayout', {
@@ -34,16 +34,24 @@ config(['$urlRouterProvider', '$stateProvider',
                     'adminPanel@salesPurchase': {
                         template: '<admin-panel></admin-panel>'
                     },
-                    'adminSubPanel@salesPurchase': {
-                        template: '<sales-purchase-sub-panel></sales-purchase-sub-panel>'
-                    }
+                    // 'adminSubPanel@salesPurchase': {
+                    //     template: '<sales-purchase-sub-panel></sales-purchase-sub-panel>'
+                    // }
                 }
             })
             .state('salesPurchase.salesPurchaseDetails', {
                 url: '/salesPurchaseDetails',
                 views: {
                     'contentSection@salesPurchase': {
-                        template: '<sales-purchase-details></sales-purchase-details>'
+                        template: '<sales-purchase-sub-panel></sales-purchase-sub-panel>'
+                    }
+                }
+            })
+            .state('salesPurchase.checkout', {
+                url: '/checkout',
+                views: {
+                    'contentSection@salesPurchase': {
+                        template: '<sales-purchase-checkout></sales-purchase-checkout>'
                     }
                 }
             })

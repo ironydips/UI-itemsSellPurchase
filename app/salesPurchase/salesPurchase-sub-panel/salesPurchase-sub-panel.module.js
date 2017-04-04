@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('salesPurchaseSubPanel',[]);
+angular.module('salesPurchaseSubPanel',['salesPurchaseCheckout']);
