@@ -1,7 +1,7 @@
 'use strict';
 
 angular.
-module('bathwaterApp').
+module('sellPurchaseApp').
 config(['$urlRouterProvider', '$stateProvider', 
     function config($urlRouterProvider, $stateProvider) {
 

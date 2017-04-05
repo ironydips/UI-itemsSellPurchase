@@ -1,7 +1,7 @@
 'use strict';
 
 // Define the `bathwaterApp` module
-angular.module('bathwaterApp', [
+angular.module('sellPurchaseApp', [
 	'ui.router',
 	'angular-google-gapi',
 	'ngMessages',
@@ -15,6 +15,7 @@ angular.module('bathwaterApp', [
 	'ngToast',
 	//LightBox Library used as Image Viewer.
 	'bootstrapLightbox',
+	'sellPurchaseApp.services',
 	'adminLayout',
 	'adminPanel',
 	// 'salesPurchase',
