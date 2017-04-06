@@ -1,48 +1,280 @@
 <style>
-	.round-button {
-    display:block;
-    width:50px;
-    height:50px;
-    line-height:50px;
+.round-button {
+    display: block;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
     border: 2px solid #f5f5f5;
     border-radius: 50%;
     color: blue;
-    text-align:center;
-    text-decoration:none;
+    text-align: center;
+    text-decoration: none;
     background: #464646;
     box-shadow: 0 0 3px gray;
-    font-size:20px;
-    font-weight:bold;
+    font-size: 20px;
+    font-weight: bold;
 }
+
 .round-button:hover {
     background: orange;
 }
+/* Accordian*/
+.panel-heading {
+    position: relative;
+}
+
+.panel-heading[data-toggle="collapse"]:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e072";
+    /* "play" icon */
+    position: absolute;
+    color: #b0c5d8;
+    font-size: 18px;
+    line-height: 22px;
+    right: 20px;
+    top: calc(50% - 10px);
+    /* rotate "play" icon from > (right arrow) to up arrow */
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.panel-heading[data-toggle="collapse"].collapsed:after {
+    /* rotate "play" icon from > (right arrow) to ^ (down arrow) */
+    -webkit-transform: rotate(-360deg);
+    -moz-transform: rotate(-360deg);
+    -ms-transform: rotate(-360deg);
+    -o-transform: rotate(-360deg);
+    transform: rotate(-360deg);
+}
+
 
 /* i-pad */
+
 @media screen and (max-width: 1024px) {
-.round-button { right: auto!important; left: -20px!important; }
+    .round-button {
+        right: auto!important;
+        left: -20px!important;
+    }
 }
+
 
 /* mobile */
+
 @media screen and (max-width: 767px) {
-.round-button { left: 0px!important; }
- .panel-body { padding: 5px; }
- .round-button { right: auto!important; left: 0px!important; }
+    .round-button {
+        left: 0px!important;
+    }
+    .panel-body {
+        padding: 5px;
+    }
+    .round-button {
+        right: auto!important;
+        left: 0px!important;
+    }
 }
-
 </style>
-
-
-<div class="panel panel-warning">
-<div class="panel-heading">
-	<h3>Items You Have Selected</h3>
-</div>
-	<div class="panel-body well text-center">
-	<div class="row">
+<br>
+ <div class="panel-group" id="accordion">
+        <div class="panel panel-success">
+            <div class="panel-heading accordion-toggle" ng-class="{'collapsed' : $ctrl.collapse}" data-toggle="collapse" data-parent="#accordion" data-target="">
+                <h4 class="panel-title text-center"><b style="font-size: 20px;">Items You Have Selected</b></h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                  
+                     <div class="row" ng-repeat="item in $ctrl.getItems">
+            <div class="panel panel-default">
+                <div class="panel-body" style="height: 140px;">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                        <a href="" style="position: absolute;right: 180px;bottom: 90px;" class="round-button"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <img src="https://pizzaonline.dominos.co.in/themes/OLO_v2.1/images/deal/p-1.jpg" class="img-circle" alt="Cinque Terre" width="100" height="100">
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <h5><b>Brand</b></h5>
+                        <h6>{{item.brand}}-{{item.size}}</h6>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <h5><b>QTY</b></h5>
+                        <h6>{{item.qty}}</h6>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <h5><b>Price</b></h5>
+                        <h6>Rs.{{item.price}}</h6>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <h5><b>Total</b></h5>
+                        <h6>Rs.{{item.totalPrice}}</h6>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+                        <br>
+                        <button type="button" class="btn btn-danger btn-sm" ng-click="$ctrl.deleteItem(item)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    <br>
+                    <div class="row">
+                    	<div class="pull-right">
+                    		<a href="" data-target="#collapseSecond"  class="btn btn-sm btn-primary" data-toggle="collapse"  data-parent="#accordion" ng-click="$ctrl.openGenrlInfo()">Continue >></a>
+                    	</div>
+                    	
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-success">
+            <div class="panel-heading accordion-toggle " ng-class="{'collapsed' : $ctrl.secondCollapse}" data-toggle="collapse">
+                <h4 class="panel-title text-center"><b style="font-size: 20px;">General Information</b></h4>
+            </div>
+            <div id="collapseSecond" class="panel-collapse collapse">
+                <div class="panel-body">
+                    
+                    
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="col-sm-2">
+                                <label>Country:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" style="width:270px;" ng-model="$ctrl.doctorDetail.success[0].physician.county" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="col-sm-2">
+                                <label>Fax:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" style="width:270px;" ng-model="$ctrl.doctorDetail.success[0].physician.fax" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="col-sm-2">
+                                <label>MSA:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" style="width:270px;" ng-model="$ctrl.doctorDetail.success[0].physician.msa" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                    <div class="col-sm-9">
+                    	
+                    </div>
+                    	<div class="col-sm-2">
+                    		<a href="" data-target="#collapseOne, #collapseSecond"  class="btn btn-sm btn-primary" data-toggle="collapse"  data-parent="#accordion" ng-click="$ctrl.editSelectedItem()"><< Edit Selected Items </a>
+                    	</div>
+                    	<div class="col-sm-1">
+                    		<a href="" data-target="#collapseThird, #collapseSecond"  class="btn btn-sm btn-primary" data-toggle="collapse"  data-parent="#accordion" ng-click="$ctrl.editPayment()">Continue >> </a>
+                    	</div>
+                    	
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-success">
+            <div class="panel-heading accordion-toggle " ng-class="{'collapsed' : $ctrl.ThirdCollapse}" data-toggle="collapse">
+                <h4 class="panel-title text-center"><b style="font-size: 20px;">Payment</b></h4>
+            </div>
+            <div id="collapseThird" class="panel-collapse collapse">
+                <div class="panel-body">
+                    
+                    
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="col-sm-2">
+                                <label>Country:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" style="width:270px;" ng-model="$ctrl.doctorDetail.success[0].physician.county" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="col-sm-2">
+                                <label>Fax:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" style="width:270px;" ng-model="$ctrl.doctorDetail.success[0].physician.fax" class="form-control" disabled>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="col-sm-2">
+                                <label>MSA:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" style="width:270px;" ng-model="$ctrl.doctorDetail.success[0].physician.msa" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    
+                    <div class="row">
+                    <div class="col-sm-8">
+                    	
+                    </div>
+                    	<div class="col-sm-2">
+                    		<a href="" data-target="#collapseOne, #collapseThird"  class="btn btn-sm btn-primary" data-toggle="collapse" ng-click="$ctrl.editSelectedItem()"  data-parent="#accordion"><< Edit Selected Items </a>
+                    	</div>
+                    	<div class="col-sm-2">
+                    		<a href="" data-target="#collapseThird, #collapseSecond"  class="btn btn-sm btn-primary" data-toggle="collapse"  data-parent="#accordion" ng-click="$ctrl.openGenrlInfo()"><< Edit General Info </a>
+                    	</div>
+                    	
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- <div class="panel panel-warning">
+    <div class="panel-heading">
+        <h3>Items You Have Selected</h3>
+    </div>
+    <div class="panel-body well text-center">
+        <div class="row" ng-repeat="item in $ctrl.getItems">
+            <div class="panel panel-default">
+                <div class="panel-body" style="height: 140px;">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
+                        <a href="" style="position: absolute;right: 180px;bottom: 90px;" class="round-button"><span class="glyphicon glyphicon-pencil"></span></a>
+                        <img src="https://pizzaonline.dominos.co.in/themes/OLO_v2.1/images/deal/p-1.jpg" class="img-circle" alt="Cinque Terre" width="100" height="100">
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <h5><b>Brand</b></h5>
+                        <h6>{{item.brand}}-{{item.size}}</h6>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <h5><b>QTY</b></h5>
+                        <h6>{{item.qty}}</h6>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <h5><b>Price</b></h5>
+                        <h6>Rs.{{item.price}}</h6>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <h5><b>Total</b></h5>
+                        <h6>Rs.{{item.totalPrice}}</h6>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+                        <br>
+                        <button type="button" class="btn btn-danger btn-sm">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+         	<div class="row">
 		<div class="panel panel-default">
   <div class="panel-body" style="height: 140px;">
-  	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-<a href="" style="position: absolute;right: 180px;bottom: 90px;" class="round-button"><span class="glyphicon glyphicon-pencil"></span></a>           
+  	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4"> -->
+<!-- <a href="" style="position: absolute;right: 180px;bottom: 90px;" class="round-button"><span class="glyphicon glyphicon-pencil"></span></a>           
   		<img src="https://pizzaonline.dominos.co.in/themes/OLO_v2.1/images/deal/p-1.jpg" class="img-circle" alt="Cinque Terre" width="100" height="100">
   	</div>
   	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -68,38 +300,6 @@
   	</div>
   </div>
 </div>
-	</div>
-	<div class="row">
-		<div class="panel panel-default">
-  <div class="panel-body" style="height: 140px;">
-  	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4">
-<a href="" style="position: absolute;right: 180px;bottom: 90px;" class="round-button"><span class="glyphicon glyphicon-pencil"></span></a>           
-  		<img src="https://pizzaonline.dominos.co.in/themes/OLO_v2.1/images/deal/p-1.jpg" class="img-circle" alt="Cinque Terre" width="100" height="100">
-  	</div>
-  	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-  		<h5><b>Size</b></h5>
-  		<h6>Medium</h6>
-  	</div>
-  	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-  		<h5><b>QTY</b></h5>
-  		<h6>2</h6>
-  	</div>
-  	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-  		<h5><b>Price</b></h5>
-  		<h6>Rs.200</h6>
-  	</div>
-  	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-  		<h5><b>Total</b></h5>
-  		<h6>Rs.400</h6>
-  	</div>
-  	<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2"><br>
-  		<button type="button" class="btn btn-danger btn-sm">
-          <span class="glyphicon glyphicon-trash"></span> 
-        </button>
-  	</div>
-  </div>
-</div>
-	</div>
-		
-	</div>
+	</div> --> 
+    </div>
 </div>
