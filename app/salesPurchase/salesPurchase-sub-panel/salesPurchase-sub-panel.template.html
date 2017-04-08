@@ -315,12 +315,12 @@ a:hover {
 <div class="loading" ng-show="$ctrl.loader">
             Loading&#8230;
         </div><br>
-    <div class="row" style="background-color: orange; height: 70px;">
+    <div class="row" style="background-color: yellow; height: 70px;">
         <div class="col-sm-9">
         </div>
         <div class="col-sm-1">
             <br>
-            <a ui-sref="salesPurchase.checkout" class="btn btn-sm btn-primary">CHECKOUT</a>
+            <a ui-sref="salesPurchase.checkout" ng-click = "$ctrl.checkout()" class="btn btn-sm btn-primary">CHECKOUT</a>
         </div>
         <div class="col-sm-1">
             <br>
@@ -328,6 +328,7 @@ a:hover {
         </div>
         
     </div>
+    <div></div>
     <div id="pizza" class="scrollWrap">
         <div id="add_product">
             <div class="pizzaType" id="vegSection">
@@ -346,7 +347,7 @@ a:hover {
                                 <ul style="background-color: white;" class="contentText">
                                     <li><span class="crust">Size</span>
                                         <span class="crust-side">
-                                        <button class="size " ng-class="{'selected': '150ml' == $ctrl.valueSet}" ng-click = "$ctrl.setBtnValue('150ml', $index)" >150ml</button>
+                                        <button class="size " ng-class="{'selected': '150ml' == $ctrl.valueSet}" ng-click = "$ctrl.setBtnValue('150ml')" >150ml</button>
                                         <button class="size " ng-class="{'selected': '250ml' == $ctrl.valueSet}" ng-click = "$ctrl.setBtnValue('250ml')" >250ml</button>
                                         <button class="size" ng-class="{'selected': '300ml' == $ctrl.valueSet}" ng-click = "$ctrl.setBtnValue('300ml')" >300ml</button>
                                         <button class="size " ng-class="{'selected': '500ml' == $ctrl.valueSet}" ng-click = "$ctrl.setBtnValue('500ml')" >500ml</button>
@@ -354,19 +355,22 @@ a:hover {
                                         <button class="size " ng-class="{'selected': '1.5ltr' == $ctrl.valueSet}" ng-click = "$ctrl.setBtnValue('1.5ltr')" >1.5ltr</button>
                                         </span>
                                         </span>
+                                        <h5 style="color: red;" ng-if="$ctrl.message == '1'">Please Enter Size</h5>
                                     </li>
                                     <li><span class="crust">Price</span>
                                         <div class="qty">
-                                            <input type="text" ng-model="$ctrl.selectedItem.price" class="form-control" name="">
+                                            <input type="text" ng-model="$ctrl.selectedItem.price" class="form-control" name="" >
+                                            <h5 style="color: red;" ng-if="$ctrl.message == '1'">Please Enter Price</h5>
                                         </div>
                                     </li>
                                     <li><span class="crust">Qty</span>
                                         <div class="qty">
                                             <input type="text" ng-model="$ctrl.selectedItem.qty" class="form-control" name="">
+                                            <h5 style="color: red;" ng-if="$ctrl.message == '1'">Please Enter Qty</h5>
                                         </div>
                                     </li>
                                 </ul>
-                                <div class="hoverCtn"><a ng-click="$ctrl.quickAdd('Pepsi',$ctrl.selectedItem.price, $ctrl.selectedItem.qty, $ctrl.selectedItem.size)" class="cntGreen quick_add" href="">QUICK ADD</a></div>
+                                <div class="hoverCtn"><a ng-click="$ctrl.quickAdd('Pepsi',$ctrl.selectedItem.price, $ctrl.selectedItem.qty,'1')" class="cntGreen quick_add" href="">QUICK ADD</a></div>
                             </div>
                         </div>
                     </li>
@@ -387,7 +391,7 @@ a:hover {
                                 <ul style="background-color: white;" class="contentText">
                                     <li><span class="crust">Size</span>
                                         <span class="crust-side">
-                                        <button class="size " ng-class="{'selected': '150ml' == $ctrl.valueSet}" ng-click = "$ctrl.setBtnValue('150ml', $index)" >150ml</button>
+                                        <button class="size " ng-class="{'selected': '150ml' == $ctrl.valueSet}" ng-click = "$ctrl.setBtnValue('150ml')" >150ml</button>
                                         <button class="size " ng-class="{'selected': '250ml' == $ctrl.valueSet}" ng-click = "$ctrl.setBtnValue('250ml')" >250ml</button>
                                         <button class="size" ng-class="{'selected': '300ml' == $ctrl.valueSet}" ng-click = "$ctrl.setBtnValue('300ml')" >300ml</button>
                                         <button class="size " ng-class="{'selected': '500ml' == $ctrl.valueSet}" ng-click = "$ctrl.setBtnValue('500ml')" >500ml</button>
@@ -395,19 +399,22 @@ a:hover {
                                         <button class="size " ng-class="{'selected': '1.5ltr' == $ctrl.valueSet}" ng-click = "$ctrl.setBtnValue('1.5ltr')" >1.5ltr</button>
                                         </span>
                                         </span>
+                                        <h5 style="color: red;" ng-if="$ctrl.message == '2'">Please Enter Size</h5>
                                     </li>
                                     <li><span class="crust">Price</span>
                                         <div class="qty">
                                             <input type="text" ng-model="$ctrl.selectedItem.price1" class="form-control" name="">
+                                            <h5 style="color: red;" ng-if="$ctrl.message == '2'">Please Enter Price</h5>
                                         </div>
                                     </li>
                                     <li><span class="crust">Qty</span>
                                         <div class="qty">
                                             <input type="text" ng-model="$ctrl.selectedItem.qty1" class="form-control" name="">
+                                            <h5 style="color: red;" ng-if="$ctrl.message == '2'">Please Enter Qty</h5>
                                         </div>
                                     </li>
                                 </ul>
-                                <div class="hoverCtn"><a class="cntGreen quick_add" href="" ng-click="$ctrl.quickAdd('Limca',$ctrl.selectedItem.price1, $ctrl.selectedItem.qty1)" class="cntGreen quick_add">QUICK ADD</a></div>
+                                <div class="hoverCtn"><a class="cntGreen quick_add" href="" ng-click="$ctrl.quickAdd('Limca',$ctrl.selectedItem.price1, $ctrl.selectedItem.qty1, '2')" class="cntGreen quick_add">QUICK ADD</a></div>
                             </div>
                         </div>
                     </li>
@@ -436,19 +443,22 @@ a:hover {
                                         <button class="size " ng-class="{'selected': '1.5ltr' == $ctrl.valueSet}" ng-click = "$ctrl.setBtnValue('1.5ltr')" >1.5ltr</button>
                                         </span>
                                         </span>
+                                        <h5 style="color: red;" ng-if="$ctrl.message == '3'">Please Enter Size</h5>
                                     </li>
                                     <li><span class="crust">Price</span>
                                         <div class="qty">
                                             <input type="text" ng-model="$ctrl.selectedItem.price1" class="form-control" name="">
+                                            <h5 style="color: red;" ng-if="$ctrl.message == '3'">Please Enter Price</h5>
                                         </div>
                                     </li>
                                     <li><span class="crust">Qty</span>
                                         <div class="qty">
                                             <input type="text" ng-model="$ctrl.selectedItem.qty1" class="form-control" name="">
+                                            <h5 style="color: red;" ng-if="$ctrl.message == '3'">Please Enter Qty</h5>
                                         </div>
                                     </li>
                                 </ul>
-                                <div class="hoverCtn"><a class="cntGreen quick_add" href="" ng-click="$ctrl.quickAdd('Thums Up',$ctrl.selectedItem.price1, $ctrl.selectedItem.qty1)" class="cntGreen quick_add">QUICK ADD</a></div>
+                                <div class="hoverCtn"><a class="cntGreen quick_add" href="" ng-click="$ctrl.quickAdd('Thums Up',$ctrl.selectedItem.price1, $ctrl.selectedItem.qty1, '3')" class="cntGreen quick_add">QUICK ADD</a></div>
                             </div>
                         </div>
                     </li>
@@ -477,19 +487,22 @@ a:hover {
                                         <button class="size " ng-class="{'selected': '1.5ltr' == $ctrl.valueSet}" ng-click = "$ctrl.setBtnValue('1.5ltr')" >1.5ltr</button>
                                         </span>
                                         </span>
+                                        <h5 style="color: red;" ng-if="$ctrl.message == '4'">Please Enter Size</h5>
                                     </li>
                                     <li><span class="crust">Price</span>
                                         <div class="qty">
                                             <input type="text" ng-model="$ctrl.selectedItem.price1" class="form-control" name="">
+                                            <h5 style="color: red;" ng-if="$ctrl.message == '4'">Please Enter Price</h5>
                                         </div>
                                     </li>
                                     <li><span class="crust">Qty</span>
                                         <div class="qty">
                                             <input type="text" ng-model="$ctrl.selectedItem.qty1" class="form-control" name="">
+                                            <h5 style="color: red;" ng-if="$ctrl.message == '4'">Please Enter Qty</h5>
                                         </div>
                                     </li>
                                 </ul>
-                                <div class="hoverCtn"><a class="cntGreen quick_add" href="" ng-click="$ctrl.quickAdd('Sprite',$ctrl.selectedItem.price1, $ctrl.selectedItem.qty1)" class="cntGreen quick_add">QUICK ADD</a></div>
+                                <div class="hoverCtn"><a class="cntGreen quick_add" href="" ng-click="$ctrl.quickAdd('Sprite',$ctrl.selectedItem.price1, $ctrl.selectedItem.qty1, '4')" class="cntGreen quick_add">QUICK ADD</a></div>
                             </div>
                         </div>
                     </li>
