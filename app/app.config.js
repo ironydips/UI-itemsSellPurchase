@@ -24,6 +24,14 @@ config(['$urlRouterProvider', '$stateProvider',
                     }
                 }
             })
+            .state('adminLayout.addBrandDetails', {
+                url: '/addBrandDetails',
+                views: {
+                    'contentSection@adminLayout': {
+                        template: '<admin-add-brand-details></admin-add-brand-details>'
+                    }
+                }
+            })
             .state('salesPurchase', {
                 url: '/salesPurchase',
                 abstract: true,
@@ -55,6 +63,7 @@ config(['$urlRouterProvider', '$stateProvider',
                     }
                 }
             })
+
 
             
     }

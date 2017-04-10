@@ -18,6 +18,7 @@ angular.module('sellPurchaseApp', [
 	'sellPurchaseApp.services',
 	'adminLayout',
 	'adminPanel',
+	'adminAddBrandDetails',
 	// 'salesPurchase',
 	'salesPurchaseSubPanel',
 	'salesPurchaseCheckout'

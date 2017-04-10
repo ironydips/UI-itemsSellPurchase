@@ -1,16 +1,17 @@
 'use strict';
 
-function SalesPurchaseSubPanelController($state, $timeout, checkoutService) {
+function SalesPurchaseSubPanelController($state, $timeout, checkoutService, moveItemToSaleService) {
     var ctrl = this;
     ctrl.selectedItem = {};
     ctrl.itemArr = [];
     ctrl.itemCount = 0;
     ctrl.message = false;
+    ctrl.getItemDetails = moveItemToSaleService.ItemsToSale();
+    console.log(ctrl.getItemDetails)
 
     ctrl.init = function() {
 
         ctrl.getItemArr = checkoutService.getAddedItems();
-        console.log(ctrl.getItems)
         if (ctrl.getItemArr != undefined) {
             //  		ctrl.itemArr = checkoutService.getAddedItems();
             // console.log(ctrl.itemArr)
@@ -137,5 +138,5 @@ function SalesPurchaseSubPanelController($state, $timeout, checkoutService) {
 angular.module('salesPurchaseSubPanel')
     .component('salesPurchaseSubPanel', {
         templateUrl: 'salesPurchase/salesPurchase-sub-panel/salesPurchase-sub-panel.template.html',
-        controller: ['$state', '$timeout', 'checkoutService', SalesPurchaseSubPanelController]
+        controller: ['$state', '$timeout', 'checkoutService','moveItemToSaleService', SalesPurchaseSubPanelController]
     });
