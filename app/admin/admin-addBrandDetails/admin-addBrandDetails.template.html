@@ -1,24 +1,54 @@
+<style>
+.ng-enter {
+    -webkit-transition: 1s;
+    transition: 1s;
+    margin-left: 100%;
+}
+
+.ng-enter-active {
+    margin-left: 0;
+}
+
+.ng-leave {
+    -webkit-transition: 1s;
+    transition: 1s;
+    margin-left: 0;
+}
+
+.ng-leave-active {
+    margin-left: 100%;
+}
+
+.ng-move {
+    -webkit-transition: 1s;
+    transition: 1s;
+    background: gold;
+}
+
+.ng-move-active {
+    background: #fff;
+}
+</style>
 <!-- / component2 \ -->
 <div class="component2">
     <div class="container">
         <div class="row">
             <div class="col-sm-2">
                 <a href="" class="btn btn-lg btn-success" ng-click="$ctrl.addBrand()">Add Drivers</a>
-                
             </div>
             <div class="col-sm-8"></div>
             <div class="col-sm-2">
-            	<a href="" class="btn btn-lg btn-success" ui-sref="salesPurchase.salesPurchaseDetails" ng-click="$ctrl.moveToSale()">Move to Inventory</a>
+                <a href="" class="btn btn-lg btn-success" ui-sref="salesPurchase.salesPurchaseDetails" ng-click="$ctrl.moveToSale()">Move to Inventory</a>
             </div>
             <br>
             <br>
             <br>
             <br>
             <div>
-                <div ng-repeat="item in $ctrl.brandArr">
+                <div class="item" ng-repeat="item in $ctrl.brandArr">
                     <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4>{{item.brand}}</h4>
+                        <div class="panel-heading text-center" style="height: 37px;font-size: 18px;">
+                            {{item.brand}}
                         </div>
                         <div class="panel-body">
                             <!-- <div class="row">
@@ -30,13 +60,12 @@
 								</div>               				
                 			</div> -->
                             <div class="zipCodeComponent">
-                                <div class="container">
+                                <div class="">
                                     <div class="component-bg-small">
                                         <ul>
-                                            <li class="full"><a href="" ng-click="$ctrl.setBrandDetails(item.brand, item)">Add Driver Details</a></li>
+                                            <li class="full"><a href="" ng-click="$ctrl.setBrandDetails(item.brand, item)">Add Varient</a></li>
                                             <li class="active full" ng-repeat="varient in item.varients">
-                                                <a href=""><span style="float:left">{{varient}}</span>
-							<img style="width: 20px; height: 20px;float: left; margin-left:1px; margin-top: 3px" src="images/DeleteIcon.png"></a>
+                                                <a href=""><span style="float:left">{{varient}}</span></a>
                                             </li>
                                         </ul>
                                         <div class="clear"></div>

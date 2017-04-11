@@ -55,10 +55,10 @@ header, section, footer, aside, nav, main, article, figure { display: block; }
 .component-bg h2 { margin: 0px; font-size: 15px; color: #706f75; line-height: 40px; text-align: center; background: #fff; }
 .component-bg h2 a { color: #706f75; text-decoration: none; }
 
-.component-bg-small { padding: 15px 15px 0 15px; overflow: hidden; border-radius: 0px 4px 4px 4px; background: #eaeefa; }
-.component-bg-small ul { padding: 10px 10px 0 10px; background: #dbdeef; margin: 0px 0 10px 0; list-style: none; overflow: hidden; }
+.component-bg-small { overflow: hidden; border-radius: 0px 4px 4px 4px; background: #eaeefa; }
+.component-bg-small ul { background: #dbdeef; margin: 0px 0 10px 0; list-style: none; overflow: hidden; }
 .component-bg-small li { margin-right: 1%; position: relative; margin-bottom: 3%; width: 16.1%; float: left; border: 1px dashed #969697; }
-.component-bg-small li.full { margin-right: 1%; margin-bottom: 3%; margin-top: 3%; width: 16.1%; float: left; border: none; }
+.component-bg-small li.full { margin-right: 1%; margin-bottom: 1%; margin-top: 1%; width: 11.4%; float: left; border: none; }
 .component-bg-small .blank { display: none; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; border-radius: 4px; border: 3px solid #fdba96; }
 .component-bg-small li.full:hover .blank { display: block; }
 .component-bg-small li img { margin: 0 auto; display: block; width: 100%; height: auto; } 

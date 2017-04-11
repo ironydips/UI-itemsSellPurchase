@@ -189,6 +189,8 @@ a:hover {
 .showcase .thumb3 a:hover h3 i {
     background: #0046A2;
 }
+
+
 /* Absolute Center Spinner */
 
 .loading {
@@ -240,7 +242,7 @@ a:hover {
     box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
 }
 
-    @-webkit-keyframes spinner {
+@-webkit-keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);
         -moz-transform: rotate(0deg);
@@ -307,29 +309,86 @@ a:hover {
         transform: rotate(360deg);
     }
 }
-
-
 </style>
 <!-- / component2 \ -->
 <div class="component2">
-<div class="loading" ng-show="$ctrl.loader">
-            Loading&#8230;
-        </div><br>
+    <div class="loading" ng-show="$ctrl.loader">
+        Loading&#8230;
+    </div>
+    <br>
     <div class="row" style="background-color: yellow; height: 70px;">
         <div class="col-sm-9">
         </div>
         <div class="col-sm-1">
             <br>
-            <a ui-sref="salesPurchase.checkout" ng-click = "$ctrl.checkout()" class="btn btn-sm btn-primary">CHECKOUT</a>
+            <a ui-sref="salesPurchase.checkout" ng-click="$ctrl.checkout()" class="btn btn-sm btn-primary">CHECKOUT</a>
         </div>
         <div class="col-sm-1">
             <br>
             <h4>({{$ctrl.itemCount}} Items)</h4>
         </div>
-        
     </div>
-    <div></div>
-    <div id="pizza" class="scrollWrap">
+    <br>
+    <div ng-repeat="item in $ctrl.getItemDetails">
+        <div class="panel panel-primary">
+            <div class="panel-heading text-center" style="height: 37px;font-size: 18px;">
+                {{item.brand}}
+            </div>
+            <div class="panel-body">
+                <!-- <div class="row">
+								<div class="col-sm-2">
+									<a href=""  ng-click="$ctrl.setBrandDetails(item.brand, item)" class="btn btn-sm btn-primary">Add Driver Details</a>
+								</div>
+								<div ng-repeat="v in item.varArr">
+									{{v}}
+								</div>               				
+                			</div> -->
+                <ul>
+                    <li ng-repeat="varient in item.varients">
+                        <div class="panel panel-success" style="width: 180px;">
+                            <div class="panel-heading text-center" style="height: 37px;font-size: 18px;">
+                                {{varient}}
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Price:</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Quantity:</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- <div ng-repeat="item in $ctrl.getItemDetails" style="background-color: orange;">
+    <div>
+    	{{item.brand}}
+    </div>
+    <div ng-repeat="subItem in item.varients">
+    <ul>
+    	<li style="background-color: purple;">
+    		{{subItem}}		
+    	</li>
+    </ul>
+    
+    </div>
+    	
+    </div> -->
+    <!-- <div id="pizza" class="scrollWrap">
         <div id="add_product">
             <div class="pizzaType" id="vegSection">
                 <ul class="pizzaList" id="feast_pizzas__veg_0">
@@ -359,7 +418,7 @@ a:hover {
                                     </li>
                                     <li><span class="crust">Price</span>
                                         <div class="qty">
-                                            <input type="text" ng-model="$ctrl.selectedItem.price" class="form-control" name="" >
+                                            <input type="text" ng-model="$ctrl.selectedItem.price" class="form-control" name="">
                                             <h5 style="color: red;" ng-if="$ctrl.message == '1'">Please Enter Price</h5>
                                         </div>
                                     </li>
@@ -509,6 +568,6 @@ a:hover {
                 </ul>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 <!-- \ component2 end / -->
