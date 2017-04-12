@@ -115,6 +115,35 @@ header, section, footer, aside, nav, main, article, figure { display: block; }
 .slotComponent .bottom-btn .btn.save { background: #00d87f; border: 1px solid #00d87f; }
 .slotComponent .bottom-btn .btn.save:hover { background: #bfcbd7; border: 1px solid #bfcbd7; }
 .highlight { background-color: #dcc2ff;}
+.ng-enter {
+    -webkit-transition: 1s;
+    transition: 1s;
+    margin-left: 100%;
+}
+
+.ng-enter-active {
+    margin-left: 0;
+}
+
+.ng-leave {
+    -webkit-transition: 1s;
+    transition: 1s;
+    margin-left: 0;
+}
+
+.ng-leave-active {
+    margin-left: 100%;
+}
+
+.ng-move {
+    -webkit-transition: 1s;
+    transition: 1s;
+    background: gold;
+}
+
+.ng-move-active {
+    background: #fff;
+}
 
 
 

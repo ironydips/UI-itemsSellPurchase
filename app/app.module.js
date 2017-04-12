@@ -21,5 +21,7 @@ angular.module('sellPurchaseApp', [
 	'adminAddBrandDetails',
 	// 'salesPurchase',
 	'salesPurchaseSubPanel',
-	'salesPurchaseCheckout'
+	'salesPurchaseCheckout',
+	//stock details
+	'stockDetail'
 ]);

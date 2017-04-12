@@ -12,6 +12,7 @@ config(['$urlRouterProvider', '$stateProvider',
         $stateProvider
             .state('adminLayout', {
                 url: '/admin',
+                abstract: true,
                 views: {
                     '': {
                         template: '<admin-layout></admin-layout>'
@@ -19,9 +20,9 @@ config(['$urlRouterProvider', '$stateProvider',
                     'adminPanel@adminLayout': {
                         template: '<admin-panel></admin-panel>'
                     },
-                    'adminSubPanel@adminLayout': {
-                        template: '<admin-sub-panel></admin-sub-panel>'
-                    }
+                    // 'adminSubPanel@adminLayout': {
+                    //     template: '<admin-sub-panel></admin-sub-panel>'
+                    // }
                 }
             })
             .state('adminLayout.addBrandDetails', {
@@ -60,6 +61,29 @@ config(['$urlRouterProvider', '$stateProvider',
                 views: {
                     'contentSection@salesPurchase': {
                         template: '<sales-purchase-checkout></sales-purchase-checkout>'
+                    }
+                }
+            })
+            .state('stock', {
+                url: '/stock',
+                abstract: true,
+                views: {
+                    '': {
+                        template: '<admin-layout></admin-layout>'
+                    },
+                    'adminPanel@stock': {
+                        template: '<admin-panel></admin-panel>'
+                    },
+                    // 'adminSubPanel@salesPurchase': {
+                    //     template: '<sales-purchase-sub-panel></sales-purchase-sub-panel>'
+                    // }
+                }
+            })
+            .state('stock.stockDetail', {
+                url: '/stockDetail',
+                views: {
+                    'contentSection@stock': {
+                        template: '<stock-detail></stock-detail>'
                     }
                 }
             })
