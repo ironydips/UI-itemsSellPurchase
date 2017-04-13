@@ -7,6 +7,7 @@ function SalesPurchaseCheckoutController($state,$scope, checkoutService) {
 	ctrl.secondCollapse = true;
 	ctrl.ThirdCollapse = true;
 	ctrl.getItems = checkoutService.getAddedItems();
+	console.log(ctrl.getItems)
 	ctrl.details = {};
 
 	ctrl.names = ['A', 'AB', 'B', 'BM', 
@@ -39,7 +40,7 @@ function SalesPurchaseCheckoutController($state,$scope, checkoutService) {
 
 angular.module('salesPurchaseCheckout')
 	.component('salesPurchaseCheckout',{
-		templateUrl: 'salesPurchase/sales-purchase-checkout/sales-purchase-checkout.template.html',
+		templateUrl: 'purchase/purchase-checkout-details/purchase-checkout-details.template.html',
 		controller:['$state','$scope','checkoutService', SalesPurchaseCheckoutController]
 	});
 })(window.angular);

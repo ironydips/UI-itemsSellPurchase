@@ -18,7 +18,7 @@
                 <div class="item" ng-repeat="item in $ctrl.brandArr">
                     <div class="panel panel-primary">
                         <div class="panel-heading text-center" style="height: 37px;font-size: 18px;">
-                            {{item.brand}}
+                            {{item.brandName}}
                         </div>
                         <div class="panel-body">
                             <!-- <div class="row">
@@ -34,8 +34,8 @@
                                     <div class="component-bg-small">
                                         <ul>
                                             <li class="full"><a href="" ng-click="$ctrl.setBrandDetails(item.brand, item)">Add Varient</a></li>
-                                            <li class="active full" ng-repeat="varient in item.varients">
-                                                <a href=""><span style="float:left">{{varient}}</span></a>
+                                            <li class="active full" ng-repeat="varient in item.variants">
+                                                <a href=""><span style="float:left">{{varient.name}}</span></a>
                                             </li>
                                         </ul>
                                         <div class="clear"></div>

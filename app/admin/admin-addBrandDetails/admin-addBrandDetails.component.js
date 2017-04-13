@@ -1,6 +1,7 @@
 (function(angular) {
 
     'use strict';
+    var baseURL = "http://52.58.120.159:3011/api/";
 
     function openAddBrandPopUp(details) {
 
@@ -21,7 +22,8 @@
                 //data passed when pop up closed.
                 if (data && data.action == 'update') {
 
-                    popUpCtrl.showBrand(data.getBrand);
+                    // popUpCtrl.showBrand(data.getBrand);
+                    popUpCtrl.init();
 
                 }
 
@@ -50,8 +52,8 @@
                 //data passed when pop up closed.
                 if (data && data.action == 'update') {
 
-                    popUpCtrl.showVarient(data.brandObj, data.getVarient);
-
+                    // popUpCtrl.showVarient(data.brandObj, data.getVarient);
+                    popUpCtrl.init();
                 }
 
             }),
@@ -61,22 +63,36 @@
             }
     }
 
-    function AdminAddBrandController($state, $uibModal, moveItemToSaleService) {
+    function AdminAddBrandController($state, $http, $uibModal, moveItemToSaleService) {
         var ctrl = this;
         ctrl.$uibModal = $uibModal;
         ctrl.$state = $state;
         ctrl.brandArr = [];
+
+        ctrl.init = function() {
+
+            $http({
+                    url: baseURL + "admin/getBrandInfo",
+                    method: "GET",
+
+                }).then(function(response) {
+                    ctrl.brandArr = response.data.result.message;
+                })
+                .catch(function(error) {
+
+                });
+        }
 
         ctrl.addBrand = function() {
             angular.bind(ctrl, openAddBrandPopUp, null)();
         }
         ctrl.showBrand = function(brand) {
 
-            ctrl.brandArr.push({ "brand": brand, "varients": [] });
+            ctrl.brandArr.push({ "brandName": brand, "varients": [] });
 
         };
         ctrl.showVarient = function(item, varient) {
-            console.log(item,   varient);
+            console.log(item, varient);
             item.varients.push(varient);
 
         };
@@ -86,15 +102,17 @@
 
             angular.bind(ctrl, openBrandDetailPopUp, item)();
         }
-        ctrl.moveToSale = function(){
-        	moveItemToSaleService.addItemsToSale(ctrl.brandArr);
+        ctrl.moveToSale = function() {
+            moveItemToSaleService.addItemsToSale(ctrl.brandArr);
         }
+
+        ctrl.init();
     }
 
     angular.module('adminAddBrandDetails')
         .component('adminAddBrandDetails', {
             templateUrl: 'admin/admin-addBrandDetails/admin-addBrandDetails.template.html',
-            controller: ['$state', '$uibModal','moveItemToSaleService', AdminAddBrandController]
+            controller: ['$state', '$http', '$uibModal', 'moveItemToSaleService', AdminAddBrandController]
         });
 
 })(window.angular);

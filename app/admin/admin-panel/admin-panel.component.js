@@ -4,7 +4,6 @@
 
 function AdminPanelController($state) {
 	var ctrl = this;
-	console.log($state.current)
 }
 
 angular.module('adminPanel')

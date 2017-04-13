@@ -6,7 +6,7 @@
 
     function AddBrandModalController($state, $http) {
         var ctrl = this;
-        ctrl.brand = (ctrl.resolve && ctrl.resolve.details) || {};
+        ctrl.brandDetail = (ctrl.resolve && ctrl.resolve.details) || {};
 
         ctrl.save = function(brand) {
 
@@ -22,7 +22,7 @@
 
                 }).then(function(response) {
                     debugger;
-                    ctrl.modalInstance.close({ action: 'update', getBrand: brand });
+                    ctrl.modalInstance.close({ action: 'update'});
                 })
                 .catch(function(error) {
                     console.log("Error while adding brand")
