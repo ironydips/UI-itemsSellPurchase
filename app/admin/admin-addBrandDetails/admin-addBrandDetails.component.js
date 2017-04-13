@@ -76,12 +76,13 @@
 
         };
         ctrl.showVarient = function(item, varient) {
-
+            console.log(item,   varient);
             item.varients.push(varient);
 
         };
 
         ctrl.setBrandDetails = function(brandName, item) {
+
 
             angular.bind(ctrl, openBrandDetailPopUp, item)();
         }
