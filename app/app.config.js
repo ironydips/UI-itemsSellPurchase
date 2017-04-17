@@ -20,9 +20,6 @@ config(['$urlRouterProvider', '$stateProvider',
                     'adminPanel@adminLayout': {
                         template: '<admin-panel></admin-panel>'
                     },
-                    // 'adminSubPanel@adminLayout': {
-                    //     template: '<admin-sub-panel></admin-sub-panel>'
-                    // }
                 }
             })
             .state('adminLayout.addBrandDetails', {
@@ -43,9 +40,6 @@ config(['$urlRouterProvider', '$stateProvider',
                     'adminPanel@salesPurchase': {
                         template: '<admin-panel></admin-panel>'
                     },
-                    // 'adminSubPanel@salesPurchase': {
-                    //     template: '<sales-purchase-sub-panel></sales-purchase-sub-panel>'
-                    // }
                 }
             })
             .state('salesPurchase.salesPurchaseDetails', {
@@ -74,9 +68,6 @@ config(['$urlRouterProvider', '$stateProvider',
                     'adminPanel@stock': {
                         template: '<admin-panel></admin-panel>'
                     },
-                    // 'adminSubPanel@salesPurchase': {
-                    //     template: '<sales-purchase-sub-panel></sales-purchase-sub-panel>'
-                    // }
                 }
             })
             .state('stock.stockDetail', {
