@@ -1,7 +1,7 @@
 (function(angular) {
 'use strict';
 
-function SalesPurchaseCheckoutController($state,$scope, checkoutService) {
+function PurchaseCheckoutController($state,$scope, checkoutService) {
 	var ctrl = this;
 	ctrl.collapse = false;
 	ctrl.secondCollapse = true;
@@ -38,9 +38,9 @@ function SalesPurchaseCheckoutController($state,$scope, checkoutService) {
     }
 }
 
-angular.module('salesPurchaseCheckout')
-	.component('salesPurchaseCheckout',{
-		templateUrl: 'purchase/purchase-checkout-details/purchase-checkout-details.template.html',
-		controller:['$state','$scope','checkoutService', SalesPurchaseCheckoutController]
+angular.module('purchaseCheckout')
+	.component('purchaseCheckout',{
+		templateUrl: 'warehouse/purchase-checkout-details/purchase-checkout-details.template.html',
+		controller:['$state','$scope','checkoutService', PurchaseCheckoutController]
 	});
 })(window.angular);

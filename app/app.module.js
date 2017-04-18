@@ -18,10 +18,13 @@ angular.module('sellPurchaseApp', [
 	'sellPurchaseApp.services',
 	'adminLayout',
 	'adminPanel',
+	'adminSubPanel',
 	'adminAddBrandDetails',
-	// 'salesPurchase',
-	'salesPurchaseSubPanel',
-	'salesPurchaseCheckout',
+	// 'sellPurchase',
+	'warehouseSubPanel',
+	'purchaseDetail',
+	'purchaseCheckout',
+	'sellDetail',
 	//stock details
 	'stockDetail'
 ]);

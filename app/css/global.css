@@ -23,8 +23,8 @@ header, section, footer, aside, nav, main, article, figure { display: block; }
 .component2 { padding-top: 15px; width: 100%; overflow: hidden; }
 .component2 ul { list-style: none; }
 .component2 li { padding: 0 10px; float: left; }
-/*.component2 li a { padding: 0 12px 1px 12px; transition: all 0.7s ease; float: left; font-size: 15px; color: #575587; line-height: 24px; border: 1px solid #575587; border-radius: 15px; }
-.component2 li.active a,.component2 li a:hover { color: #fff; border: 1px solid #4f4d82; background: #5a588a; text-decoration: none; }*/
+.component2 li a { padding: 0 12px 1px 12px; transition: all 0.7s ease; float: left; font-size: 15px; color: #575587; line-height: 24px; border: 1px solid #575587; border-radius: 15px; }
+.component2 li.active a,.component2 li a:hover { color: #fff; border: 1px solid #4f4d82; background: #5a588a; text-decoration: none; }
 
 /* zipCodeComponent */
 .zipCodeComponent { padding-top: 15px; width: 100%; overflow: hidden; }
@@ -116,7 +116,7 @@ header, section, footer, aside, nav, main, article, figure { display: block; }
 .slotComponent .bottom-btn .btn.save:hover { background: #bfcbd7; border: 1px solid #bfcbd7; }
 .highlight { background-color: #dcc2ff;}
 /*Animation effect*/
-.ng-enter {
+/*.ng-enter {
     -webkit-transition: 1s;
     transition: 1s;
     margin-left: 100%;
@@ -145,7 +145,7 @@ header, section, footer, aside, nav, main, article, figure { display: block; }
 .ng-move-active {
     background: #fff;
 }
-
+*/
 
 /* Absolute Center Spinner */
 

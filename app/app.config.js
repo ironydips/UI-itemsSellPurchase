@@ -7,7 +7,7 @@ config(['$urlRouterProvider', '$stateProvider',
 
         
         // UI-Routing Config
-        $urlRouterProvider.otherwise('/salesPurchase/salesPurchaseDetails');
+        $urlRouterProvider.otherwise('/warehouse/purchaseDetails');
 
         $stateProvider
             .state('adminLayout', {
@@ -20,6 +20,9 @@ config(['$urlRouterProvider', '$stateProvider',
                     'adminPanel@adminLayout': {
                         template: '<admin-panel></admin-panel>'
                     },
+                    'adminSubPanel@adminLayout': {
+                        template: '<admin-sub-panel></admin-sub-panel>'
+                    }
                 }
             })
             .state('adminLayout.addBrandDetails', {
@@ -30,31 +33,42 @@ config(['$urlRouterProvider', '$stateProvider',
                     }
                 }
             })
-            .state('salesPurchase', {
-                url: '/salesPurchase',
+            .state('warehouse', {
+                url: '/warehouse',
                 abstract: true,
                 views: {
                     '': {
                         template: '<admin-layout></admin-layout>'
                     },
-                    'adminPanel@salesPurchase': {
+                    'adminPanel@warehouse': {
                         template: '<admin-panel></admin-panel>'
                     },
-                }
-            })
-            .state('salesPurchase.salesPurchaseDetails', {
-                url: '/salesPurchaseDetails',
-                views: {
-                    'contentSection@salesPurchase': {
-                        template: '<sales-purchase-sub-panel></sales-purchase-sub-panel>'
+                    'adminSubPanel@warehouse': {
+                        template: '<warehouse-sub-panel></warehouse-sub-panel>'
                     }
                 }
             })
-            .state('salesPurchase.checkout', {
+            .state('warehouse.purchaseDetails', {
+                url: '/purchaseDetails',
+                views: {
+                    'contentSection@warehouse': {
+                        template: '<purchase-detail></purchase-detail>'
+                    }
+                }
+            })
+            .state('warehouse.checkout', {
                 url: '/checkout',
                 views: {
-                    'contentSection@salesPurchase': {
-                        template: '<sales-purchase-checkout></sales-purchase-checkout>'
+                    'contentSection@warehouse': {
+                        template: '<purchase-checkout></purchase-checkout>'
+                    }
+                }
+            })
+            .state('warehouse.sellDetails', {
+                url: '/sellDetails',
+                views: {
+                    'contentSection@warehouse': {
+                        template: '<sell-detail></sell-detail>'
                     }
                 }
             })
