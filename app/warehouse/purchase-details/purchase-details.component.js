@@ -1,10 +1,10 @@
 'use strict';
 var baseURL = "http://52.58.120.159:3011/api/";
 
-function popup(details) {
+function popupView(details) {
     var popUpCtrl = this;
     var modalInstance = popUpCtrl.$uibModal.open({
-        component: 'addBrandModal',
+        component: 'newPurchaserModal',
         windowClass: 'app-modal-window-small',
         keyboard: false,
         resolve: {
@@ -19,8 +19,7 @@ function popup(details) {
             //data passed when pop up closed.
             if (data && data.action == 'update') {
 
-                // popUpCtrl.showBrand(data.getBrand);
-                popUpCtrl.init();
+                popUpCtrl.onSelectCallback(data.obj)
 
             }
 
@@ -38,6 +37,11 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
     ctrl.itemArr = [];
     ctrl.displayCartBtn = true;
     ctrl.itemCount = 0;
+    ctrl.productArr = [];
+    ctrl.purchaseDetail = {};
+    ctrl.productDetail ={};
+    ctrl.total = 0;
+
 
     ctrl.init = function() {
 
@@ -60,81 +64,71 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
             }
         });
 
-
-        $http({
-                url: baseURL + "admin/getBrandInfo",
-                method: "GET",
-
-            }).then(function(response) {
-                ctrl.getItemDetails = response.data.result.message;
-            })
-            .catch(function(error) {
-
-            });
     }
 
-    ctrl.addToCart = function(item) {
 
-        item.enableUpdate = false;
+    ctrl.addProduct = function(seller, price, quantity){
 
-        for (var i = 0; i < item.variants.length; i++) {
-
-            if (item.variants[i].price == undefined && item.variants[i].quantity == undefined) {
-                ctrl.itemCount = ctrl.itemArr.length;
-            } else {
-
-                ctrl.loader = true;
-                item.variants[i].totalPrice = parseInt(item.variants[i].quantity) * parseInt(item.variants[i].price);
-                if (ctrl.itemArr.length <= 0) {
-
-                    ctrl.itemArr.push(item);
-                    item.enableUpdate = true;
-                    console.log(ctrl.itemArr);
-                    ctrl.itemCount = ctrl.itemArr.length;
-
-                } else {
-
-                    var itemSet = ctrl.itemArr.filter(function(el) {
-                        return (el.brandName === item.brandName);
-
-                    });
-                    if (itemSet.length == 0) {
-                        ctrl.itemArr.push(item);
-                        item.enableUpdate = true;
-                        ctrl.itemCount = ctrl.itemArr.length;
-                        //checkoutService.addItems(ctrl.itemArr);
-                        console.log(ctrl.itemArr);
-                    } else {
-                        item.enableUpdate = true;
-                        console.log(ctrl.itemArr)
-                    }
-                };
-
-                var countUp = function() {
-                    ctrl.loader = false;
-
-                }
-                $timeout(countUp, 1000);
-            }
+        ctrl.totalPrice = parseInt(quantity) * parseInt(price);
+        var obj = {
+            sellerName: seller,
+            price: price,
+            quantity: quantity,
+            totalPrice: ctrl.totalPrice
         }
+        ctrl.productArr.push(obj);
+        ctrl.price = "";
+        ctrl.qty = "";
+        ctrl.productDetail = {};
+        
+        // for (var i = 0; i < ctrl.productArr.length; i++) {
+        //     var value = 0;
+        //     value = value + ctrl.productArr[i].totalPrice;
+        //     console.log(value)
+        // }
     };
 
-    ctrl.checkout = function() {
+    ctrl.deleteProduct = function(pdt){
+        ctrl.productArr.splice(ctrl.productArr.indexOf(pdt), 1)
+    }
 
-        // for (var i = 0; i < ctrl.itemArr.length; i++) {
-        //     for (var j = 0; j < ctrl.itemArr[i].variants.length; j++) {
-        //         console.log(ctrl.itemArr[i].variants[j].totalPrice)
-        //         if (ctrl.itemArr[i].variants[j].price == undefined || ctrl.itemArr[i].variants[j].price == undefined) {
-        //             console.log(ctrl.itemArr[i].variants[j])
-        //         }
-        //         if (ctrl.itemArr[i].variants[j].price == undefined && ctrl.itemArr[i].variants[j].price == undefined) {
-        //             console.log(ctrl.itemArr[i].variants[j])
-        //         }
-        //     }
-        // }
+    ctrl.onSelectCallback = function(item, model) {
+            ctrl.purchaserName = item.name;
+            ctrl.purchaserAddress = item.address;
+            ctrl.purchaserNumber = item.phoneNumber;
+            ctrl.purchaserPrevBal = item.prevBal;
+        };
 
-        checkoutService.addItems(ctrl.itemArr);
-        $state.go('warehouse.checkout');
+        
+
+        ctrl.purchaseDetails = [
+            { name: 'Adam', address: 'abc', phoneNumber: 12123, prevBal: 0 },
+            { name: 'Amalie', address: 'w', phoneNumber: 4566, prevBal: 110},
+            { name: 'Estefanía',address: 'j', phoneNumber: 898, prevBal: 889 },
+            { name: 'Adrian', address: 'l', phoneNumber: 89, prevBal: 0 },
+            { name: 'Wladimir', address: 'hh', phoneNumber: 543, prevBal: 0 },
+            { name: 'Samantha', address: 'ccccfe', phoneNumber: 4545, prevBal: 454 },
+            { name: 'Nicole', address: 'ghhg', phoneNumber: 565, prevBal: 64545},
+            { name: 'Natasha', address: 'ytty', phoneNumber: 434, prevBal: 433 },
+            { name: 'Michael', address: 'rtrt', phoneNumber: 45454, prevBal: 32 },
+            { name: 'Nicolás', address: 'fgf', phoneNumber: 4544, prevBal: 0 }
+        ];
+
+        
+        ctrl.productDetails = [
+            { name: 'Adam', email: 'adam@email.com', age: 12, country: 'United States' },
+            { name: 'Amalie', email: 'amalie@email.com', age: 12, country: 'Argentina' },
+            { name: 'Estefanía', email: 'estefania@email.com', age: 21, country: 'Argentina' },
+            { name: 'Adrian', email: 'adrian@email.com', age: 21, country: 'Ecuador' },
+            { name: 'Wladimir', email: 'wladimir@email.com', age: 30, country: 'Ecuador' },
+            { name: 'Samantha', email: 'samantha@email.com', age: 30, country: 'United States' },
+            { name: 'Nicole', email: 'nicole@email.com', age: 43, country: 'Colombia' },
+            { name: 'Natasha', email: 'natasha@email.com', age: 54, country: 'Ecuador' },
+            { name: 'Michael', email: 'michael@email.com', age: 15, country: 'Colombia' },
+            { name: 'Nicolás', email: 'nicole@email.com', age: 43, country: 'Colombia' }
+        ];
+    ctrl.newPurchaser = function(){
+        angular.bind(ctrl, popupView, null)();
     }
 
 

@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('purchaseDetail',['ui.bootstrap','purchaseCheckout','addBrandModal', 'sellPurchaseApp.services']);
+angular.module('purchaseDetail',['ui.bootstrap','newPurchaserModal', 'purchaseCheckout','addBrandModal', 'sellPurchaseApp.services']);

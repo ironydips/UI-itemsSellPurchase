@@ -78,6 +78,25 @@
         left: 0px!important;
     }
 }
+    .select2 > .select2-choice.ui-select-match {
+            /* Because of the inclusion of Bootstrap */
+            height: 29px;
+        }
+
+        .selectize-control > .selectize-dropdown {
+            top: 36px;
+        }
+        /* Some additional styling to demonstrate that append-to-body helps achieve the proper z-index layering. */
+        .select-box {
+          background: #fff;
+          position: relative;
+          z-index: 1;
+        }
+        .alert-info.positioned {
+          margin-top: 1em;
+          position: relative;
+          z-index: 10000; /* The select2 dropdown has a z-index of 9999 */
+        }
 </style>
 <br>
 <div class="panel-group" id="accordion">
@@ -120,29 +139,30 @@
                                 </button>
                             </div> -->
                             <table class="table table-hover">
-                                    <tr>
-                                        <th style="font-size: 13px;" class="col-md-2">Varient Name</th>
-                                        <th style="font-size: 13px;" class="col-md-2"> Quantity</th>
-                                        <th style="font-size: 13px;" class="col-md-2">Price</th>
-                                        <th style="font-size: 13px;" class="col-md-2">Total Price</th>
-                                    </tr>
-                                    <tr class="text-center" ng-repeat="varient in item.variants">
-                                        <td>{{varient.name}}</td>
-                                        <td>{{varient.quantity}}</td>
-                                        <td>{{varient.price}}</td>
-                                        <td>{{varient.totalPrice}}</td>
-                                    </tr>
-                                </table>
+                                <tr>
+                                    <th style="font-size: 13px;" class="col-md-2">Varient Name</th>
+                                    <th style="font-size: 13px;" class="col-md-2"> Quantity</th>
+                                    <th style="font-size: 13px;" class="col-md-2">Price</th>
+                                    <th style="font-size: 13px;" class="col-md-2">Total Price</th>
+                                </tr>
+                                <tr class="text-center" ng-repeat="varient in item.variants">
+                                    <td>{{varient.name}}</td>
+                                    <td>{{varient.quantity}}</td>
+                                    <td>{{varient.price}}</td>
+                                    <td>{{varient.totalPrice}}</td>
+                                </tr>
+                            </table>
                         </div>
-                    </div><br>
+                    </div>
+                    <br>
                 </div>
                 <br>
                 <div class="row">
                     <div class="col-sm-10">
                     </div>
                     <!-- <div class="col-sm-2">
-                    		<a href="" data-target="#collapseOne, #collapseThird"  class="btn btn-sm btn-primary" data-toggle="collapse" ng-click="$ctrl.editSelectedItem()"  data-parent="#accordion"><< Edit Selected Items </a>
-                    	</div> -->
+                            <a href="" data-target="#collapseOne, #collapseThird"  class="btn btn-sm btn-primary" data-toggle="collapse" ng-click="$ctrl.editSelectedItem()"  data-parent="#accordion"><< Edit Selected Items </a>
+                        </div> -->
                     <div class="col-sm-2">
                         <a href="" data-target="#collapseSecond" class="btn btn-sm btn-primary" data-toggle="collapse" data-parent="#accordion" ng-click="$ctrl.openGenrlInfo()">Continue >></a> </div>
                 </div>
@@ -173,7 +193,14 @@
                         </div>
                         <div class="col-sm-4">
                             <!-- <input type="text" style="width:270px;" ng-model="$ctrl.doctorDetail.success[0].physician.county" class="form-control" disabled> -->
-                            <input type="text" style="width:160px;" class="form-control" ng-model="$ctrl.details.name" uib-typeahead="name for name in $ctrl.names | filter:$viewValue |limitTo:8">
+                            <!-- <input type="text" style="width:160px;" class="form-control" ng-model="$ctrl.details.name" uib-typeahead="name for name in $ctrl.names | filter:$viewValue |limitTo:8"> -->
+                            <ui-select ng-model="$ctrl.country.selected" theme="selectize" on-select="$ctrl.onSelectCallback($item, $model)" style="width: 300px;" title="Choose a country">
+                                <ui-select-match placeholder="Select or search a country in the list...">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="country in $ctrl.countries | filter: $select.search">
+                                    <span ng-bind-html="country.name | highlight: $select.search"></span>
+                                    <small ng-bind-html="country.code | highlight: $select.search"></small>
+                                </ui-select-choices>
+                            </ui-select>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -199,8 +226,8 @@
                     <div class="col-sm-10">
                     </div>
                     <!-- <div class="col-sm-2">
-                    		<a href="" data-target="#collapseOne, #collapseSecond"  class="btn btn-sm btn-primary" data-toggle="collapse"  data-parent="#accordion" ng-click="$ctrl.editSelectedItem()"><< Edit Selected Items </a>
-                    	</div> -->
+                            <a href="" data-target="#collapseOne, #collapseSecond"  class="btn btn-sm btn-primary" data-toggle="collapse"  data-parent="#accordion" ng-click="$ctrl.editSelectedItem()"><< Edit Selected Items </a>
+                        </div> -->
                     <div class="col-sm-1">
                         <a href="" data-target="#collapseThird, #collapseSecond" class="btn btn-sm btn-primary" data-toggle="collapse" data-parent="#accordion" ng-click="$ctrl.editPayment($ctrl.details.name, $ctrl.details.mobileNum, $ctrl.details.address)">Continue >> </a>
                     </div>
@@ -230,28 +257,28 @@
                 </div>
                 <br>
                 <div class="row">
-                   <div class="row">
-						<div class="col-sm-4">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h3>Details</h3>
-								</div>
-								<div class="panel-body">
-									<h4>Name: {{$ctrl.userName}}</h4>
-									<h4>Mobile Number: {{$ctrl.mobileNum}}</h4>
-									<h4>Address: {{$ctrl.address}}</h4>
-								</div>
-							</div>
-						</div>                   	
-                   </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3>Details</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <h4>Name: {{$ctrl.userName}}</h4>
+                                    <h4>Mobile Number: {{$ctrl.mobileNum}}</h4>
+                                    <h4>Address: {{$ctrl.address}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="col-sm-11">
                     </div>
                     <!-- <div class="col-sm-2">
-                    		<a href="" data-target="#collapseOne, #collapseThird"  class="btn btn-sm btn-primary" data-toggle="collapse" ng-click="$ctrl.editSelectedItem()"  data-parent="#accordion"><< Edit Selected Items </a>
-                    	</div> -->
+                            <a href="" data-target="#collapseOne, #collapseThird"  class="btn btn-sm btn-primary" data-toggle="collapse" ng-click="$ctrl.editSelectedItem()"  data-parent="#accordion"><< Edit Selected Items </a>
+                        </div> -->
                     <div class="col-sm-1">
                         <a href="" class="btn btn-sm btn-primary">Finish</a>
                     </div>
@@ -297,36 +324,36 @@
                 </div>
             </div>
         </div>
-         	<div class="row">
-		<div class="panel panel-default">
+            <div class="row">
+        <div class="panel panel-default">
   <div class="panel-body" style="height: 140px;">
-  	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-4"> -->
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4"> -->
 <!-- <a href="" style="position: absolute;right: 180px;bottom: 90px;" class="round-button"><span class="glyphicon glyphicon-pencil"></span></a>           
-  		<img src="https://pizzaonline.dominos.co.in/themes/OLO_v2.1/images/deal/p-1.jpg" class="img-circle" alt="Cinque Terre" width="100" height="100">
-  	</div>
-  	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-  		<h5><b>Size</b></h5>
-  		<h6>Medium</h6>
-  	</div>
-  	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-  		<h5><b>QTY</b></h5>
-  		<h6>2</h6>
-  	</div>
-  	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-  		<h5><b>Price</b></h5>
-  		<h6>Rs.200</h6>
-  	</div>
-  	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-  		<h5><b>Total</b></h5>
-  		<h6>Rs.400</h6>
-  	</div>
-  	<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2"><br>
-  		<button type="button" class="btn btn-danger btn-sm">
+        <img src="https://pizzaonline.dominos.co.in/themes/OLO_v2.1/images/deal/p-1.jpg" class="img-circle" alt="Cinque Terre" width="100" height="100">
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <h5><b>Size</b></h5>
+        <h6>Medium</h6>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <h5><b>QTY</b></h5>
+        <h6>2</h6>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <h5><b>Price</b></h5>
+        <h6>Rs.200</h6>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <h5><b>Total</b></h5>
+        <h6>Rs.400</h6>
+    </div>
+    <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2"><br>
+        <button type="button" class="btn btn-danger btn-sm">
           <span class="glyphicon glyphicon-trash"></span> 
         </button>
-  	</div>
+    </div>
   </div>
 </div>
-	</div> -->
+    </div> -->
 </div>
 </div>

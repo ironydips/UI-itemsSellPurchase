@@ -1,70 +1,138 @@
 <!-- / component2 \ -->
 <div class="">
     <div class="component2">
-        <div class="loading" ng-show="$ctrl.loader">
-            Loading&#8230;
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3>Info</h3></div>
+                    <div class="panel-body" style="height: 300px;">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <ui-select ng-model="$ctrl.purchaseDetail.selected" theme="selectize" on-select="$ctrl.onSelectCallback($item, $model)" style="width: 250px;" title="Choose a country">
+                                    <ui-select-match placeholder="Select or search a purchaser in the list...">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="country in $ctrl.purchaseDetails | filter: $select.search">
+                                        <span ng-bind-html="country.name | highlight: $select.search"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="" class="btn btn-lg btn-primary" ng-click="$ctrl.newPurchaser()">New</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div>
+                                <h4>Name: {{$ctrl.purchaserName}}</h4>
+                                <h4>Address: {{$ctrl.purchaserAddress}}</h4>
+                                <h4>Contact Number: {{$ctrl.purchaserNumber}}</h4>
+                                <h4>Previous Bal: {{$ctrl.purchaserPrevBal}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3>Product Detail</h3>
+                    </div>
+                    <div class="panel-body" style="height: 300px;">
+                        <table class="table table-hover">
+                            <tr>
+                                <th style="font-size: 13px;" class="col-md-2">Item Name</th>
+                                <th style="font-size: 13px;" class="col-md-2"> Price</th>
+                                <th style="font-size: 13px;" class="col-md-2">Quantity</th>
+                                <th style="font-size: 13px;" class="col-md-2">Total</th>
+                                <th style="font-size: 13px;" class="col-md-2">Action</th>
+                            </tr>
+                            <tr class="text-center">
+                                <td>
+                                    <ui-select ng-model="$ctrl.productDetail.selected" theme="selectize" style="width: 150px;" title="Choose a country">
+                                        <ui-select-match placeholder="Select or search a product in the list...">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="country in $ctrl.productDetails | filter: $select.search">
+                                            <span ng-bind-html="country.name | highlight: $select.search"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </td>
+                                <td>
+                                    <input type="text" name="" ng-model="$ctrl.price" class="form-control">
+                                </td>
+                                <td>
+                                    <input type="text" name="" ng-model="$ctrl.qty" class="form-control">
+                                </td>
+                                <td></td>
+                                <td><a href="" ng-click="$ctrl.addProduct($ctrl.productDetail.selected.name, $ctrl.price, $ctrl.qty)" class="btn btn-sm btn-primary">+</a></td>
+                            </tr>
+                            <tr ng-repeat="product in $ctrl.productArr" class="text-center">
+                                <td>{{product.sellerName}}</td>
+                                <td>{{product.price}}</td>
+                                <td>{{product.quantity}}</td>
+                                <td>{{product.totalPrice}}</td>
+                                <td><a href="" class="btn btn-sm btn-danger" ng-click="$ctrl.deleteProduct(product)">Delete</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
-            <div class="col-sm-10">
-            </div>
-            <div class="col-sm-1">
-                <br>
-                <a ng-click="$ctrl.checkout()" class="btn btn-sm btn-success">CHECKOUT</a>
-            </div>
-            <div class="col-sm-1">
-                <br>
-                <h4>({{$ctrl.itemCount}} Items)</h4>
-            </div>
-        </div>
-        <br>
-        <form name="$ctrl.purchaseform" novalidate>
-        <div ng-repeat="item in $ctrl.getItemDetails">
-            <div class="panel panel-primary">
-                <div class="panel-heading text-center" style="height: 37px;font-size: 18px;">
-                    {{item.brandName}}
-                </div>
+            <div class="panel panel-success">
                 <div class="panel-body">
-                    <div class="row">
-                        <ul>
-                            <li ng-repeat="varient in item.variants">
-                                <div class="panel panel-success" style="width: 180px;">
-                                    <div class="panel-heading text-center" style="height: 37px;font-size: 18px;">
-                                        {{varient.name}}
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <label>Price:</label>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input name="price{{varient.name}}" type="text" ng-model="varient.price" class="form-control">
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <label>Quantity:</label>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input type="text" name="Qty{{varient.name}}" ng-model="varient.quantity" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                    <div class="col-sm-8">
                     </div>
-                    <div class="row">
-                    <div class="col-sm-5"></div>
-                        <div class="col-sm-2">
-                            <button  class="hoverButton" ng-click="$ctrl.addToCart(item)"><span ng-show="!item.enableUpdate" >Add</span><span ng-show="item.enableUpdate">Update</span></button>
-                            <!-- <button  class="hoverButton" ng-click="$ctrl.updateCart(item)"><span>Update</span></button> -->
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Total:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{$ctrl.total}}
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Amount Paid:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" ng-model="$ctrl.name" class="form-control">
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Paid by shop:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Paid by A:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Paid by B:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-sm-4">
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="" class="btn btn-lg btn-primary">Place Order</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        </form>
+        <!-- <div class="row" ></div> -->
     </div>
 </div>
 <!-- \ component2 end / -->
