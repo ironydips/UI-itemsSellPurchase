@@ -15,10 +15,18 @@
                </div>
                <div class="row">
                   <div class="col-sm-3">
-                     <label>Contact Number:</label>
+                     <label>Contact Number(Primary):</label>
                   </div>
                   <div class="col-sm-3">
-                     <input type="text" ng-model="$ctrl.phoneNumber" class="form-controls">
+                     <input type="text" ng-model="$ctrl.phoneNumber1" class="form-controls">
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-3">
+                     <label>Contact Number(Secondary):</label>
+                  </div>
+                  <div class="col-sm-3">
+                     <input type="text" ng-model="$ctrl.phoneNumber2" class="form-controls">
                   </div>
                </div>
                <div class="row">
@@ -42,7 +50,7 @@
             </div>
             <div class="btn-main">
                <button type="button" ng-click = "$ctrl.cancel()" class="btn btn-sm btn-default">Cancel</button>
-               <button type="button" ng-click = "$ctrl.save($ctrl.name, $ctrl.phoneNumber, $ctrl.address, $ctrl.note)" class="btn btn-sm btn-success">Save</button>
+               <button type="button" ng-click = "$ctrl.save($ctrl.name, $ctrl.phoneNumber1, $ctrl.phoneNumber2, $ctrl.address, $ctrl.note)" class="btn btn-sm btn-success">Save</button>
             </div>
          </div>
       </div>

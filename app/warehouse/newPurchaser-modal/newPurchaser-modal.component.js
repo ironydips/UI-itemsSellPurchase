@@ -1,31 +1,51 @@
 (function(angular) {
-'use strict';
+    'use strict';
 
-function newPurchaserModalModalController($state) {
-	var ctrl = this;
+    function newPurchaserModalModalController($state, $http) {
+        var ctrl = this;
+        ctrl.phoneNumberArr = [];
 
-	ctrl.save = function(name, phoneNumber, address, note){                  
-		var obj = {
-            name: name,
-            phoneNumber: phoneNumber,
-            address: address,
-            prevBal : 0
+        ctrl.save = function(name, phoneNumber1, phoneNumber2, address, note) {
+
+        	ctrl.phoneNumberArr.push(phoneNumber1, phoneNumber2);
+            var data = {
+                name: name,
+                number1: phoneNumber1,
+                number2: phoneNumber2,
+                address: address,
+                notes: note
+            }
+            	
+            $http({
+                    url: baseURL + "purchaser/addPurchaser",
+                    method: "POST",
+                    data: JSON.stringify(data),
+                    dataType: JSON
+
+                }).then(function(response) {
+                    console.log(response)
+                    data.phone = ctrl.phoneNumberArr;
+                    ctrl.modalInstance.close({ action: "update", profile: data });
+                })
+                .catch(function(error) {
+                    console.log("Error while adding brand's varient")
+                })
+
+
         }
-        ctrl.modalInstance.close({action: "update", obj: obj});
-	}
 
-	ctrl.cancel = function(){
-		ctrl.modalInstance.close();
-	}
-}
+        ctrl.cancel = function() {
+            ctrl.modalInstance.close();
+        }
+    }
 
-angular.module('newPurchaserModal')
-	.component('newPurchaserModal',{
-		templateUrl: 'warehouse/newPurchaser-modal/newPurchaser-modal.template.html',
-		controller:['$state', newPurchaserModalModalController],
-		bindings:{
-			modalInstance: '<',
-			resolve: '<'
-		}
-	});
+    angular.module('newPurchaserModal')
+        .component('newPurchaserModal', {
+            templateUrl: 'warehouse/newPurchaser-modal/newPurchaser-modal.template.html',
+            controller: ['$state','$http', newPurchaserModalModalController],
+            bindings: {
+                modalInstance: '<',
+                resolve: '<'
+            }
+        });
 })(window.angular);

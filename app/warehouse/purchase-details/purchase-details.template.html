@@ -10,9 +10,9 @@
                         <div class="row">
                             <div class="col-sm-8">
                                 <ui-select ng-model="$ctrl.purchaseDetail.selected" theme="selectize" on-select="$ctrl.onSelectCallback($item, $model)" style="width: 250px;" title="Choose a country">
-                                    <ui-select-match placeholder="Select or search a purchaser in the list...">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-match placeholder="Select or search a purchaser in the list...">{{$select.selected.profile.name}}</ui-select-match>
                                     <ui-select-choices repeat="country in $ctrl.purchaseDetails | filter: $select.search">
-                                        <span ng-bind-html="country.name | highlight: $select.search"></span>
+                                        <span ng-bind-html="country.profile.name | highlight: $select.search"></span>
                                     </ui-select-choices>
                                 </ui-select>
                             </div>
@@ -24,7 +24,8 @@
                             <div>
                                 <h4>Name: {{$ctrl.purchaserName}}</h4>
                                 <h4>Address: {{$ctrl.purchaserAddress}}</h4>
-                                <h4>Contact Number: {{$ctrl.purchaserNumber}}</h4>
+                                <h4>Contact Number(Primary): {{$ctrl.purchaserNumber1}}</h4>
+                                <h4>Contact Number(Secondary): {{$ctrl.purchaserNumber2}}</h4>
                                 <h4>Previous Bal: {{$ctrl.purchaserPrevBal}}</h4>
                             </div>
                         </div>
@@ -47,10 +48,10 @@
                             </tr>
                             <tr class="text-center">
                                 <td>
-                                    <ui-select ng-model="$ctrl.productDetail.selected" theme="selectize" style="width: 150px;" title="Choose a country">
-                                        <ui-select-match placeholder="Select or search a product in the list...">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select ng-model="$ctrl.productDetail.selected" theme="selectize"  on-select="$ctrl.onSelectItem($item, $model)" style="width: 160px;" title="Choose a country">
+                                        <ui-select-match placeholder="Select or search a product in the list...">{{$select.selected.productInfo}}</ui-select-match>
                                         <ui-select-choices repeat="country in $ctrl.productDetails | filter: $select.search">
-                                            <span ng-bind-html="country.name | highlight: $select.search"></span>
+                                            <span ng-bind-html="country.productInfo | highlight: $select.search"></span>
                                         </ui-select-choices>
                                     </ui-select>
                                 </td>
@@ -61,10 +62,10 @@
                                     <input type="text" name="" ng-model="$ctrl.qty" class="form-control">
                                 </td>
                                 <td></td>
-                                <td><a href="" ng-click="$ctrl.addProduct($ctrl.productDetail.selected.name, $ctrl.price, $ctrl.qty)" class="btn btn-sm btn-primary">+</a></td>
+                                <td><a href="" ng-click="$ctrl.addProduct($ctrl.productDetail.selected.productInfo, $ctrl.price, $ctrl.qty)" class="btn btn-sm btn-primary">+</a></td>
                             </tr>
                             <tr ng-repeat="product in $ctrl.productArr" class="text-center">
-                                <td>{{product.sellerName}}</td>
+                                <td>{{product.productInfo}}</td>
                                 <td>{{product.price}}</td>
                                 <td>{{product.quantity}}</td>
                                 <td>{{product.totalPrice}}</td>
@@ -83,18 +84,26 @@
                     <div class="col-sm-4">
                         <div class="row">
                             <div class="col-sm-4">
-                                <label>Total:</label>
+                                <label>Total Bill:</label>
                             </div>
                             <div class="col-sm-4">
-                                {{$ctrl.total}}
+                                {{$ctrl.totalBill}}
                             </div>
                         </div><br>
                         <div class="row">
                             <div class="col-sm-4">
-                                <label>Amount Paid:</label>
+                                <label>Prev Balance:</label>
                             </div>
                             <div class="col-sm-4">
-                                <input type="text" ng-model="$ctrl.name" class="form-control">
+                                {{$ctrl.purchaserPrevBal}}
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Total Amount:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{$ctrl.totalAmt}}
                             </div>
                         </div><br>
                         <div class="row">
@@ -102,7 +111,7 @@
                                 <label>Paid by shop:</label>
                             </div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control">
+                                <input type="text" ng-model="$ctrl.paidByShop" class="form-control">
                             </div>
                         </div><br>
                         <div class="row">
@@ -110,7 +119,7 @@
                                 <label>Paid by A:</label>
                             </div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control">
+                                <input type="text" ng-model="$ctrl.paidByPrateek" class="form-control">
                             </div>
                         </div><br>
                         <div class="row">
@@ -118,14 +127,30 @@
                                 <label>Paid by B:</label>
                             </div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control">
+                                <input type="text" ng-model="$ctrl.paidByBharat" class="form-control">
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Current Balance:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                {{$ctrl.currentBal}}
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Amount Paid:</label>
+                            </div>
+                            <div class="col-sm-4">
+                            <input type="text" ng-model="$ctrl.amtPaid" class="form-control">
                             </div>
                         </div><br>
                         <div class="row">
                             <div class="col-sm-4">
                             </div>
                             <div class="col-sm-3">
-                                <a href="" class="btn btn-lg btn-primary">Place Order</a>
+                                <a href="" ng-click="$ctrl.placeOrder()" class="btn btn-lg btn-primary">Place Order</a>
                             </div>
                         </div>
                     </div>

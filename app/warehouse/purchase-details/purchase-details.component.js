@@ -18,8 +18,8 @@ function popupView(details) {
     modalInstance.result.then(function(data) {
             //data passed when pop up closed.
             if (data && data.action == 'update') {
-
-                popUpCtrl.onSelectCallback(data.obj)
+                console.log(data)
+                popUpCtrl.onSelectCallback(data)
 
             }
 
@@ -39,8 +39,10 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
     ctrl.itemCount = 0;
     ctrl.productArr = [];
     ctrl.purchaseDetail = {};
-    ctrl.productDetail ={};
-    ctrl.total = 0;
+    ctrl.productDetail = {};
+    ctrl.totalBill = 0;
+    ctrl.totalAmt = 0;
+    var totalSum = 0;
 
 
     ctrl.init = function() {
@@ -59,78 +61,152 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
                 if (!isConfirm) {
                     event.preventDefault();
                 }
-
-                //angular.bind(ctrl, popup, null)();
             }
         });
 
+        $http({
+            url: baseURL + "purchaser/getPurchasingRelatedInfo",
+            method: "GET",
+        }).then(function(response) {
+            ctrl.productDetails = response.data.result.message.warehouseItems;
+            ctrl.purchaseDetails = response.data.result.message.purchaserInfo;
+        }).catch(function(err) {
+            console.log("error while getting data in get purchaser info");
+            console.log(err);
+        })
+
     }
 
+    $scope.$watch(angular.bind(ctrl, function() {
+        return ctrl.paidByShop;
+    }), function(value) {
 
-    ctrl.addProduct = function(seller, price, quantity){
+        if (ctrl.paidByShop == undefined) {
+            ctrl.paidByShop = 0;
+        }
+        if (ctrl.paidByPrateek == undefined) {
+            ctrl.paidByPrateek = 0;
+        }
+        if (ctrl.paidByBharat == undefined) {
+            ctrl.paidByBharat = 0;
+        }
+
+        sumOfPayies(ctrl.paidByShop, ctrl.paidByPrateek, ctrl.paidByBharat);
+    });
+    $scope.$watch(angular.bind(ctrl, function() {
+        return ctrl.paidByPrateek;
+    }), function(value) {
+        if (ctrl.paidByShop == undefined) {
+            ctrl.paidByShop = 0;
+        }
+        if (ctrl.paidByPrateek == undefined) {
+            ctrl.paidByPrateek = 0;
+        }
+        if (ctrl.paidByBharat == undefined) {
+            ctrl.paidByBharat = 0;
+        }
+        sumOfPayies(ctrl.paidByShop, ctrl.paidByPrateek, ctrl.paidByBharat);
+    });
+    $scope.$watch(angular.bind(ctrl, function() {
+        return ctrl.paidByBharat;
+    }), function(value) {
+        if (ctrl.paidByShop == undefined) {
+            ctrl.paidByShop = 0;
+        }
+        if (ctrl.paidByPrateek == undefined) {
+            ctrl.paidByPrateek = 0;
+        }
+        if (ctrl.paidByBharat == undefined) {
+            ctrl.paidByBharat = 0;
+        }
+        sumOfPayies(ctrl.paidByShop, ctrl.paidByPrateek, ctrl.paidByBharat);
+    });
+
+
+
+    ctrl.addProduct = function(seller, price, quantity) {
+
+        
+        console.log(ctrl.SelectedItem)
+
 
         ctrl.totalPrice = parseInt(quantity) * parseInt(price);
-        var obj = {
-            sellerName: seller,
-            price: price,
-            quantity: quantity,
-            totalPrice: ctrl.totalPrice
-        }
-        ctrl.productArr.push(obj);
+        ctrl.SelectedItem.price = price;
+        ctrl.SelectedItem.quantity = quantity;
+        ctrl.SelectedItem.totalPrice = ctrl.totalPrice;
+        
+        ctrl.productArr.push(ctrl.SelectedItem);
         ctrl.price = "";
         ctrl.qty = "";
         ctrl.productDetail = {};
-        
-        // for (var i = 0; i < ctrl.productArr.length; i++) {
-        //     var value = 0;
-        //     value = value + ctrl.productArr[i].totalPrice;
-        //     console.log(value)
-        // }
+
+        ctrl.totalBill = ctrl.totalBill + ctrl.totalPrice;
+
     };
 
-    ctrl.deleteProduct = function(pdt){
+    ctrl.deleteProduct = function(pdt) {
+
+        ctrl.totalBill = ctrl.totalBill - pdt.totalPrice;
         ctrl.productArr.splice(ctrl.productArr.indexOf(pdt), 1)
     }
 
     ctrl.onSelectCallback = function(item, model) {
-            ctrl.purchaserName = item.name;
-            ctrl.purchaserAddress = item.address;
-            ctrl.purchaserNumber = item.phoneNumber;
-            ctrl.purchaserPrevBal = item.prevBal;
-        };
+        console.log(item)
 
-        
+        ctrl.purchaserName = item.profile.name;
+        ctrl.purchaserAddress = item.profile.address;
+        ctrl.purchaserNumber1 = item.profile.phone[0];
+        ctrl.purchaserNumber2 = item.profile.phone[1];
+        ctrl.purchaserPrevBal = item.balance;
+        ctrl.totalAmt = ctrl.totalBill + item.balance;
+        ctrl.purchaserID = item._id;
 
-        ctrl.purchaseDetails = [
-            { name: 'Adam', address: 'abc', phoneNumber: 12123, prevBal: 0 },
-            { name: 'Amalie', address: 'w', phoneNumber: 4566, prevBal: 110},
-            { name: 'Estefanía',address: 'j', phoneNumber: 898, prevBal: 889 },
-            { name: 'Adrian', address: 'l', phoneNumber: 89, prevBal: 0 },
-            { name: 'Wladimir', address: 'hh', phoneNumber: 543, prevBal: 0 },
-            { name: 'Samantha', address: 'ccccfe', phoneNumber: 4545, prevBal: 454 },
-            { name: 'Nicole', address: 'ghhg', phoneNumber: 565, prevBal: 64545},
-            { name: 'Natasha', address: 'ytty', phoneNumber: 434, prevBal: 433 },
-            { name: 'Michael', address: 'rtrt', phoneNumber: 45454, prevBal: 32 },
-            { name: 'Nicolás', address: 'fgf', phoneNumber: 4544, prevBal: 0 }
-        ];
+    };
 
-        
-        ctrl.productDetails = [
-            { name: 'Adam', email: 'adam@email.com', age: 12, country: 'United States' },
-            { name: 'Amalie', email: 'amalie@email.com', age: 12, country: 'Argentina' },
-            { name: 'Estefanía', email: 'estefania@email.com', age: 21, country: 'Argentina' },
-            { name: 'Adrian', email: 'adrian@email.com', age: 21, country: 'Ecuador' },
-            { name: 'Wladimir', email: 'wladimir@email.com', age: 30, country: 'Ecuador' },
-            { name: 'Samantha', email: 'samantha@email.com', age: 30, country: 'United States' },
-            { name: 'Nicole', email: 'nicole@email.com', age: 43, country: 'Colombia' },
-            { name: 'Natasha', email: 'natasha@email.com', age: 54, country: 'Ecuador' },
-            { name: 'Michael', email: 'michael@email.com', age: 15, country: 'Colombia' },
-            { name: 'Nicolás', email: 'nicole@email.com', age: 43, country: 'Colombia' }
-        ];
-    ctrl.newPurchaser = function(){
+    ctrl.newPurchaser = function() {
         angular.bind(ctrl, popupView, null)();
+    };
+
+    ctrl.onSelectItem = function(item, model){
+        console.log(item)
+        ctrl.SelectedItem = item;
     }
 
+    ctrl.placeOrder = function(){
+
+        ctrl.payment = {
+            previousBalance: ctrl.purchaserPrevBal,
+            totalAmount : ctrl.totalAmt,
+            amountPaid: ctrl.amtPaid,
+            currentBalance: ctrl.currentBal,
+            paidByShop : ctrl.paidByShop,
+            paidByPrateek : ctrl.paidByPrateek,
+            paidByBharat: ctrl.paidByBharat
+        }
+        var obj = {
+            purchaserID: ctrl.purchaserID,
+            Items: ctrl.productArr,
+            payment: ctrl.payment 
+        }
+        
+        $http({
+                    url: baseURL + "purchaser/placeOrder",
+                    method: "POST",
+                    data: JSON.stringify(obj),
+                    dataType: JSON
+
+                }).then(function(response) {
+                    console.log(response)
+                })
+                .catch(function(error) {
+                    console.log("Error while adding brand's varient")
+                })
+    }
+
+    function sumOfPayies(a, b, c) {
+        totalSum = parseInt(a) + parseInt(b) + parseInt(c);
+        ctrl.currentBal = ctrl.totalAmt - totalSum;
+    }
 
     ctrl.init();
 }
