@@ -26,5 +26,8 @@ angular.module('sellPurchaseApp', [
 	'purchaseCheckout',
 	'sellDetail',
 	//stock details
-	'stockDetail'
+	'stockDetail',
+	//order details
+	'orderSubPanel',
+	'orderDetail'
 ]);

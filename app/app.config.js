@@ -81,7 +81,7 @@ config(['$urlRouterProvider', '$stateProvider',
                     },
                     'adminPanel@stock': {
                         template: '<admin-panel></admin-panel>'
-                    },
+                    }
                 }
             })
             .state('stock.stockDetail', {
@@ -89,6 +89,26 @@ config(['$urlRouterProvider', '$stateProvider',
                 views: {
                     'contentSection@stock': {
                         template: '<stock-detail></stock-detail>'
+                    }
+                }
+            })
+            .state('order', {
+                url: '/order',
+                abstract: true,
+                views: {
+                    '': {
+                        template: '<admin-layout></admin-layout>'
+                    },
+                    'adminPanel@order': {
+                        template: '<admin-panel></admin-panel>'
+                    }
+                }
+            })
+            .state('order.orderDetail', {
+                url: '/orderDetail',
+                views: {
+                    'contentSection@order': {
+                        template: '<order-detail></order-detail>'
                     }
                 }
             })

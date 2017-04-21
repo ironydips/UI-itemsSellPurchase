@@ -80,7 +80,7 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
     $scope.$watch(angular.bind(ctrl, function() {
         return ctrl.paidByShop;
     }), function(value) {
-
+        
         if (ctrl.paidByShop == undefined) {
             ctrl.paidByShop = 0;
         }
@@ -121,25 +121,39 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
         }
         sumOfPayies(ctrl.paidByShop, ctrl.paidByPrateek, ctrl.paidByBharat);
     });
+    $scope.$watch(angular.bind(ctrl, function() {
+        return ctrl.totalBill;
+    }), function(value) {
+        if (ctrl.totalBill) {
+            if (ctrl.purchaserPrevBal == undefined) {
+                ctrl.purchaserPrevBal = 0;
+            }
+            calculateTotalBill(ctrl.totalBill, ctrl.purchaserPrevBal);
+        }
+    });
+    $scope.$watch(angular.bind(ctrl, function() {
+        return ctrl.purchaserPrevBal;
+    }), function(value) {
+        if (ctrl.purchaserPrevBal) {
+            if (ctrl.totalBill == undefined) {
+                ctrl.totalBill = 0;
+            }
+            calculateTotalBill(ctrl.totalBill, ctrl.purchaserPrevBal);
+        }
+    });
 
 
 
     ctrl.addProduct = function(seller, price, quantity) {
 
-        
-        console.log(ctrl.SelectedItem)
-
-
         ctrl.totalPrice = parseInt(quantity) * parseInt(price);
         ctrl.SelectedItem.price = price;
         ctrl.SelectedItem.quantity = quantity;
         ctrl.SelectedItem.totalPrice = ctrl.totalPrice;
-        
         ctrl.productArr.push(ctrl.SelectedItem);
         ctrl.price = "";
         ctrl.qty = "";
         ctrl.productDetail = {};
-
         ctrl.totalBill = ctrl.totalBill + ctrl.totalPrice;
 
     };
@@ -151,14 +165,26 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
     }
 
     ctrl.onSelectCallback = function(item, model) {
-        console.log(item)
+
+        switch (item.profile.phone.length) {
+            case 0:
+                ctrl.purchaserNumber1 = "";
+                ctrl.purchaserNumber2 = "";
+                break;
+            case 1:
+                ctrl.purchaserNumber1 = item.profile.phone[0] + ",";
+                ctrl.purchaserNumber2 = "";
+                break;
+            case 2:
+                ctrl.purchaserNumber1 = item.profile.phone[0] + ",";
+                ctrl.purchaserNumber2 = item.profile.phone[1] + ",";
+                break;
+
+        }
 
         ctrl.purchaserName = item.profile.name;
-        ctrl.purchaserAddress = item.profile.address;
-        ctrl.purchaserNumber1 = item.profile.phone[0];
-        ctrl.purchaserNumber2 = item.profile.phone[1];
+        ctrl.purchaserAddress = item.profile.address + ",";
         ctrl.purchaserPrevBal = item.balance;
-        ctrl.totalAmt = ctrl.totalBill + item.balance;
         ctrl.purchaserID = item._id;
 
     };
@@ -167,45 +193,70 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
         angular.bind(ctrl, popupView, null)();
     };
 
-    ctrl.onSelectItem = function(item, model){
-        console.log(item)
+    ctrl.onSelectItem = function(item, model) {
+
         ctrl.SelectedItem = item;
     }
 
-    ctrl.placeOrder = function(){
+    ctrl.placeOrder = function() {
+
+        ctrl.loader = true;
 
         ctrl.payment = {
             previousBalance: ctrl.purchaserPrevBal,
-            totalAmount : ctrl.totalAmt,
+            totalAmount: ctrl.totalAmt,
             amountPaid: ctrl.amtPaid,
             currentBalance: ctrl.currentBal,
-            paidByShop : ctrl.paidByShop,
-            paidByPrateek : ctrl.paidByPrateek,
+            paidByShop: ctrl.paidByShop,
+            paidByPrateek: ctrl.paidByPrateek,
             paidByBharat: ctrl.paidByBharat
         }
         var obj = {
             purchaserID: ctrl.purchaserID,
             Items: ctrl.productArr,
-            payment: ctrl.payment 
+            payment: ctrl.payment
         }
-        
-        $http({
-                    url: baseURL + "purchaser/placeOrder",
-                    method: "POST",
-                    data: JSON.stringify(obj),
-                    dataType: JSON
 
-                }).then(function(response) {
-                    console.log(response)
-                })
-                .catch(function(error) {
-                    console.log("Error while adding brand's varient")
-                })
+        $http({
+                url: baseURL + "purchaser/placeOrder",
+                method: "POST",
+                data: JSON.stringify(obj),
+                dataType: JSON
+
+            }).then(function(response) {
+                console.log(response)
+                ctrl.loader = false;
+                ctrl.productArr = [];
+                ctrl.purchaserPrevBal = "";
+                ctrl.totalAmt = 0;
+                ctrl.amtPaid = 0;
+                ctrl.currentBal = 0;
+                ctrl.totalAmt = 0;
+                ctrl.paidByShop = 0;
+                ctrl.paidByPrateek = 0;
+                ctrl.paidByBharat = 0;
+                ctrl.totalBill = 0;
+                ctrl.purchaserName = "";
+                ctrl.purchaserAddress = "";
+                ctrl.purchaserPrevBal = "";
+                ctrl.purchaserNumber1 = "";
+                ctrl.purchaserNumber2 = "";
+
+            })
+            .catch(function(error) {
+                console.log("Error while adding brand's varient")
+            })
     }
 
-    function sumOfPayies(a, b, c) {
-        totalSum = parseInt(a) + parseInt(b) + parseInt(c);
+    function sumOfPayies(paidByShop, paidByPrateek, paidByBharat) {
+        totalSum = parseInt(paidByShop) + parseInt(paidByPrateek) + parseInt(paidByBharat);
+        ctrl.amtPaid = totalSum;
         ctrl.currentBal = ctrl.totalAmt - totalSum;
+    }
+
+    function calculateTotalBill(totalBill, purchaserPrevBal){
+
+        ctrl.totalAmt = totalBill + purchaserPrevBal;
     }
 
     ctrl.init();

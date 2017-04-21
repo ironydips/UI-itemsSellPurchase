@@ -1,6 +1,8 @@
 <!-- / component2 \ -->
-<div class="">
     <div class="component2">
+        <div class="loading" ng-show="$ctrl.loader">
+                Loading&#8230;
+            </div>
         <div class="row">
             <div class="col-sm-4">
                 <div class="panel panel-success">
@@ -10,7 +12,7 @@
                         <div class="row">
                             <div class="col-sm-8">
                                 <ui-select ng-model="$ctrl.purchaseDetail.selected" theme="selectize" on-select="$ctrl.onSelectCallback($item, $model)" style="width: 250px;" title="Choose a country">
-                                    <ui-select-match placeholder="Select or search a purchaser in the list...">{{$select.selected.profile.name}}</ui-select-match>
+                                    <ui-select-match placeholder="Select Purchaser">{{$select.selected.profile.name}}</ui-select-match>
                                     <ui-select-choices repeat="country in $ctrl.purchaseDetails | filter: $select.search">
                                         <span ng-bind-html="country.profile.name | highlight: $select.search"></span>
                                     </ui-select-choices>
@@ -22,10 +24,7 @@
                         </div>
                         <div class="row">
                             <div>
-                                <h4>Name: {{$ctrl.purchaserName}}</h4>
-                                <h4>Address: {{$ctrl.purchaserAddress}}</h4>
-                                <h4>Contact Number(Primary): {{$ctrl.purchaserNumber1}}</h4>
-                                <h4>Contact Number(Secondary): {{$ctrl.purchaserNumber2}}</h4>
+                                <h4>{{$ctrl.purchaserName}}{{$ctrl.purchaserAddress}} {{$ctrl.purchaserNumber1}}{{$ctrl.purchaserNumber2}}</h4>
                                 <h4>Previous Bal: {{$ctrl.purchaserPrevBal}}</h4>
                             </div>
                         </div>
@@ -49,7 +48,7 @@
                             <tr class="text-center">
                                 <td>
                                     <ui-select ng-model="$ctrl.productDetail.selected" theme="selectize"  on-select="$ctrl.onSelectItem($item, $model)" style="width: 160px;" title="Choose a country">
-                                        <ui-select-match placeholder="Select or search a product in the list...">{{$select.selected.productInfo}}</ui-select-match>
+                                        <ui-select-match placeholder="Select Item">{{$select.selected.productInfo}}</ui-select-match>
                                         <ui-select-choices repeat="country in $ctrl.productDetails | filter: $select.search">
                                             <span ng-bind-html="country.productInfo | highlight: $select.search"></span>
                                         </ui-select-choices>
@@ -143,7 +142,7 @@
                                 <label>Amount Paid:</label>
                             </div>
                             <div class="col-sm-4">
-                            <input type="text" ng-model="$ctrl.amtPaid" class="form-control">
+                           {{$ctrl.amtPaid}}
                             </div>
                         </div><br>
                         <div class="row">
@@ -157,7 +156,5 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="row" ></div> -->
     </div>
-</div>
 <!-- \ component2 end / -->
