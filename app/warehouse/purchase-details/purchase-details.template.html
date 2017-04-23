@@ -6,8 +6,8 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <h3>Info</h3></div>
+                    <div class="panel-heading" style="background-color: transparent;padding: 0">
+                        <h3>Supplier Info</h3></div>
                     <div class="panel-body" style="height: 300px;">
                         <div class="row">
                             <div class="col-sm-8">
@@ -33,7 +33,7 @@
             </div>
             <div class="col-sm-8">
                 <div class="panel panel-success">
-                    <div class="panel-heading">
+                    <div class="panel-heading" style="background-color: transparent;padding: 0">
                         <h3>Product Detail</h3>
                     </div>
                     <div class="panel-body" style="height: 300px;">
@@ -42,7 +42,7 @@
                                 <th style="font-size: 13px;" class="col-md-2">Item Name</th>
                                 <th style="font-size: 13px;" class="col-md-2"> Price</th>
                                 <th style="font-size: 13px;" class="col-md-2">Quantity</th>
-                                <th style="font-size: 13px;" class="col-md-2">Total</th>
+                                <th style="font-size: 13px;" class="col-md-2">Total(₹)</th>
                                 <th style="font-size: 13px;" class="col-md-2">Action</th>
                             </tr>
                             <tr class="text-center">
@@ -60,7 +60,7 @@
                                 <td>
                                     <input type="text" name="" ng-model="$ctrl.qty" class="form-control">
                                 </td>
-                                <td></td>
+                                <td>{{$ctrl.price * $ctrl.qty}}</td>
                                 <td><a href="" ng-click="$ctrl.addProduct($ctrl.productDetail.selected.productInfo, $ctrl.price, $ctrl.qty)" class="btn btn-sm btn-primary">+</a></td>
                             </tr>
                             <tr ng-repeat="product in $ctrl.productArr" class="text-center">
@@ -78,77 +78,67 @@
         <div class="row">
             <div class="panel panel-success">
                 <div class="panel-body">
-                    <div class="col-sm-8">
-                    </div>
                     <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-8">
                         <div class="row">
-                            <div class="col-sm-4">
-                                <label>Total Bill:</label>
+                            <div class="col-sm-8">
+                                <label class="pull-right">Bill Amount({{$ctrl.productArr.length}} items):</label>
                             </div>
-                            <div class="col-sm-4">
-                                {{$ctrl.totalBill}}
+                            <div class="col-sm-4 padding-left-22">
+                                ₹{{$ctrl.totalBill}}
                             </div>
                         </div><br>
                         <div class="row">
-                            <div class="col-sm-4">
-                                <label>Prev Balance:</label>
+                            <div class="col-sm-8">
+                                <label class="pull-right">Prev Balance:</label>
                             </div>
-                            <div class="col-sm-4">
-                                {{$ctrl.purchaserPrevBal}}
-                            </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <label>Total Amount:</label>
-                            </div>
-                            <div class="col-sm-4">
-                                {{$ctrl.totalAmt}}
+                            <div class="col-sm-4 padding-left-22">
+                                ₹{{$ctrl.purchaserPrevBal}}
                             </div>
                         </div><br>
                         <div class="row">
-                            <div class="col-sm-4">
-                                <label>Paid by shop:</label>
+                            <div class="col-sm-8">
+                                <label class="pull-right">Total Amount:</label>
                             </div>
-                            <div class="col-sm-4">
-                                <input type="text" ng-model="$ctrl.paidByShop" class="form-control">
+                            <div class="col-sm-4 padding-left-22">
+                                ₹{{$ctrl.totalAmt}}
+                            </div>
+                        </div><br>
+                        
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <span>
+                                    <span style="float:left; padding-top: 4px; padding-left: 5px">S =&nbsp;</span> 
+                                    <input type="text" ng-model="$ctrl.paidByShop" class="form-control small-input">
+                                </span>
+                                 <span >
+                                      <span style="float:left; padding-top: 4px; padding-left: 5px">B =&nbsp;</span>
+                                      <input type="text" ng-model="$ctrl.paidByBharat" class="form-control small-input">
+                                </span>
+                                <span>
+                                    <span style="float:left; padding-top: 4px; padding-left: 5px">P =&nbsp;</span> 
+                                    <input type="text" ng-model="$ctrl.paidByPrateek" class="form-control small-input">
+                                </span>
+                                <label class="pull-right">Amount Paid:</label>
+                            </div>
+                            <div class="col-sm-4 padding-left-22">
+                                    ₹{{$ctrl.amtPaid}}
                             </div>
                         </div><br>
                         <div class="row">
-                            <div class="col-sm-4">
-                                <label>Paid by A:</label>
+                            <div class="col-sm-8">
+                                <label class="pull-right">Current Balance:</label>
                             </div>
-                            <div class="col-sm-4">
-                                <input type="text" ng-model="$ctrl.paidByPrateek" class="form-control">
-                            </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <label>Paid by B:</label>
-                            </div>
-                            <div class="col-sm-4">
-                                <input type="text" ng-model="$ctrl.paidByBharat" class="form-control">
+                            <div class="col-sm-4 padding-left-22">
+                                ₹{{$ctrl.currentBal}}
                             </div>
                         </div><br>
+                        
                         <div class="row">
-                            <div class="col-sm-4">
-                                <label>Current Balance:</label>
+                            <div class="col-sm-7">
                             </div>
-                            <div class="col-sm-4">
-                                {{$ctrl.currentBal}}
-                            </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <label>Amount Paid:</label>
-                            </div>
-                            <div class="col-sm-4">
-                           {{$ctrl.amtPaid}}
-                            </div>
-                        </div><br>
-                        <div class="row">
-                            <div class="col-sm-4">
-                            </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-5 padding-left-22">
                                 <a href="" ng-click="$ctrl.placeOrder()" class="btn btn-lg btn-primary">Place Order</a>
                             </div>
                         </div>
@@ -158,3 +148,7 @@
         </div>
     </div>
 <!-- \ component2 end / -->
+<style>
+ .small-input{width: 120px; float:left; height: 25px}
+ .padding-left-22 {padding-left: 22px}
+</style>

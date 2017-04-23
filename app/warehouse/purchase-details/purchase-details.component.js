@@ -45,9 +45,10 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
     ctrl.paidByShop = 0;
     ctrl.paidByPrateek = 0;
     ctrl.paidByBharat = 0;
+    ctrl.price = 0;
+    ctrl.qty = 0;
 
     var totalSum = 0;
-
 
     ctrl.init = function() {
 
@@ -68,8 +69,10 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
             url: "purchaser/getPurchasingRelatedInfo",
             method: "GET",
         }).then(function(response) {
-            ctrl.productDetails = response.data.result.message.warehouseItems;
-            ctrl.purchaseDetails = response.data.result.message.purchaserInfo;
+            if(response.data && response.data.result && response.data.result &&message){
+                ctrl.productDetails = response.data.result.message.warehouseItems;
+                ctrl.purchaseDetails = response.data.result.message.purchaserInfo;
+            }
         }).catch(function(err) {
             console.log("error while getting data in get purchaser info");
             console.log(err);
@@ -85,7 +88,7 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
 
         Object.defineProperty(ctrl, 'totalAmt', {
          get() {
-                return parseFloat(ctrl.totalBill) - parseFloat(ctrl.purchaserPrevBal);
+                return parseFloat(ctrl.totalBill) + parseFloat(ctrl.purchaserPrevBal);
             }
         });
 
@@ -94,7 +97,6 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
                 return parseFloat(ctrl.totalAmt) - parseFloat(ctrl.amtPaid);
             }
         });
-
        
     }
 
@@ -186,14 +188,6 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
             .catch(function(error) {
                 console.log("Error while adding brand's varient")
             })
-    }
-
-    function sumOfPayies(paidByShop, paidByPrateek, paidByBharat) {
-    }
-
-    function calculateTotalBill(totalBill, purchaserPrevBal){
-
-        ctrl.totalAmt = totalBill + purchaserPrevBal;
     }
 
     ctrl.init();
