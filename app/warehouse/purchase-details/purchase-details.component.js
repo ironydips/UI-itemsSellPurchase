@@ -41,6 +41,11 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
     ctrl.productDetail = {};
     ctrl.totalBill = 0;
     ctrl.totalAmt = 0;
+    ctrl.purchaserPrevBal = 0;
+    ctrl.paidByShop = 0;
+    ctrl.paidByPrateek = 0;
+    ctrl.paidByBharat = 0;
+
     var totalSum = 0;
 
 
@@ -48,11 +53,6 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
 
         //TODO: Move to run.
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-            // $timeout(function(){
-            //     isDirty = ctrl.purchaseform.$dirty;
-
-            //   });
-
             var isDirty = ctrl.purchaseform.$dirty;
 
             if (isDirty && toState.name != 'warehouse.checkout') {
@@ -75,74 +75,28 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
             console.log(err);
         })
 
+
+        // ES5 style property definition.
+        Object.defineProperty(ctrl, 'amtPaid', {
+         get() {
+                return parseFloat(ctrl.paidByShop) + parseFloat(ctrl.paidByPrateek) + parseFloat(ctrl.paidByBharat);
+            }
+        });
+
+        Object.defineProperty(ctrl, 'totalAmt', {
+         get() {
+                return parseFloat(ctrl.totalBill) - parseFloat(ctrl.purchaserPrevBal);
+            }
+        });
+
+        Object.defineProperty(ctrl, 'currentBal', {
+         get() {
+                return parseFloat(ctrl.totalAmt) - parseFloat(ctrl.amtPaid);
+            }
+        });
+
+       
     }
-
-    $scope.$watch(angular.bind(ctrl, function() {
-        return ctrl.paidByShop;
-    }), function(value) {
-        
-        if (ctrl.paidByShop == undefined) {
-            ctrl.paidByShop = 0;
-        }
-        if (ctrl.paidByPrateek == undefined) {
-            ctrl.paidByPrateek = 0;
-        }
-        if (ctrl.paidByBharat == undefined) {
-            ctrl.paidByBharat = 0;
-        }
-
-        sumOfPayies(ctrl.paidByShop, ctrl.paidByPrateek, ctrl.paidByBharat);
-    });
-    $scope.$watch(angular.bind(ctrl, function() {
-        return ctrl.paidByPrateek;
-    }), function(value) {
-        if (ctrl.paidByShop == undefined) {
-            ctrl.paidByShop = 0;
-        }
-        if (ctrl.paidByPrateek == undefined) {
-            ctrl.paidByPrateek = 0;
-        }
-        if (ctrl.paidByBharat == undefined) {
-            ctrl.paidByBharat = 0;
-        }
-        sumOfPayies(ctrl.paidByShop, ctrl.paidByPrateek, ctrl.paidByBharat);
-    });
-    $scope.$watch(angular.bind(ctrl, function() {
-        return ctrl.paidByBharat;
-    }), function(value) {
-        if (ctrl.paidByShop == undefined) {
-            ctrl.paidByShop = 0;
-        }
-        if (ctrl.paidByPrateek == undefined) {
-            ctrl.paidByPrateek = 0;
-        }
-        if (ctrl.paidByBharat == undefined) {
-            ctrl.paidByBharat = 0;
-        }
-        sumOfPayies(ctrl.paidByShop, ctrl.paidByPrateek, ctrl.paidByBharat);
-    });
-    $scope.$watch(angular.bind(ctrl, function() {
-        return ctrl.totalBill;
-    }), function(value) {
-        if (ctrl.totalBill) {
-            if (ctrl.purchaserPrevBal == undefined) {
-                ctrl.purchaserPrevBal = 0;
-            }
-            calculateTotalBill(ctrl.totalBill, ctrl.purchaserPrevBal);
-        }
-    });
-    $scope.$watch(angular.bind(ctrl, function() {
-        return ctrl.purchaserPrevBal;
-    }), function(value) {
-        if (ctrl.purchaserPrevBal) {
-            if (ctrl.totalBill == undefined) {
-                ctrl.totalBill = 0;
-            }
-            calculateTotalBill(ctrl.totalBill, ctrl.purchaserPrevBal);
-        }
-    });
-
-
 
     ctrl.addProduct = function(seller, price, quantity) {
 
@@ -226,21 +180,7 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
             }).then(function(response) {
                 console.log(response)
                 ctrl.loader = false;
-                ctrl.productArr = [];
-                ctrl.purchaserPrevBal = "";
-                ctrl.totalAmt = 0;
-                ctrl.amtPaid = 0;
-                ctrl.currentBal = 0;
-                ctrl.totalAmt = 0;
-                ctrl.paidByShop = 0;
-                ctrl.paidByPrateek = 0;
-                ctrl.paidByBharat = 0;
-                ctrl.totalBill = 0;
-                ctrl.purchaserName = "";
-                ctrl.purchaserAddress = "";
-                ctrl.purchaserPrevBal = "";
-                ctrl.purchaserNumber1 = "";
-                ctrl.purchaserNumber2 = "";
+                
 
             })
             .catch(function(error) {
@@ -249,9 +189,6 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
     }
 
     function sumOfPayies(paidByShop, paidByPrateek, paidByBharat) {
-        totalSum = parseInt(paidByShop) + parseInt(paidByPrateek) + parseInt(paidByBharat);
-        ctrl.amtPaid = totalSum;
-        ctrl.currentBal = ctrl.totalAmt - totalSum;
     }
 
     function calculateTotalBill(totalBill, purchaserPrevBal){
