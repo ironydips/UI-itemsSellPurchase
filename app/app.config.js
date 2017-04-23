@@ -2,8 +2,11 @@
 
 angular.
 module('sellPurchaseApp').
-config(['$urlRouterProvider', '$stateProvider', 
-    function config($urlRouterProvider, $stateProvider) {
+config(['$urlRouterProvider', '$stateProvider', '$httpProvider', 
+    function config($urlRouterProvider, $stateProvider, $httpProvider) {
+
+        $httpProvider.defaults.useXDomain = true;
+        $httpProvider.interceptors.push('InterceptorService');
 
         
         // UI-Routing Config

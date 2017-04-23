@@ -1,5 +1,4 @@
 'use strict';
-var baseURL = "http://52.58.120.159:3011/api/";
 
 function popupView(details) {
     var popUpCtrl = this;
@@ -47,6 +46,7 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
 
     ctrl.init = function() {
 
+        //TODO: Move to run.
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
             // $timeout(function(){
             //     isDirty = ctrl.purchaseform.$dirty;
@@ -65,7 +65,7 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
         });
 
         $http({
-            url: baseURL + "purchaser/getPurchasingRelatedInfo",
+            url: "purchaser/getPurchasingRelatedInfo",
             method: "GET",
         }).then(function(response) {
             ctrl.productDetails = response.data.result.message.warehouseItems;
@@ -212,13 +212,13 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
             paidByBharat: ctrl.paidByBharat
         }
         var obj = {
-            purchaserID: ctrl.purchaserID,
+            purchaser: {id: ctrl.purchaserID, name: ctrl.purchaserName},
             Items: ctrl.productArr,
             payment: ctrl.payment
         }
 
         $http({
-                url: baseURL + "purchaser/placeOrder",
+                url: "purchaser/placeOrder",
                 method: "POST",
                 data: JSON.stringify(obj),
                 dataType: JSON

@@ -1,7 +1,6 @@
 (function(angular) {
 
     'use strict';
-    var baseURL = "http://52.58.120.159:3011/api/";
 
     function openAddBrandPopUp(details) {
 
@@ -72,7 +71,7 @@
         ctrl.init = function() {
 
             $http({
-                    url: baseURL + "admin/getBrandInfo",
+                    url: "admin/getBrandInfo",
                     method: "GET",
 
                 }).then(function(response) {

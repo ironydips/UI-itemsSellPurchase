@@ -17,7 +17,7 @@
             }
             	
             $http({
-                    url: baseURL + "purchaser/addPurchaser",
+                    url: "purchaser/addPurchaser",
                     method: "POST",
                     data: JSON.stringify(data),
                     dataType: JSON

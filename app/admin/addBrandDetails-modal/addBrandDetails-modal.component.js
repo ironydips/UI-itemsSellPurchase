@@ -2,7 +2,6 @@
 
 
     'use strict';
-    var baseURL = "http://52.58.120.159:3011/api/";
 
     function AddBrandDetailsController($state, $http) {
         var ctrl = this;
@@ -16,7 +15,7 @@
             }
 
             $http({
-                    url: baseURL + "admin/addVariantUnderBrand",
+                    url: "admin/addVariantUnderBrand",
                     method: "POST",
                     data: JSON.stringify(data),
                     dataType: JSON

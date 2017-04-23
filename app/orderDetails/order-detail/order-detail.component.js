@@ -1,5 +1,4 @@
 'use strict';
-var baseURL = "http://52.58.120.159:3011/api/";
 
 function OrderDetailController($state, $http) {
     var ctrl = this;
@@ -8,7 +7,7 @@ function OrderDetailController($state, $http) {
 
     	$http({
 
-    		url: "http://52.58.120.159:3011/api/order/getAllOrders?fromDate=" + fromDate +"&toDate=" + todayDate,
+    		url: "order/getAllOrders?fromDate=" + fromDate +"&toDate=" + todayDate,
 
     		method: "GET"
     	}).then(function(response){
