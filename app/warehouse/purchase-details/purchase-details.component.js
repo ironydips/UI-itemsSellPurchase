@@ -69,7 +69,7 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
             url: "purchaser/getPurchasingRelatedInfo",
             method: "GET",
         }).then(function(response) {
-            if(response.data && response.data.result && response.data.result &&message){
+            if(response.data && response.data.result && response.data.result.message){
                 ctrl.productDetails = response.data.result.message.warehouseItems;
                 ctrl.purchaseDetails = response.data.result.message.purchaserInfo;
             }
