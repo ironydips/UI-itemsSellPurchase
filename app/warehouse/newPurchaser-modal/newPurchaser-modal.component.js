@@ -23,7 +23,6 @@
                     dataType: JSON
 
                 }).then(function(response) {
-                    console.log(response)
                     data.phone = ctrl.phoneNumberArr;
                     ctrl.modalInstance.close({ action: "update", profile: data });
                 })

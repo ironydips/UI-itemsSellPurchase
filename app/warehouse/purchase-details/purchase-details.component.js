@@ -1,6 +1,6 @@
 'use strict';
 
-function popupView(details) {
+function newSellerPopup(details) {
     var popUpCtrl = this;
     var modalInstance = popUpCtrl.$uibModal.open({
         component: 'newPurchaserModal',
@@ -29,47 +29,70 @@ function popupView(details) {
         }
 }
 
-function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, $timeout, checkoutService, moveItemToSaleService) {
-    var ctrl = this;
-    ctrl.$uibModal = $uibModal;
-    ctrl.$state = $state;
-    ctrl.itemArr = [];
-    ctrl.displayCartBtn = true;
-    ctrl.itemCount = 0;
-    ctrl.productArr = [];
-    ctrl.purchaseDetail = {};
-    ctrl.productDetail = {};
-    ctrl.totalBill = 0;
-    ctrl.totalAmt = 0;
-    ctrl.purchaserPrevBal = 0;
-    ctrl.paidByShop = 0;
-    ctrl.paidByPrateek = 0;
-    ctrl.paidByBharat = 0;
-    ctrl.price = 0;
-    ctrl.qty = 0;
+function viewFullOrderPopUp(details) {
 
-    var totalSum = 0;
+    var popUpCtrl = this;
+    var modalInstance = popUpCtrl.$uibModal.open({
+        component: 'viewFullOrderModal',
+        windowClass: 'app-modal-window-large',
+        keyboard: false,
+        resolve: {
+            details: function() {
+                return (details || {});
+            }
+        },
+        backdrop: 'static'
+    });
+
+    modalInstance.result.then(function(data) {
+            //data passed when pop up closed.
+            //if (data && data.action == "update");
+
+        }),
+        function(err) {
+            console.log('Error in view-Full-Order-Modal');
+            console.log(err);
+        }
+}
+
+function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, $timeout, ngToast, checkoutService, moveItemToSaleService) {
+    var ctrl = this;
 
     ctrl.init = function() {
 
+        ctrl.$uibModal = $uibModal;
+        ctrl.$state = $state;
+        ctrl.itemArr = [];
+        ctrl.displayCartBtn = true;
+        ctrl.itemCount = 0;
+        ctrl.productArr = [];
+        ctrl.purchaseDetail = {};
+        ctrl.productDetail = {};
+        ctrl.totalBill = 0;
+        ctrl.totalAmt = 0;
+        ctrl.purchaserPrevBal = 0;
+        ctrl.paidByShop = 0;
+        ctrl.paidByPrateek = 0;
+        ctrl.paidByBharat = 0;
+        ctrl.price = 0;
+        ctrl.qty = 0;
+        ctrl.disablePlaceOrder = true;
+
+        var totalSum = 0;
+
+      //  $scope.$emit('eventEmitedName', ctrl.purchaseform);
+
+      
+      
+      
         //TODO: Move to run.
-        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-            var isDirty = ctrl.purchaseform.$dirty;
 
-            if (isDirty && toState.name != 'warehouse.checkout') {
-                var isConfirm = confirm('You have unsaved changes, go back?');
-
-                if (!isConfirm) {
-                    event.preventDefault();
-                }
-            }
-        });
 
         $http({
             url: "purchaser/getPurchasingRelatedInfo",
             method: "GET",
         }).then(function(response) {
-            if(response.data && response.data.result && response.data.result.message){
+            if (response.data && response.data.result && response.data.result.message) {
                 ctrl.productDetails = response.data.result.message.warehouseItems;
                 ctrl.purchaseDetails = response.data.result.message.purchaserInfo;
             }
@@ -81,24 +104,24 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
 
         // ES5 style property definition.
         Object.defineProperty(ctrl, 'amtPaid', {
-         get() {
+            get() {
                 return parseFloat(ctrl.paidByShop) + parseFloat(ctrl.paidByPrateek) + parseFloat(ctrl.paidByBharat);
             }
         });
 
         Object.defineProperty(ctrl, 'totalAmt', {
-         get() {
+            get() {
                 return parseFloat(ctrl.totalBill) + parseFloat(ctrl.purchaserPrevBal);
             }
         });
 
         Object.defineProperty(ctrl, 'currentBal', {
-         get() {
+            get() {
                 return parseFloat(ctrl.totalAmt) - parseFloat(ctrl.amtPaid);
             }
         });
-       
-    }
+
+    };
 
     ctrl.addProduct = function(seller, price, quantity) {
 
@@ -106,9 +129,10 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
         ctrl.SelectedItem.price = price;
         ctrl.SelectedItem.quantity = quantity;
         ctrl.SelectedItem.totalPrice = ctrl.totalPrice;
-        ctrl.productArr.push(ctrl.SelectedItem);
-        ctrl.price = "";
-        ctrl.qty = "";
+        ctrl.items = angular.copy(ctrl.SelectedItem)
+        ctrl.productArr.push(ctrl.items);
+        ctrl.price = 0;
+        ctrl.qty = 0;
         ctrl.productDetail = {};
         ctrl.totalBill = ctrl.totalBill + ctrl.totalPrice;
 
@@ -122,31 +146,33 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
 
     ctrl.onSelectCallback = function(item, model) {
 
+        ctrl.disablePlaceOrder = false;
+
         switch (item.profile.phone.length) {
             case 0:
                 ctrl.purchaserNumber1 = "";
                 ctrl.purchaserNumber2 = "";
                 break;
             case 1:
-                ctrl.purchaserNumber1 = item.profile.phone[0] + ",";
+                ctrl.purchaserNumber1 = item.profile.phone[0];
                 ctrl.purchaserNumber2 = "";
                 break;
             case 2:
-                ctrl.purchaserNumber1 = item.profile.phone[0] + ",";
-                ctrl.purchaserNumber2 = item.profile.phone[1] + ",";
+                ctrl.purchaserNumber1 = item.profile.phone[0];
+                ctrl.purchaserNumber2 = item.profile.phone[1];
                 break;
 
         }
 
         ctrl.purchaserName = item.profile.name;
-        ctrl.purchaserAddress = item.profile.address + ",";
+        ctrl.purchaserAddress = item.profile.address;
         ctrl.purchaserPrevBal = item.balance;
         ctrl.purchaserID = item._id;
 
     };
 
     ctrl.newPurchaser = function() {
-        angular.bind(ctrl, popupView, null)();
+        angular.bind(ctrl, newSellerPopup, null)();
     };
 
     ctrl.onSelectItem = function(item, model) {
@@ -168,7 +194,7 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
             paidByBharat: ctrl.paidByBharat
         }
         var obj = {
-            purchaser: {id: ctrl.purchaserID, name: ctrl.purchaserName},
+            purchaser: { id: ctrl.purchaserID, name: ctrl.purchaserName },
             Items: ctrl.productArr,
             payment: ctrl.payment
         }
@@ -180,14 +206,23 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
                 dataType: JSON
 
             }).then(function(response) {
-                console.log(response)
+                ctrl.orderDetail = response.data.result.message[0];
                 ctrl.loader = false;
-                
+                angular.bind(ctrl, viewFullOrderPopUp, ctrl.orderDetail[0])();
+                ngToast.create({
+
+                    className: 'success',
+                    horizontalPosition: 'center',
+                    dismissButton: true,
+                    timeout: 1000,
+                    content: '<h4>Order Placed Successfully</h4>'
+                });
 
             })
             .catch(function(error) {
-                console.log("Error while adding brand's varient")
+                console.log("Error while placing order")
             })
+
     }
 
     ctrl.init();
@@ -196,5 +231,6 @@ function PurchaseDetailController($rootScope, $scope, $uibModal, $state, $http, 
 angular.module('purchaseDetail')
     .component('purchaseDetail', {
         templateUrl: 'warehouse/purchase-details/purchase-details.template.html',
-        controller: ['$rootScope', '$scope', '$uibModal', '$state', '$http', '$timeout', 'checkoutService', 'moveItemToSaleService', PurchaseDetailController]
+        controller: ['$rootScope', '$scope', '$uibModal', '$state', '$http', '$timeout', 'ngToast', 'checkoutService', 'moveItemToSaleService', PurchaseDetailController]
     });
+

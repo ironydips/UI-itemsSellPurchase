@@ -121,3 +121,4 @@ config(['$urlRouterProvider', '$stateProvider', '$httpProvider',
     }
 
 ]);
+

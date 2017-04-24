@@ -1,0 +1,93 @@
+<!-- / profileComponent \ -->
+<div class="profileComponent">
+    <div class="container">
+        <div class="profileBg">
+            <h2>Order Detail</h2>
+            <div class="inner-adjust">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <label>Date:</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <label>{{$ctrl.placedOrderDetail.createdOn | date:'dd-MM-yyyy'}}</label>
+                    </div>
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-1">
+                        <label>OrderID:</label>
+                    </div>
+                    <div class="col-sm-3">
+                        {{$ctrl.orderDetails.orderID}}
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <h3>Product Info</h3>
+                <div>
+                    <table style="text-align:center;" class="table table-hover">
+                        <tr>
+                            <th style="font-size: 13px;" class="col-md-2">Item Name</th>
+                            <th style="font-size: 13px;" class="col-md-2">Price</th>
+                            <th style="font-size: 13px;" class="col-md-2"> Quantity</th>
+                            <th style="font-size: 13px;" class="col-md-2">Total</th>
+                        </tr>
+                        <tr ng-repeat="item in $ctrl.placedOrderDetail.order_items">
+                            <td>{{item.brandName}}-{{item.variantName}}</td>
+                            <td>{{item.price}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td>{{item.quantity * item.price}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3>Supplier Info</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-1">
+                                </div>
+                                <div class="col-sm-10">
+                                    <h4>Name: {{$ctrl.placedOrderDetail.purchaser_info[0].profile.name}} </h4>
+                                    <h4 ng-show="$ctrl.showAddress">Address: {{$ctrl.placedOrderDetail.purchaser_info[0].profile.address}} </h4>
+                                    <h4 ng-show="$ctrl.showPhone">Contact Number: {{$ctrl.purchaserNumber1}}{{$ctrl.purchaserNumber2}} </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3>Balance Info</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-1">
+                                </div>
+                                <div class="col-sm-10">
+                                    <h4>Total Amount({{$ctrl.placedOrderDetail.totalItems}}Item): {{$ctrl.placedOrderDetail.totalAmount}} </h4>
+                                    <h4>Previous Balance: {{$ctrl.placedOrderDetail.previousBalance}} </h4>
+                                    <h4>Current Balance: {{$ctrl.placedOrderDetail.currentBalance}}</h4>
+                                    <h4>Amount Paid: {{$ctrl.placedOrderDetail.amountPaid}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div style="text-align:center">
+                <button type="button" ng-click="$ctrl.cancel()" class="btn btn-lg btn-default">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- \ profileComponent end / -->

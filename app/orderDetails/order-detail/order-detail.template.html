@@ -46,43 +46,30 @@
     </div>
     <br>
     <br>
-    <div class="row">
-        <!-- <div class="col-sm-1">
-        </div> -->
-        <div class="col-sm-12">
-            <div class="card well" ng-repeat="order in $ctrl.orders">
-                <div class="row">
-                    <div class="col-sm-12 text-center">
-                        <div class="col-sm-2">
-                            <h3><b>{{order.name}}</b></h3>
-                            <h4>(S)</h4>
-                        </div>
-                        <div class="col-sm-2">
-                            <h5><b>OrderID</b></h5>
-                            <h6>{{order.orderID}}</h6>
-                        </div>
-                        <div class="col-sm-1">
-                            <h5><b>Date</b></h5>
-                            <h6></h6>
-                        </div>
-                        <div class="col-sm-2">
-                            <h5><b>Bill Amount</b></h5>
-                            <h6>{{order.billAmount}}</h6>
-                        </div>
-                        <div class="col-sm-2">
-                            <h5><b>Previous Bill</b></h5>
-                            <h6>{{order.previousBalance}}</h6>
-                        </div>
-                        <div class="col-sm-2">
-                            <h5><b>Amount Paid</b></h5>
-                            <h6>{{order.amountPaid}}</h6>
-                        </div>
-                        <div class="col-sm-1">
-                            <h5><b><a href="">View Full Order</a></b></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div style="height:470px;overflow:auto;">
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th class="col-md-2">Seller Name</th>
+                    <th class="col-md-1">Date</th>
+                    <th class="col-md-1">Bill Amount</th>
+                    <th class="col-md-2">Previous Balance</th>
+                    <th class="col-md-2">Current Balance</th>
+                    <th class="col-md-2">Amount Paid</th>
+                    <th class="col-md-2">Action</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="order in $ctrl.orders">
+                <td>{{order.name}}</td>
+                <td>{{order.date | date:'dd-MM-yyyy'}}</td>
+                <td>{{order.billAmount}}</td>
+                <td>{{order.previousBalance}}</td>
+                <td></td>
+                <td>{{order.amountPaid}}</td>
+                <td><a href="" class="btn btn-sm btn-primary" ng-click="$ctrl.viewFullOrderModal(order)">View Full Order</a></td>
+            </tr>
+            <tbody>
+            </tbody>
+        </table>
     </div>
 </div>
