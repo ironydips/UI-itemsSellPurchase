@@ -1,3 +1,6 @@
 'use strict';
 
-angular.module('stockDetail',[]);
+angular.module('stockDetail',[
+		'viewFullPdtDetail',
+	   	'ui.bootstrap'
+	]);

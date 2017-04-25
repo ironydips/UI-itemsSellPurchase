@@ -3,16 +3,16 @@
 
     function ViewFullOrderModalController($state, $http) {
         var ctrl = this;
-        ctrl.orderDetails = (ctrl.resolve && ctrl.resolve.details) || {};
-
+        
         ctrl.init = function() {
 
+            ctrl.orderID = (ctrl.resolve && ctrl.resolve.details) || {};
             ctrl.showAddress = false;
             ctrl.showPhone = false;
 
             var data = {
-                orderID: ctrl.orderDetails.orderID,
-                isPurchaser: ctrl.orderDetails.isPurchaser
+                orderID: ctrl.orderID,
+                isPurchaser: true
             }
 
             $http({
@@ -22,30 +22,34 @@
 
 
                 }).then(function(response) {
+                    if (response.data.result.message.length >= 0) {
+                        ctrl.placedOrderDetail = response.data.result.message[0];
+                        if (ctrl.placedOrderDetail.purchaser_info[0].profile.address) {
+                            ctrl.showAddress = true;
+                        }
+                        switch (ctrl.placedOrderDetail.purchaser_info[0].profile.phone.length) {
+                            case 0:
+                                ctrl.purchaserNumber1 = "";
+                                ctrl.purchaserNumber2 = "";
+                                ctrl.showPhone = false;
+                                break;
+                            case 1:
+                                ctrl.purchaserNumber1 = ctrl.placedOrderDetail.purchaser_info[0].profile.phone[0];
+                                ctrl.purchaserNumber2 = "";
+                                ctrl.showPhone = true;
+                                break;
+                            case 2:
+                                ctrl.purchaserNumber1 = ctrl.placedOrderDetail.purchaser_info[0].profile.phone[0] + ",";
+                                ctrl.purchaserNumber2 = ctrl.placedOrderDetail.purchaser_info[0].profile.phone[1];
+                                ctrl.showPhone = true;
 
-                    ctrl.placedOrderDetail = response.data.result.message[0];
-                    if(ctrl.placedOrderDetail.purchaser_info[0].address){
-                        ctrl.showAddress= true;
-                    }
-                    switch (ctrl.placedOrderDetail.purchaser_info[0].phone) {
-                        case 0:
-                            ctrl.purchaserNumber1 = "";
-                            ctrl.purchaserNumber2 = "";
-                            ctrl.showPhone = false;
-                            break;
-                        case 1:
-                            ctrl.purchaserNumber1 = item.profile.phone[0];
-                            ctrl.purchaserNumber2 = "";
-                            ctrl.showPhone = true;
-                            break;
-                        case 2:
-                            ctrl.purchaserNumber1 = item.profile.phone[0] + ",";
-                            ctrl.purchaserNumber2 = item.profile.phone[1];
-                            ctrl.showPhone = true;
-                            
-                            break;
+                                break;
 
+                        }
+                    }else{
+                        debugger;
                     }
+
                 })
                 .catch(function(error) {
 
@@ -54,8 +58,9 @@
 
         };
 
-        ctrl.cancel = function() {
-            ctrl.modalInstance.close();
+        ctrl.cancelBtn = function() {
+
+            ctrl.modalInstance.close({ action: 'update'});
         };
 
         ctrl.init();

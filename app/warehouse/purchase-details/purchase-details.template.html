@@ -1,10 +1,10 @@
 <!-- / component2 \ -->
-    <div class="component2">
-        <div class="loading" ng-show="$ctrl.loader">
-                Loading&#8230;
-            </div>
-            <toast></toast>
-            <form name="$ctrl.purchaseform">
+<div class="component2">
+    <div class="loading" ng-show="$ctrl.loader">
+        Loading&#8230;
+    </div>
+    <toast></toast>
+    <form name="$ctrl.purchaseform">
         <div class="row">
             <div class="col-sm-4">
                 <div class="panel panel-success">
@@ -24,10 +24,33 @@
                                 <a href="" class="btn btn-sm btn-primary" ng-click="$ctrl.newPurchaser()">New</a>
                             </div>
                         </div>
+                        <br><br>
                         <div class="row">
-                            <div>
-                                <h4>{{$ctrl.purchaserName}}</h4><h4>{{$ctrl.purchaserAddress}}</h4><h4> {{$ctrl.purchaserNumber1}}</h4><h4>{{$ctrl.purchaserNumber2}}</h4>
-                                <h4>Previous Bal: {{$ctrl.purchaserPrevBal}}</h4>
+                            <div class="col-sm-12">
+                                <div class="row" ng-show="$ctrl.showName">
+                                    <div class="col-sm-6">
+                                        <h4><b style="padding-left: 92px;">Name:</b></h4></div>
+                                    <div class="col-md-2">
+                                        <h4>{{$ctrl.purchaserName}}</h4></div>
+                                </div>
+                                <div class="row" ng-show="$ctrl.showAddress">
+                                    <div class="col-sm-6">
+                                        <h4><b style="padding-left: 70px;">Address:</b></h4></div>
+                                    <div class="col-md-2">
+                                        <h4>{{$ctrl.purchaserAddress}}</h4></div>
+                                </div>
+                                <div class="row" ng-show="$ctrl.showPhone">
+                                    <div class="col-sm-6">
+                                        <h4><b style="padding-left: 90px;">Phone:</b></h4></div>
+                                    <div class="col-md-2">
+                                        <h4>{{$ctrl.purchaserNumber1}}{{$ctrl.purchaserNumber2}}</h4></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h4><b>Previous Balance:</b></h4></div>
+                                    <div class="col-md-2">
+                                        <h4>{{$ctrl.purchaserPrevBal}}</h4></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -39,6 +62,7 @@
                         <h3>Product Detail</h3>
                     </div>
                     <div class="panel-body" style="height: 300px;">
+                        <div style="height:250px;overflow:auto;">
                         <table class="table table-hover">
                             <tr>
                                 <th style="font-size: 13px;" class="col-md-2">Item Name</th>
@@ -49,7 +73,7 @@
                             </tr>
                             <tr class="text-center">
                                 <td>
-                                    <ui-select name="productDetail" ng-model="$ctrl.productDetail.selected" theme="selectize"  on-select="$ctrl.onSelectItem($item, $model)" style="width: 160px;" title="Choose a country">
+                                    <ui-select name="productDetail" ng-model="$ctrl.productDetail.selected" theme="selectize" on-select="$ctrl.onSelectItem($item, $model)" style="width: 160px;" title="Choose a country">
                                         <ui-select-match placeholder="Select Item">{{$select.selected.productInfo}}</ui-select-match>
                                         <ui-select-choices repeat="country in $ctrl.productDetails | filter: $select.search">
                                             <span ng-bind-html="country.productInfo | highlight: $select.search"></span>
@@ -73,6 +97,7 @@
                                 <td><a href="" class="btn btn-sm btn-danger" ng-click="$ctrl.deleteProduct(product)">Delete</a></td>
                             </tr>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -90,7 +115,8 @@
                             <div class="col-sm-4 padding-left-22">
                                 ₹{{$ctrl.totalBill}}
                             </div>
-                        </div><br>
+                        </div>
+                        <br>
                         <div class="row">
                             <div class="col-sm-8">
                                 <label class="pull-right">Prev Balance:</label>
@@ -98,7 +124,8 @@
                             <div class="col-sm-4 padding-left-22">
                                 ₹{{$ctrl.purchaserPrevBal}}
                             </div>
-                        </div><br>
+                        </div>
+                        <br>
                         <div class="row">
                             <div class="col-sm-8">
                                 <label class="pull-right">Total Amount:</label>
@@ -106,28 +133,29 @@
                             <div class="col-sm-4 padding-left-22">
                                 ₹{{$ctrl.totalAmt}}
                             </div>
-                        </div><br>
-                        
+                        </div>
+                        <br>
                         <div class="row">
                             <div class="col-sm-8">
                                 <span>
-                                    <span style="float:left; padding-top: 4px; padding-left: 5px">S =&nbsp;</span> 
-                                    <input type="text" valid-number name="s" ng-model="$ctrl.paidByShop" class="form-control small-input">
-                                </span>
-                                 <span >
-                                      <span style="float:left; padding-top: 4px; padding-left: 5px">B =&nbsp;</span>
-                                      <input type="text" name="b" ng-model="$ctrl.paidByBharat" valid-number class="form-control small-input">
+                                    <span style="float:left; padding-top: 4px; padding-left: 5px">S =&nbsp;</span>
+                                <input type="text" valid-number name="s" ng-model="$ctrl.paidByShop" class="form-control small-input">
                                 </span>
                                 <span>
-                                    <span style="float:left; padding-top: 4px; padding-left: 5px">P =&nbsp;</span> 
-                                    <input type="text" name="p" ng-model="$ctrl.paidByPrateek" valid-number class="form-control small-input">
+                                      <span style="float:left; padding-top: 4px; padding-left: 5px">B =&nbsp;</span>
+                                <input type="text" name="b" ng-model="$ctrl.paidByBharat" valid-number class="form-control small-input">
+                                </span>
+                                <span>
+                                    <span style="float:left; padding-top: 4px; padding-left: 5px">P =&nbsp;</span>
+                                <input type="text" name="p" ng-model="$ctrl.paidByPrateek" valid-number class="form-control small-input">
                                 </span>
                                 <label class="pull-right">Amount Paid:</label>
                             </div>
                             <div class="col-sm-4 padding-left-22">
-                                    ₹{{$ctrl.amtPaid}}
+                                ₹{{$ctrl.amtPaid}}
                             </div>
-                        </div><br>
+                        </div>
+                        <br>
                         <div class="row">
                             <div class="col-sm-8">
                                 <label class="pull-right">Current Balance:</label>
@@ -135,8 +163,8 @@
                             <div class="col-sm-4 padding-left-22">
                                 ₹{{$ctrl.currentBal}}
                             </div>
-                        </div><br>
-                        
+                        </div>
+                        <br>
                         <div class="row">
                             <div class="col-sm-7">
                             </div>
@@ -149,10 +177,17 @@
                 </div>
             </div>
         </div>
-        </form>
-    </div>
+    </form>
+</div>
 <!-- \ component2 end / -->
 <style>
- .small-input{width: 120px; float:left; height: 25px}
- .padding-left-22 {padding-left: 22px}
+.small-input {
+    width: 120px;
+    float: left;
+    height: 25px
+}
+
+.padding-left-22 {
+    padding-left: 22px
+}
 </style>

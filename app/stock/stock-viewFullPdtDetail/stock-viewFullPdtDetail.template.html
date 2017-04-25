@@ -1,0 +1,63 @@
+<!-- / profileComponent \ -->
+<div class="profileComponent">
+    <div class="container">
+        <div class="profileBg">
+            <h2>Variant Detail</h2>
+            <div class="inner-adjust">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <label style=" padding-left: 40px;">Brand:</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text"  ng-model="$ctrl.variantDetail.brandName" class="form-control" name="">
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
+                    <div class="col-sm-1">
+                        <label>Variant:</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" ng-model="$ctrl.variantDetail.variantName"  class="form-control" name="">
+                        
+                    </div>
+                    <div class="col-sm-2">
+                    <a href="" class="btn btn-sm btn-primary" ng-click="$ctrl.findDetail()">Find</a>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <h3>Product Info</h3>
+                    <div style="height:250px;overflow:auto;">
+                        <table class="table table-bordered text-center">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-2">Purchaser Name</th>
+                                    <th class="col-md-1">Date</th>
+                                    <th class="col-md-1">Quantity</th>
+                                    <th class="col-md-2">Price</th>
+                                    <th class="col-md-1">Profit/Loss</th>
+                                </tr>
+                            </thead>
+                            <tr ng-repeat="detail in $ctrl.variantDetails | filter: searchText">
+                                <td></td>
+                                <td>{{detail.createdOn | date:'dd-MM-yyyy'}}</td>
+                                <td>{{detail.quantity}}</td>
+                                <td>{{detail.price}}</td>
+                                <td>+{{detail.profit}}</td>
+                            </tr>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <br>
+            <br>
+            <div style="text-align:center">
+                <button type="button" ng-click="$ctrl.cancel()" class="btn btn-lg btn-default">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- \ profileComponent end / -->

@@ -6,7 +6,7 @@
             <div class="inner-adjust">
                 <div class="row">
                     <div class="col-sm-1">
-                        <label>Date:</label>
+                        <label style=" padding-left: 40px;">Date:</label>
                     </div>
                     <div class="col-sm-3">
                         <label>{{$ctrl.placedOrderDetail.createdOn | date:'dd-MM-yyyy'}}</label>
@@ -17,64 +17,104 @@
                         <label>OrderID:</label>
                     </div>
                     <div class="col-sm-3">
-                        {{$ctrl.orderDetails.orderID}}
+                        {{$ctrl.orderID}}
                     </div>
                 </div>
-            </div>
-            <br>
-            <div class="row">
-                <h3>Product Info</h3>
-                <div>
-                    <table style="text-align:center;" class="table table-hover">
-                        <tr>
-                            <th style="font-size: 13px;" class="col-md-2">Item Name</th>
-                            <th style="font-size: 13px;" class="col-md-2">Price</th>
-                            <th style="font-size: 13px;" class="col-md-2"> Quantity</th>
-                            <th style="font-size: 13px;" class="col-md-2">Total</th>
-                        </tr>
-                        <tr ng-repeat="item in $ctrl.placedOrderDetail.order_items">
-                            <td>{{item.brandName}}-{{item.variantName}}</td>
-                            <td>{{item.price}}</td>
-                            <td>{{item.quantity}}</td>
-                            <td>{{item.quantity * item.price}}</td>
-                        </tr>
-                    </table>
+                <br>
+                <div class="row">
+                    <h3>Product Info</h3>
+                    <div>
+                        <table style="text-align:center;" class="table table-hover">
+                            <tr>
+                                <th style="font-size: 13px;" class="col-md-2">Item Name</th>
+                                <th style="font-size: 13px;" class="col-md-2">Price</th>
+                                <th style="font-size: 13px;" class="col-md-2"> Quantity</th>
+                                <th style="font-size: 13px;" class="col-md-2">Total</th>
+                            </tr>
+                            <tr ng-repeat="item in $ctrl.placedOrderDetail.order_items">
+                                <td>{{item.brandName}}-{{item.variantName}}</td>
+                                <td>{{item.price}}</td>
+                                <td>{{item.quantity}}</td>
+                                <td>{{item.quantity * item.price}}</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="panel">
-                        <div class="panel-heading">
-                            <h3>Supplier Info</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-1">
-                                </div>
-                                <div class="col-sm-10">
-                                    <h4>Name: {{$ctrl.placedOrderDetail.purchaser_info[0].profile.name}} </h4>
-                                    <h4 ng-show="$ctrl.showAddress">Address: {{$ctrl.placedOrderDetail.purchaser_info[0].profile.address}} </h4>
-                                    <h4 ng-show="$ctrl.showPhone">Contact Number: {{$ctrl.purchaserNumber1}}{{$ctrl.purchaserNumber2}} </h4>
+                <br>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3>Supplier Info</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-2">
+                                                <h4 style="padding-left: 22px;"><b>Name:</b></h4></div>
+                                            <div class="col-md-6">
+                                                <h4 style=" padding-right: 48px;">{{$ctrl.placedOrderDetail.purchaser_info[0].profile.name}}</h4></div>
+                                        </div>
+                                        <div class="row" ng-show="$ctrl.showAddress">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-2">
+                                                <h4><b>Address:</b></h4></div>
+                                            <div class="col-md-5">
+                                                <h4 style="padding-right: 50px;">{{$ctrl.placedOrderDetail.purchaser_info[0].profile.address}}</h4></div>
+                                        </div>
+                                        <div class="row" ng-show="$ctrl.showPhone">
+                                            <div class="col-sm-2"></div>
+                                            <div class="col-sm-2">
+                                                <h4 style="padding-left: 17px;"><b>Phone:</b></h4></div>
+                                            <div class="col-md-5">
+                                                <h4>{{$ctrl.purchaserNumber1}}{{$ctrl.purchaserNumber2}}</h4></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="panel">
-                        <div class="panel-heading">
-                            <h3>Balance Info</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-1">
-                                </div>
-                                <div class="col-sm-10">
-                                    <h4>Total Amount({{$ctrl.placedOrderDetail.totalItems}}Item): {{$ctrl.placedOrderDetail.totalAmount}} </h4>
-                                    <h4>Previous Balance: {{$ctrl.placedOrderDetail.previousBalance}} </h4>
-                                    <h4>Current Balance: {{$ctrl.placedOrderDetail.currentBalance}}</h4>
-                                    <h4>Amount Paid: {{$ctrl.placedOrderDetail.amountPaid}}</h4>
+                    <div class="col-sm-6">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3>Balance Info</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <h4 style="padding-left: 99px;"><b>Total Bill:</b></h4></div>
+                                            <div class="col-md-5">
+                                                <h4>{{$ctrl.placedOrderDetail.purchaser_info[0].profile.name}}</h4></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <h4 style="padding-left: 20px;"><b>Previous Balance:</b></h4></div>
+                                            <div class="col-md-5">
+                                                <h4 style="padding-right: 17px;">{{$ctrl.placedOrderDetail.previousBalance}}</h4></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <h4 style="padding-left: 30px;"><b>Current Balance:</b></h4></div>
+                                            <div class="col-md-5">
+                                                <h4 style="padding-right: 17px;">{{$ctrl.placedOrderDetail.currentBalance}}</h4></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <h4 style="padding-left: 60px;"><b>Amount Paid:</b></h4></div>
+                                            <div class="col-md-5">
+                                                <h4 style="padding-right: 17px;">{{$ctrl.placedOrderDetail.amountPaid}}</h4></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <h4 style="padding-right: 17px;"><b>Total Amount({{$ctrl.placedOrderDetail.totalItems}}Item):</b></h4></div>
+                                            <div class="col-md-5">
+                                                <h4>{{$ctrl.placedOrderDetail.totalAmount}}</h4></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +124,7 @@
             <br>
             <br>
             <div style="text-align:center">
-                <button type="button" ng-click="$ctrl.cancel()" class="btn btn-lg btn-default">Cancel</button>
+                <button type="button" ng-click="$ctrl.cancelBtn()" class="btn btn-lg btn-default">Cancel</button>
             </div>
         </div>
     </div>

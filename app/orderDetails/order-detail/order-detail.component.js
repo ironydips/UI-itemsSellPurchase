@@ -17,19 +17,41 @@ function viewFullOrderPopUp(details) {
 
     modalInstance.result.then(function(data) {
             //data passed when pop up closed.
+
             //if (data && data.action == "update");
 
         }),
         function(err) {
-            console.log('Error in customer profile Modal');
+            console.log('Error in view-Full-Order-Modal');
             console.log(err);
         }
 }
 
 function OrderDetailController($state, $http, $uibModal) {
     var ctrl = this;
-    ctrl.$uibModal = $uibModal;
-    ctrl.$state = $state;
+
+
+    ctrl.init = function() {
+
+        ctrl.$uibModal = $uibModal;
+        ctrl.$state = $state;
+        ctrl.noDataMsg = false;
+        var date;
+        var d = new Date();
+        var month = (d.getMonth() + 1);
+        var day = d.getDate();
+        var year = d.getFullYear();
+
+        if (month < 10) {
+            date = year + "-" + "0" + month + "-" + day;
+        } else {
+            date = year + "-" + month + "-" + day;
+        }
+
+        ctrl.fromDate = date;
+        ctrl.todayDate = date;
+        ctrl.showOrders(date, date);
+    }
 
     ctrl.showOrders = function(todayDate, fromDate) {
 
@@ -39,6 +61,9 @@ function OrderDetailController($state, $http, $uibModal) {
 
             method: "GET"
         }).then(function(response) {
+            if(response.data.result.message[0].length == 0){
+                ctrl.noDataMsg = true;
+            }
             ctrl.orders = response.data.result.message[0];
         }).catch(function(err) {
             console.log("error while getting orders:");
@@ -48,12 +73,14 @@ function OrderDetailController($state, $http, $uibModal) {
 
     ctrl.viewFullOrderModal = function(order) {
 
-        angular.bind(ctrl, viewFullOrderPopUp, order)();
-    }
+        angular.bind(ctrl, viewFullOrderPopUp, order.orderID)();
+    };
+
+    ctrl.init();
 }
 
 angular.module('orderDetail')
     .component('orderDetail', {
         templateUrl: 'orderDetails/order-detail/order-detail.template.html',
-        controller: ['$state', '$http','$uibModal', OrderDetailController]
+        controller: ['$state', '$http', '$uibModal', OrderDetailController]
     });

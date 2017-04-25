@@ -1,181 +1,33 @@
-<style>
-.round-button {
-    display: block;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    border: 2px solid #f5f5f5;
-    border-radius: 50%;
-    color: blue;
-    text-align: center;
-    text-decoration: none;
-    background: #464646;
-    box-shadow: 0 0 3px gray;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.round-button:hover {
-    background: orange;
-}
-
-
-/* Accordian*/
-
-.panel-heading {
-    position: relative;
-}
-
-.panel-heading[data-toggle="collapse"]:after {
-    font-family: 'Glyphicons Halflings';
-    content: "\e072";
-    /* "play" icon */
-    position: absolute;
-    color: #b0c5d8;
-    font-size: 18px;
-    line-height: 22px;
-    right: 20px;
-    top: calc(50% - 10px);
-    /* rotate "play" icon from > (right arrow) to up arrow */
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    transform: rotate(90deg);
-}
-
-.panel-heading[data-toggle="collapse"].collapsed:after {
-    /* rotate "play" icon from > (right arrow) to ^ (down arrow) */
-    -webkit-transform: rotate(-360deg);
-    -moz-transform: rotate(-360deg);
-    -ms-transform: rotate(-360deg);
-    -o-transform: rotate(-360deg);
-    transform: rotate(-360deg);
-}
-
-
-/* i-pad */
-
-@media screen and (max-width: 1024px) {
-    .round-button {
-        right: auto!important;
-        left: -20px!important;
-    }
-}
-
-
-/* mobile */
-
-@media screen and (max-width: 767px) {
-    .round-button {
-        left: 0px!important;
-    }
-    .panel-body {
-        padding: 5px;
-    }
-    .round-button {
-        right: auto!important;
-        left: 0px!important;
-    }
-}
-</style>
-<br>
-<div class="panel-group" id="accordion">
-    <div class="panel panel-success">
-        <div class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne">
-            <div class="row">
-                <div class="col-sm-1"></div>
-                <div class="col-sm-2"><h4><b>Truck Name</b></h4></div>
-                <div class="col-sm-1"></div>
-                <div class="col-sm-2"><h4><b>500</b>(Total Truck)</h4></div>
-                <div class="col-sm-2"></div>
-                <div class="col-sm-2"><h4><b>300</b>(Current Truck)</h4></div>
-            </div>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse in">
-            <div class="panel-body">
-                <div class="row" ng-repeat="item in $ctrl.getItems">
-                    <div class="panel panel-default">
-                        <div class="panel-body" style="height: 140px;">
+<!-- / component2 \ -->
+<div class="component2">
+    <div class="container">
+        <div class="row">
+            <br>
+            <br>
+            <div>
+                <div class="item" ng-repeat="(key, value) in $ctrl.array">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading text-center" style="height: 37px;font-size: 18px;">
+                            {{key}}
                         </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-10">
-<!--                         <div style="height:100px;overflow:auto;">
- -->                                <table class="table table-hover">
-                                    <tr>
-                                        <th style="font-size: 13px;" class="col-md-2">Varient Name</th>
-                                        <th style="font-size: 13px;" class="col-md-2">Current Quantity</th>
-                                        <th style="font-size: 13px;" class="col-md-2">Total Quantity</th>
-                                        <th style="font-size: 13px;" class="col-md-2 col-lg-2">History</th>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <td>a</td>
-                                        <td>b</td>
-                                        <td>c</td>
-                                        <td><a href="" class="btn btn-sm btn-primary">View</a></td>
-                                    </tr>
-                                </table>
-<!--                             </div>
- -->                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- <div class="panel-group" id="accordion">
-    <div class="panel panel-success">
-        <div class="panel-heading accordion-toggle " data-target="#collapseThird" data-toggle="collapse">
-            <h4 class="panel-title text-center"><b style="font-size: 20px;">Payment</b></h4>
-        </div>
-        <div id="collapseThird" class="panel-collapse collapse">
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-8">
-                    </div>
-                    <div class="col-sm-2">
-                        <a href="" data-target="#collapseOne, #collapseThird" class="btn btn-sm btn-primary" data-toggle="collapse" ng-click="$ctrl.editSelectedItem()" data-parent="#accordion">
-                            << Edit Selected Items </a>
-                    </div>
-                    <div class="col-sm-2">
-                        <a href="" data-target="#collapseThird, #collapseSecond" class="btn btn-sm btn-primary" data-toggle="collapse" data-parent="#accordion" ng-click="$ctrl.openGenrlInfo()">
-                            << Edit General Info </a>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3>Details</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <h4>Name: {{$ctrl.userName}}</h4>
-                                    <h4>Mobile Number: {{$ctrl.mobileNum}}</h4>
-                                    <h4>Address: {{$ctrl.address}}</h4>
+                        <div class="panel-body">
+                            <div class="zipCodeComponent">
+                                <div class="">
+                                    <div class="component-bg-small">
+                                        <ul>
+                                            <li class="active full" ng-repeat="item in value">
+                                                <a ng-click="$ctrl.viewFullDetail(item)" href=""><span style="float:left"><u>{{item.variantName}}({{item.availableQty | number}})</u></span></a>
+                                            </li>
+                                        </ul>
+                                        <div class="clear"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-11">
-                    </div>
-                     <div class="col-sm-2">
-                            <a href="" data-target="#collapseOne, #collapseThird"  class="btn btn-sm btn-primary" data-toggle="collapse" ng-click="$ctrl.editSelectedItem()"  data-parent="#accordion"><< Edit Selected Items </a>
-                        </div> -->
-                    <!-- <div class="col-sm-1">
-                        <a href="" class="btn btn-sm btn-primary">Finish</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-</div> --> 
 </div>
-</div>
+<!-- \ component2 end / -->
