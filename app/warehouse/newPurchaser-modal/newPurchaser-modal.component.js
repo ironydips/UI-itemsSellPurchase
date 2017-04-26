@@ -27,7 +27,7 @@
                     ctrl.modalInstance.close({ action: "update", profile: data });
                 })
                 .catch(function(error) {
-                    console.log("Error while adding brand's varient")
+                    console.log("Error while adding brand's variant")
                 })
 
 

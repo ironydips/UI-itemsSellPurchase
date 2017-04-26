@@ -17,11 +17,9 @@ function newSellerPopup(details) {
     modalInstance.result.then(function(data) {
             //data passed when pop up closed.
             if (data && data.action == 'update') {
-
                 popUpCtrl.onSelectCallback(data)
 
             }
-
         }),
         function(err) {
             console.log('Error in new-Purchase detail modal');
@@ -29,6 +27,7 @@ function newSellerPopup(details) {
         }
 }
 
+/*jshint validthis: true */
 function viewFullOrderPopUp(details) {
 
     var popUpCtrl = this;
@@ -48,7 +47,8 @@ function viewFullOrderPopUp(details) {
             //data passed when pop up closed.
             debugger;
             if (data && data.action == 'update') {
-                popUpCtrl.init();
+                debugger;
+                popUpCtrl.$state.reload();
             };
 
         }),
@@ -62,6 +62,7 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
     var ctrl = this;
 
     ctrl.init = function() {
+        debugger;
 
         ctrl.$uibModal = $uibModal;
         ctrl.$state = $state;
@@ -87,7 +88,6 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
 
         // ES5 style property definition.
         Object.defineProperty(ctrl, 'amtPaid', {
-            
             get() {
                 return parseFloat(ctrl.paidByShop) + parseFloat(ctrl.paidByPrateek) + parseFloat(ctrl.paidByBharat);
             }
@@ -122,7 +122,6 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
         ctrl.disablePlaceOrder = true;
         ctrl.purchaserName = "";
         ctrl.purchaserAddress = "";
-        ctrl.purchaserPrevBal = "";
         ctrl.purchaserNumber1 = "";
         ctrl.purchaserNumber2 = "";
         ctrl.showPhone = false;
@@ -156,7 +155,6 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
 
         ctrl.disablePlaceOrder = false;
 
-
         switch (item.profile.phone.length) {
             case 0:
                 ctrl.purchaserNumber1 = "";
@@ -180,12 +178,11 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
             ctrl.showName = true;
         }
         if (item.profile.address != "") {
-
             ctrl.purchaserAddress = item.profile.address;
             ctrl.showAddress = true;
         }
 
-        ctrl.purchaserPrevBal = item.balance;
+        ctrl.purchaserPrevBal = item.balance || 0;
         ctrl.purchaserID = item._id;
 
     };

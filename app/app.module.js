@@ -15,6 +15,8 @@ angular.module('sellPurchaseApp', [
 	'ngToast',
 	//LightBox Library used as Image Viewer.
 	'bootstrapLightbox',
+	//Commmon modals
+	'viewFullOrderModal',
 	'sellPurchaseApp.services',
 	'adminLayout',
 	'adminPanel',
