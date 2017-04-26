@@ -27,7 +27,7 @@ function viewFullOrderPopUp(details) {
         }
 }
 
-function OrderDetailController($state, $http, $uibModal) {
+function OrderDetailController($state, $http, $timeout, $uibModal) {
     var ctrl = this;
 
 
@@ -55,16 +55,27 @@ function OrderDetailController($state, $http, $uibModal) {
 
     ctrl.showOrders = function(todayDate, fromDate) {
 
+        ctrl.loader = true;
+
         $http({
 
             url: "order/getAllOrders?fromDate=" + fromDate + "&toDate=" + todayDate,
 
             method: "GET"
         }).then(function(response) {
-            if(response.data.result.message[0].length == 0){
+            if (response.data.result.message[0].length == 0) {
                 ctrl.noDataMsg = true;
+
+                $timeout(function() {
+                    ctrl.loader = false;
+                }, 500);
+
             }
             ctrl.orders = response.data.result.message[0];
+            $timeout(function() {
+                ctrl.loader = false;
+            }, 500);
+            
         }).catch(function(err) {
             console.log("error while getting orders:");
             console.log(err);
@@ -82,5 +93,5 @@ function OrderDetailController($state, $http, $uibModal) {
 angular.module('orderDetail')
     .component('orderDetail', {
         templateUrl: 'orderDetails/order-detail/order-detail.template.html',
-        controller: ['$state', '$http', '$uibModal', OrderDetailController]
+        controller: ['$state', '$http', '$timeout', '$uibModal', OrderDetailController]
     });

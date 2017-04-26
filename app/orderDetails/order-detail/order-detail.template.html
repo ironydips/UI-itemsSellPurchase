@@ -15,6 +15,9 @@
 </style>
 <div class="container">
     <br>
+    <div class="loading" ng-show="$ctrl.loader">
+        Loading&#8230;
+    </div>
     <div class="row">
         <div class="col-sm-1">
             <label>From Date:</label>
@@ -55,8 +58,8 @@
                     <th class="col-md-1">Date</th>
                     <th class="col-md-1">Bill Amount</th>
                     <th class="col-md-2">Previous Balance</th>
-                    <th class="col-md-2">Current Balance</th>
                     <th class="col-md-2">Amount Paid</th>
+                    <th class="col-md-2">Current Balance</th>
                     <th class="col-md-2">Action</th>
                 </tr>
             </thead>
@@ -65,8 +68,8 @@
                 <td>{{order.date | date:'dd-MM-yyyy'}}</td>
                 <td>{{order.billAmount}}</td>
                 <td>{{order.previousBalance}}</td>
-                <td></td>
                 <td>{{order.amountPaid}}</td>
+                <td></td>
                 <td><a href="" class="btn btn-sm btn-primary" ng-click="$ctrl.viewFullOrderModal(order)">View Full Order</a></td>
             </tr>
             <tr ng-if="$ctrl.noDataMsg">
