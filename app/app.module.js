@@ -10,7 +10,8 @@ angular.module('sellPurchaseApp', [
 	'images-resizer',
 	'720kb.datepicker',
 	'ngAnimate',
-	'ngSanitize', 'ui.select',
+	'ngSanitize', 
+	'ui.select',
 	// For Notification
 	'ngToast',
 	//LightBox Library used as Image Viewer.

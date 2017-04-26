@@ -12,7 +12,7 @@ module('sellPurchaseApp').directive('validNumber', function() {
                     var val = '';
                 }
 
-                var clean = val.replace(/[^0-9\.]/g, '');
+                var clean = val.replace(/[^1-9\.]/g, '');
                 var negativeCheck = clean.split('-');
                 var decimalCheck = clean.split('.');
                 if (!angular.isUndefined(negativeCheck[1])) {

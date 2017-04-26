@@ -31,30 +31,30 @@
                                 <div class="row" ng-show="$ctrl.selectedPurchaser.profile.name">
                                     <div class="col-sm-6">
                                         <h4><b style="padding-left: 92px;">Name:</b></h4></div>
-                                    <div class="col-md-2">
-                                        <h4>{{$ctrl.selectedPurchaser.profile.name}}</h4></div>
+                                    <div class="col-md-4">
+                                        <h5>{{$ctrl.selectedPurchaser.profile.name}}</h5></div>
                                 </div>
                                 <div class="row" ng-show="$ctrl.selectedPurchaser.profile.address">
                                     <div class="col-sm-6">
                                         <h4><b style="padding-left: 70px;">Address:</b></h4></div>
                                     <div class="col-md-2">
-                                        <h4>{{$ctrl.selectedPurchaser.profile.address}}</h4></div>
+                                        <h5>{{$ctrl.selectedPurchaser.profile.address}}</h5></div>
                                 </div>
                                 <div class="row" ng-show="$ctrl.selectedPurchaser.profile.phone.length > 0">
                                     <div class="col-sm-6">
                                         <h4><b style="padding-left: 90px;">Phone:</b></h4></div>
                                     <div class="col-md-2">
-                                        <h4>
+                                        <h5>
                                         {{$ctrl.selectedPurchaser.profile.phone[0]}}
                                         {{$ctrl.selectedPurchaser.profile.phone[1]}}
-                                        </h4>
+                                        </h5>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <h4><b>Balance to be paid:</b></h4></div>
                                     <div class="col-md-2">
-                                        <h4>{{$ctrl.selectedPurchaser.balance || 0}}</h4></div>
+                                        <h5>{{$ctrl.selectedPurchaser.balance || 0}}</h5></div>
                                 </div>
                             </div>
                         </div>
@@ -68,15 +68,16 @@
                     </div>
                     <div class="panel-body" style="height: 300px;">
                         <div style="height:250px;overflow:auto;">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="top" >
                             <tr>
                                 <th style="font-size: 13px;" class="col-md-2">Item Name</th>
                                 <th style="font-size: 13px;" class="col-md-2"> Price</th>
                                 <th style="font-size: 13px;" class="col-md-2">Quantity</th>
                                 <th style="font-size: 13px;" class="col-md-2">Total(₹)</th>
+                                <th></th>
                                 <th style="font-size: 13px;" class="col-md-2">Action</th>
                             </tr>
-                            <tr class="text-center">
+                            <tr class="text-center" >
                                 <td>
                                     <ui-select name="productDetail" ng-model="$ctrl.productDetail.selected" theme="selectize" on-select="$ctrl.onSelectItem($item, $model)" style="width: 160px;" title="Choose a country">
                                         <ui-select-match placeholder="Select Item">{{$select.selected.productInfo}}</ui-select-match>
@@ -92,6 +93,7 @@
                                     <input type="text" valid-number name="quantity" ng-model="$ctrl.qty" class="form-control">
                                 </td>
                                 <td>{{$ctrl.price * $ctrl.qty}}</td>
+                                <td></td>
                                 <td><a href="" ng-click="$ctrl.addProduct($ctrl.productDetail.selected.productInfo, $ctrl.price, $ctrl.qty)" class="btn btn-sm btn-primary">+</a></td>
                             </tr>
                             <tr ng-repeat="product in $ctrl.productArr track by $index" class="text-center">
@@ -99,7 +101,8 @@
                                 <td>{{product.price}}</td>
                                 <td>{{product.quantity}}</td>
                                 <td>{{product.totalPrice}}</td>
-                                <td><a href="" class="btn btn-sm btn-danger" ng-click="$ctrl.deleteProduct(product)">Delete</a></td>
+                                <td><a href="" class="btn btn-sm btn-primary" ng-click="$ctrl.editProduct(product)"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                <td><a href="" class="btn btn-sm btn-danger" ng-click="$ctrl.deleteProduct(product)"><span class="glyphicon glyphicon-trash"></span></a></td>
                             </tr>
                         </table>
                         </div>

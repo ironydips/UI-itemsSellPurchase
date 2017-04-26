@@ -1,11 +1,10 @@
 'use strict';
 
 //------------------------------Controller Start----------------------------------
-function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, $timeout, ngToast, checkoutService, moveItemToSaleService) {
+function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, $state, $uibModal, $http, $timeout, ngToast, checkoutService, moveItemToSaleService) {
     var ctrl = this;
 
     ctrl.init = function() {
-        debugger;
 
         ctrl.$uibModal = $uibModal;
         ctrl.$state = $state;
@@ -39,6 +38,9 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
         Object.defineProperty(ctrl, 'totalAmt', {
             get() {
                 return parseFloat(ctrl.totalBill) + parseFloat(ctrl.selectedPurchaser.balance);
+            },
+            set(val){
+                console.log(val)
             }
         });
 
@@ -60,17 +62,27 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
         ctrl.paidByBharat = 0;
         ctrl.price = 0;
         ctrl.qty = 0;
-        ctrl.selectedPurchaser = { balance: 0, profile: {name: ''} };
+        ctrl.selectedPurchaser = { balance: 0, profile: { name: '' } };
     }
 
-    ctrl.addProduct = function(seller, price, quantity) {
+    ctrl.addProduct = function(BrandDetail, price, quantity) {
 
-        ctrl.totalPrice = parseInt(quantity) * parseInt(price);
-        ctrl.SelectedItem.price = price;
-        ctrl.SelectedItem.quantity = quantity;
+        ctrl.totalPrice = parseFloat(quantity) * parseFloat(price);
+        ctrl.SelectedItem.price = parseFloat(price);
+        ctrl.SelectedItem.quantity = parseFloat(quantity);
         ctrl.SelectedItem.totalPrice = ctrl.totalPrice;
         ctrl.items = angular.copy(ctrl.SelectedItem)
+
+        var filterProduct = ctrl.productArr.filter(function(data) {
+            return data.productInfo == BrandDetail;
+        });
+
+        if (filterProduct.length > 0) {
+            ctrl.productArr.splice(ctrl.productArr.indexOf(filterProduct[0]), 1);
+        }
+
         ctrl.productArr.push(ctrl.items);
+        ctrl.productArr.reverse();
         ctrl.price = 0;
         ctrl.qty = 0;
         ctrl.productDetail = {};
@@ -82,6 +94,16 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
 
         ctrl.totalBill = ctrl.totalBill - pdt.totalPrice;
         ctrl.productArr.splice(ctrl.productArr.indexOf(pdt), 1)
+    };
+
+    ctrl.editProduct = function(pdt) {
+
+        $location.hash('top');
+        $anchorScroll();
+        ctrl.price = pdt.price;
+        ctrl.qty = pdt.quantity;
+        ctrl.productDetail.selected = pdt.productInfo;
+        ctrl.productArr.splice(ctrl.productArr.indexOf(pdt), 1)
     }
 
     ctrl.onSelectCallback = function(item, model) {
@@ -90,7 +112,7 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
     };
 
     ctrl.newPurchaser = function() {
-        ctrl.newSellerPopup();
+        ctrl.newSellerPopup(ctrl.purchaseDetails);
     };
 
     ctrl.onSelectItem = function(item, model) {
@@ -99,6 +121,13 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
     }
 
     ctrl.placeOrder = function() {
+
+        // if(ctrl.amtPaid == 0){
+        //     //ctrl.viewAmtPaidModal(null);
+        //     SweetAlert.swal("Here's a message");
+        // }else{
+
+        // }
 
         ctrl.loader = true;
 
@@ -150,7 +179,7 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
                 console.log(error)
             })
 
-    }
+    };
 
     ctrl.init();
 
@@ -159,31 +188,56 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
     //Order Pop up
     ctrl.viewFullOrderPopUp = function viewFullOrderPopUp(details) {
 
-            var modalInstance = ctrl.$uibModal.open({
-                component: 'viewFullOrderModal',
-                windowClass: 'app-modal-window-large',
-                keyboard: false,
-                resolve: {
-                    details: function() {
-                        return (details || {});
-                    }
-                },
-                backdrop: 'static'
-            });
-
-            modalInstance.result.then(function(data) {
-                    //data passed when pop up closed.
-                    debugger;
-                    if (data && data.action == 'update') {
-                        debugger;
-                        ctrl.$state.reload();
-                    };
-
-                }),
-                function(err) {
-                    console.log('Error in view-Full-Order-Modal');
-                    console.log(err);
+        var modalInstance = ctrl.$uibModal.open({
+            component: 'viewFullOrderModal',
+            windowClass: 'app-modal-window-large',
+            keyboard: false,
+            resolve: {
+                details: function() {
+                    return (details || {});
                 }
+            },
+            backdrop: 'static'
+        });
+
+        modalInstance.result.then(function(data) {
+                //data passed when pop up closed.
+                if (data && data.action == 'update') {
+                    ctrl.$state.reload();
+                };
+
+            }),
+            function(err) {
+                console.log('Error in view-Full-Order-Modal');
+                console.log(err);
+            }
+    }
+
+    ctrl.viewAmtPaidModal = function(details) {
+
+        var modalInstance = ctrl.$uibModal.open({
+            component: 'amountPaidModalComponent',
+            windowClass: 'app-modal-window-small',
+            keyboard: false,
+            resolve: {
+                details: function() {
+                    return (details || {});
+                }
+            },
+            backdrop: 'static'
+        });
+
+        modalInstance.result.then(function(data) {
+                //data passed when pop up closed.
+                // if (data && data.action == 'update') {
+                //     ctrl.$state.reload();
+                // };
+
+            }),
+            function(err) {
+                console.log('Error in view-Full-Order-Modal');
+                console.log(err);
+            }
     }
 
     //New Seller Pop up
@@ -222,6 +276,6 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
 angular.module('purchaseDetail')
     .component('purchaseDetail', {
         templateUrl: 'warehouse/purchase-details/purchase-details.template.html',
-        controller: ['$rootScope', '$scope', '$state', '$uibModal', '$http', '$timeout', 'ngToast', 'checkoutService', 'moveItemToSaleService', PurchaseDetailController]
+        controller: ['$rootScope', '$scope', '$location', '$anchorScroll', '$state', '$uibModal', '$http', '$timeout', 'ngToast', 'checkoutService', 'moveItemToSaleService', PurchaseDetailController]
     });
 //----------------------------Module END---------------------------------------------

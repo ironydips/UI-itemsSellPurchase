@@ -1,59 +1,67 @@
 <!-- / profileComponent \ -->
 <div class="profileComponent">
-   <div class="container">
-      <div class="profileSm">
-         <h2>ADD DETAIL</h2>
-         <div class="inner-adjust">
-            <div class="input-main">
-               <div class="row">
-                  <div class="col-sm-3">
-                     <label>Name:</label>
-                  </div>
-                  <div class="col-sm-3">
-                     <input type="text" ng-model="$ctrl.name" class="form-controls">
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-sm-3">
-                     <label>Contact Number(Primary):</label>
-                  </div>
-                  <div class="col-sm-3">
-                     <input type="text" ng-model="$ctrl.phoneNumber1" class="form-controls">
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-sm-3">
-                     <label>Contact Number(Secondary):</label>
-                  </div>
-                  <div class="col-sm-3">
-                     <input type="text" ng-model="$ctrl.phoneNumber2" class="form-controls">
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-sm-3">
-                     <label>Address:</label>
-                  </div>
-                  <div class="col-sm-3">
-                     <textarea class="form-control" ng-model="$ctrl.address" style="width: 255px;"></textarea>
-                  </div>
-               </div><br>
-               <div class="row">
-                  <div class="col-sm-3">
-                     <label>Note:</label>
-                  </div>
-                  <div class="col-sm-3">
-                     <textarea class="form-control" ng-model="$ctrl.note" style="width: 255px;"></textarea>
-                  </div>
-               </div>
-            </div>
-            <div class="col-sm-3">
-            </div>
-            <div class="btn-main">
-               <button type="button" ng-click = "$ctrl.cancel()" class="btn btn-sm btn-default">Cancel</button>
-               <button type="button" ng-click = "$ctrl.save($ctrl.name, $ctrl.phoneNumber1, $ctrl.phoneNumber2, $ctrl.address, $ctrl.note)" class="btn btn-sm btn-success">Save</button>
-            </div>
-         </div>
-      </div>
-   </div>
+    <div class="container">
+        <div class="profileSm">
+            <h2>Add Purchaser Detail</h2>
+            <form name="userForm" novalidate>
+                <div class="inner-adjust">
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-5" style="color: red;" ng-show="$ctrl.showDuplicacyErr">Name already Exist</div>
+                    </div>
+                    <div class="input-main">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Name:</label>
+                            </div>
+                            <div class="col-sm-5">
+                                <input type="text" name="myName" ng-model="$ctrl.name" class="form-controls" required>
+                                <span style="color: red;" ng-show="userForm.myName.$invalid && !userForm.myName.$pristine">Purchaser Name is required.</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Contact Number(Primary):</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" ng-model="$ctrl.phoneNumber1" class="form-controls">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Contact Number(Secondary):</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" ng-model="$ctrl.phoneNumber2" class="form-controls">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Address:</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <textarea class="form-control" ng-model="$ctrl.address" style="width: 255px;"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Note:</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <textarea class="form-control" ng-model="$ctrl.note" style="width: 255px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                    </div>
+                    <div class="btn-main">
+                        <button type="button" ng-click="$ctrl.cancel()" class="btn btn-sm btn-default">Cancel</button>
+                        <button type="button" ng-click="$ctrl.save($ctrl.name, $ctrl.phoneNumber1, $ctrl.phoneNumber2, $ctrl.address, $ctrl.note)" ng-disabled="userForm.myName.$invalid" class="btn btn-sm btn-success">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <!-- \ profileComponent end / -->
