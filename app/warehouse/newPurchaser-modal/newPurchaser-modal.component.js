@@ -23,8 +23,12 @@
                     dataType: JSON
 
                 }).then(function(response) {
-                    data.phone = ctrl.phoneNumberArr;
-                    ctrl.modalInstance.close({ action: "update", profile: data });
+                    if(response && response.data && response.data.result){
+                        ctrl.modalInstance.close({ action: "update", profile: response.data.result.message });
+                    }
+                    else{
+                        alert('Error in response');
+                    }
                 })
                 .catch(function(error) {
                     console.log("Error while adding brand's variant")

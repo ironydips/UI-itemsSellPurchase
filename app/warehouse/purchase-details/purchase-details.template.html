@@ -9,12 +9,13 @@
             <div class="col-sm-4">
                 <div class="panel panel-success">
                     <div class="panel-heading" style="background-color: transparent;padding: 0">
-                        <h3>Supplier Info</h3></div>
+                    
+                    <h3>Supplier Info</h3></div>
                     <div class="panel-body" style="height: 300px;">
                         <div class="row">
                             <div class="col-sm-8">
-                                <ui-select name="purchaseDetail" ng-model="$ctrl.purchaseDetail.selected" theme="selectize" on-select="$ctrl.onSelectCallback($item, $model)" style="width: 250px;" title="Choose a country">
-                                    <ui-select-match placeholder="Select Purchaser">{{$select.selected.profile.name}}</ui-select-match>
+                                <ui-select name="purchaseDetail" ng-model="$ctrl.selectedPurchaser" theme="selectize" on-select="$ctrl.onSelectCallback($item, $model)" style="width: 250px;" title="Choose a seller">
+                                    <ui-select-match placeholder="Select Purchaser">{{$select.selected.profile.name || 'Select Purchaser'}}</ui-select-match>
                                     <ui-select-choices repeat="country in $ctrl.purchaseDetails | filter: $select.search">
                                         <span ng-bind-html="country.profile.name | highlight: $select.search"></span>
                                     </ui-select-choices>
@@ -27,29 +28,33 @@
                         <br><br>
                         <div class="row">
                             <div class="col-sm-12">
-                                <div class="row" ng-show="$ctrl.showName">
+                                <div class="row" ng-show="$ctrl.selectedPurchaser.profile.name">
                                     <div class="col-sm-6">
                                         <h4><b style="padding-left: 92px;">Name:</b></h4></div>
                                     <div class="col-md-2">
-                                        <h4>{{$ctrl.purchaserName}}</h4></div>
+                                        <h4>{{$ctrl.selectedPurchaser.profile.name}}</h4></div>
                                 </div>
-                                <div class="row" ng-show="$ctrl.showAddress">
+                                <div class="row" ng-show="$ctrl.selectedPurchaser.profile.address">
                                     <div class="col-sm-6">
                                         <h4><b style="padding-left: 70px;">Address:</b></h4></div>
                                     <div class="col-md-2">
-                                        <h4>{{$ctrl.purchaserAddress}}</h4></div>
+                                        <h4>{{$ctrl.selectedPurchaser.profile.address}}</h4></div>
                                 </div>
-                                <div class="row" ng-show="$ctrl.showPhone">
+                                <div class="row" ng-show="$ctrl.selectedPurchaser.profile.phone.length > 0">
                                     <div class="col-sm-6">
                                         <h4><b style="padding-left: 90px;">Phone:</b></h4></div>
                                     <div class="col-md-2">
-                                        <h4>{{$ctrl.purchaserNumber1}}{{$ctrl.purchaserNumber2}}</h4></div>
+                                        <h4>
+                                        {{$ctrl.selectedPurchaser.profile.phone[0]}}
+                                        {{$ctrl.selectedPurchaser.profile.phone[1]}}
+                                        </h4>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h4><b>Previous Balance:</b></h4></div>
+                                        <h4><b>Balance to be paid:</b></h4></div>
                                     <div class="col-md-2">
-                                        <h4>{{$ctrl.purchaserPrevBal}}</h4></div>
+                                        <h4>{{$ctrl.selectedPurchaser.balance || 0}}</h4></div>
                                 </div>
                             </div>
                         </div>
@@ -122,7 +127,7 @@
                                 <label class="pull-right">Prev Balance:</label>
                             </div>
                             <div class="col-sm-4 padding-left-22">
-                                ₹{{$ctrl.purchaserPrevBal}}
+                                ₹{{$ctrl.selectedPurchaser.balance}}
                             </div>
                         </div>
                         <br>
@@ -169,8 +174,8 @@
                             <div class="col-sm-7">
                             </div>
                             <div class="col-sm-5 padding-left-22">
-                                <a href="" ng-click="$ctrl.placeOrder()" ng-disabled="$ctrl.disablePlaceOrder" class="btn btn-lg btn-primary">Place Order</a>
-                                <div ng-show="$ctrl.disablePlaceOrder">Please Select Seller</div>
+                                <a href="" ng-click="$ctrl.placeOrder()" ng-disabled="!$ctrl.selectedPurchaser" class="btn btn-lg btn-primary">Place Order</a>
+                                <div ng-show="!$ctrl.selectedPurchaser">Please Select Seller</div>
                             </div>
                         </div>
                     </div>

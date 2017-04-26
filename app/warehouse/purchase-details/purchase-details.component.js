@@ -1,63 +1,6 @@
 'use strict';
 
-function newSellerPopup(details) {
-    var popUpCtrl = this;
-    var modalInstance = popUpCtrl.$uibModal.open({
-        component: 'newPurchaserModal',
-        windowClass: 'app-modal-window-small',
-        keyboard: false,
-        resolve: {
-            details: function() {
-                return (details || {});
-            }
-        },
-        backdrop: 'static'
-    });
-
-    modalInstance.result.then(function(data) {
-            //data passed when pop up closed.
-            if (data && data.action == 'update') {
-                popUpCtrl.onSelectCallback(data)
-
-            }
-        }),
-        function(err) {
-            console.log('Error in new-Purchase detail modal');
-            console.log(err);
-        }
-}
-
-/*jshint validthis: true */
-function viewFullOrderPopUp(details) {
-
-    var popUpCtrl = this;
-    var modalInstance = popUpCtrl.$uibModal.open({
-        component: 'viewFullOrderModal',
-        windowClass: 'app-modal-window-large',
-        keyboard: false,
-        resolve: {
-            details: function() {
-                return (details || {});
-            }
-        },
-        backdrop: 'static'
-    });
-
-    modalInstance.result.then(function(data) {
-            //data passed when pop up closed.
-            debugger;
-            if (data && data.action == 'update') {
-                debugger;
-                popUpCtrl.$state.reload();
-            };
-
-        }),
-        function(err) {
-            console.log('Error in view-Full-Order-Modal');
-            console.log(err);
-        }
-}
-
+//------------------------------Controller Start----------------------------------
 function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, $timeout, ngToast, checkoutService, moveItemToSaleService) {
     var ctrl = this;
 
@@ -95,7 +38,7 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
 
         Object.defineProperty(ctrl, 'totalAmt', {
             get() {
-                return parseFloat(ctrl.totalBill) + parseFloat(ctrl.purchaserPrevBal);
+                return parseFloat(ctrl.totalBill) + parseFloat(ctrl.selectedPurchaser.balance);
             }
         });
 
@@ -110,24 +53,14 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
     ctrl.initValues = function() {
         ctrl.itemCount = 0;
         ctrl.productArr = [];
-        ctrl.purchaseDetail = {};
         ctrl.productDetail = {};
         ctrl.totalBill = 0;
-        ctrl.purchaserPrevBal = 0;
         ctrl.paidByShop = 0;
         ctrl.paidByPrateek = 0;
         ctrl.paidByBharat = 0;
         ctrl.price = 0;
         ctrl.qty = 0;
-        ctrl.disablePlaceOrder = true;
-        ctrl.purchaserName = "";
-        ctrl.purchaserAddress = "";
-        ctrl.purchaserNumber1 = "";
-        ctrl.purchaserNumber2 = "";
-        ctrl.showPhone = false;
-        ctrl.showName = false;
-        ctrl.showAddress = false;
-
+        ctrl.selectedPurchaser = { balance: 0, profile: {name: ''} };
     }
 
     ctrl.addProduct = function(seller, price, quantity) {
@@ -153,42 +86,11 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
 
     ctrl.onSelectCallback = function(item, model) {
 
-        ctrl.disablePlaceOrder = false;
-
-        switch (item.profile.phone.length) {
-            case 0:
-                ctrl.purchaserNumber1 = "";
-                ctrl.purchaserNumber2 = "";
-                ctrl.showPhone = false;
-                break;
-            case 1:
-                ctrl.purchaserNumber1 = item.profile.phone[0];
-                ctrl.purchaserNumber2 = "";
-                ctrl.showPhone = true;
-                break;
-            case 2:
-                ctrl.purchaserNumber1 = item.profile.phone[0];
-                ctrl.purchaserNumber2 = item.profile.phone[1];
-                ctrl.showPhone = true;
-                break;
-
-        }
-        if (item.profile.name != "") {
-            ctrl.purchaserName = item.profile.name;
-            ctrl.showName = true;
-        }
-        if (item.profile.address != "") {
-            ctrl.purchaserAddress = item.profile.address;
-            ctrl.showAddress = true;
-        }
-
-        ctrl.purchaserPrevBal = item.balance || 0;
-        ctrl.purchaserID = item._id;
-
+        ctrl.selectedPurchaser = item;
     };
 
     ctrl.newPurchaser = function() {
-        angular.bind(ctrl, newSellerPopup, null)();
+        ctrl.newSellerPopup();
     };
 
     ctrl.onSelectItem = function(item, model) {
@@ -201,7 +103,7 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
         ctrl.loader = true;
 
         ctrl.payment = {
-            previousBalance: ctrl.purchaserPrevBal,
+            previousBalance: ctrl.selectedPurchaser.balance,
             totalAmount: ctrl.totalAmt,
             amountPaid: ctrl.amtPaid,
             currentBalance: ctrl.currentBal,
@@ -210,7 +112,7 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
             paidByBharat: ctrl.paidByBharat
         }
         var obj = {
-            purchaser: { id: ctrl.purchaserID, name: ctrl.purchaserName },
+            purchaser: { id: ctrl.selectedPurchaser._id, name: ctrl.selectedPurchaser.profile.name },
             Items: ctrl.productArr,
             payment: ctrl.payment
         }
@@ -225,9 +127,8 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
                 ctrl.initValues();
                 ctrl.orderDetail = response.data.result.message;
                 ctrl.loader = false;
-                angular.bind(ctrl, viewFullOrderPopUp, ctrl.orderDetail)();
+                ctrl.viewFullOrderPopUp(ctrl.orderDetail);
                 ngToast.create({
-
                     className: 'success',
                     horizontalPosition: 'center',
                     dismissButton: true,
@@ -252,10 +153,75 @@ function PurchaseDetailController($rootScope, $scope, $state, $uibModal, $http, 
     }
 
     ctrl.init();
+
+    //------------------ Pop-up implementations----------------------------------
+
+    //Order Pop up
+    ctrl.viewFullOrderPopUp = function viewFullOrderPopUp(details) {
+
+            var modalInstance = ctrl.$uibModal.open({
+                component: 'viewFullOrderModal',
+                windowClass: 'app-modal-window-large',
+                keyboard: false,
+                resolve: {
+                    details: function() {
+                        return (details || {});
+                    }
+                },
+                backdrop: 'static'
+            });
+
+            modalInstance.result.then(function(data) {
+                    //data passed when pop up closed.
+                    debugger;
+                    if (data && data.action == 'update') {
+                        debugger;
+                        ctrl.$state.reload();
+                    };
+
+                }),
+                function(err) {
+                    console.log('Error in view-Full-Order-Modal');
+                    console.log(err);
+                }
+    }
+
+    //New Seller Pop up
+    ctrl.newSellerPopup = function newSellerPopup(details) {
+        var modalInstance = ctrl.$uibModal.open({
+            component: 'newPurchaserModal',
+            windowClass: 'app-modal-window-small',
+            keyboard: false,
+            resolve: {
+                details: function() {
+                    return (details || {});
+                }
+            },
+            backdrop: 'static'
+        });
+
+        modalInstance.result.then(function(data) {
+                //data passed when pop up closed.
+                if (data && data.action == 'update' && data.profile) {
+                    ctrl.purchaseDetails.push(data.profile);
+                    ctrl.selectedPurchaser = data.profile;
+                }
+            }),
+            function(err) {
+                console.log('Error in new-Purchase detail modal');
+                console.log(err);
+            }
+    }
+
 }
 
+//----------------------------Controller END ---------------------------------------
+
+
+//----------------------------Module START-------------------------------------------
 angular.module('purchaseDetail')
     .component('purchaseDetail', {
         templateUrl: 'warehouse/purchase-details/purchase-details.template.html',
         controller: ['$rootScope', '$scope', '$state', '$uibModal', '$http', '$timeout', 'ngToast', 'checkoutService', 'moveItemToSaleService', PurchaseDetailController]
     });
+//----------------------------Module END---------------------------------------------
