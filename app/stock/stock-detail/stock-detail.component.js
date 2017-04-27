@@ -23,7 +23,7 @@ function viewFullPdtDetail(details) {
     modalInstance.result.then(function(data) {
             //data passed when pop up closed.
             if (data && data.action == "update") {
-                popUpCtrl.init();
+               // popUpCtrl.init();
             }
 
         }),
@@ -36,28 +36,49 @@ function viewFullPdtDetail(details) {
 function StockController($state, $http, $uibModal) {
     var ctrl = this;
 
-
     ctrl.init = function() {
         ctrl.array = {};
         ctrl.$state = $state;
         ctrl.$uibModal = $uibModal;
+        ctrl.stockArr = [];
+        ctrl.loader = true;
+        var date;
+        var d = new Date();
+        var month = (d.getMonth() + 1);
+        var day = d.getDate();
+        var year = d.getFullYear();
 
-        $http({
-            url: "stock/getCurrentStockInfo",
+        if (month < 10) {
+            date = year + "-" + "0" + month + "-" + day;
+        } else {
+            date = year + "-" + month + "-" + day;
+        }
+
+        ctrl.fromDate = date;
+        ctrl.todayDate = date;
+        ctrl.showStock(ctrl.fromDate, ctrl.todayDate);
+
+       
+    };
+
+    ctrl.showStock = function(fromDate, todayDate){
+
+         $http({
+            url: "stock/getCurrentStockInfo?fromDate=2017-04-27&endDate=2017-04-28",
             method: "GET"
         }).then(function(response) {
             console.log(response);
-            ctrl.brandArr = response.data.result.message;
-
-            response.data.result.message.forEach(function(data) {
-                Object.keys(ctrl.array).indexOf(data.brandName) == -1 ? ctrl.array[data.brandName] = [data] : ctrl.array[data.brandName].push(data);
-            });
+            ctrl.loader = false;
+            ctrl.stockDetail = response.data.result.message;
+            ctrl.stockDetail.forEach(function(data){
+                data.isReturned = 'No';
+            })
 
         }).catch(function(error) {
             console.log("Error while getting stock data:");
             console.log(error);
         });
-    };
+    }
 
     ctrl.viewFullDetail = function(item) {
         angular.bind(ctrl, viewFullPdtDetail, item)();

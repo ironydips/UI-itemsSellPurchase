@@ -4,7 +4,7 @@
         <div class="profileBg">
             <h2>Variant Detail</h2>
             <div class="inner-adjust">
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-sm-1">
                         <label style=" padding-left: 40px;">Brand:</label>
                     </div>
@@ -23,7 +23,7 @@
                     <div class="col-sm-2">
                     <a href="" class="btn btn-sm btn-primary" ng-click="$ctrl.findDetail()">Find</a>
                     </div>
-                </div>
+                </div> -->
                 <br>
                 <div class="row">
                     <h3>Product Info</h3>
@@ -31,19 +31,21 @@
                         <table class="table table-bordered text-center">
                             <thead>
                                 <tr>
-                                    <th class="col-md-2">Purchaser Name</th>
+                                    <th class="col-md-2">Name</th>
                                     <th class="col-md-1">Date</th>
-                                    <th class="col-md-1">Quantity</th>
                                     <th class="col-md-2">Price</th>
-                                    <th class="col-md-1">Profit/Loss</th>
+                                    <th class="col-md-1">Is Returned</th>
+                                    <th class="col-md-1">Quantity</th>
+                                    <th class="col-md-1">Action</th>
                                 </tr>
                             </thead>
-                            <tr ng-repeat="detail in $ctrl.variantDetails | filter: searchText">
-                                <td></td>
+                            <tr ng-repeat="detail in $ctrl.orderDetail.orderItems | filter: searchText">
+                                <td>{{detail.userName}}(<span ng-show="detail.isPurchaser" style="color: black;">Purchaser</span><span ng-show="detail.isSeller">Seller</span>)</td>
                                 <td>{{detail.createdOn | date:'dd-MM-yyyy'}}</td>
-                                <td>{{detail.quantity}}</td>
                                 <td>{{detail.price}}</td>
-                                <td>+{{detail.profit}}</td>
+                                <td>{{$ctrl.orderDetail.isReturned}}</td>
+                                <td>+{{detail.quantity}}</td>
+                                <td><a href="" class="btn btn-sm btn-primary" ng-click="$ctrl.viewFullOrderModal(detail.orderID)">View Full Order</a></td>
                             </tr>
                             <tbody>
                             </tbody>

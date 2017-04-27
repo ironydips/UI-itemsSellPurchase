@@ -1,40 +1,57 @@
 (function(angular) {
     'use strict';
 
-    function ViewFullPdtDetailController($state, $http) {
+    function ViewFullPdtDetailController($state, $http, $uibModal) {
         var ctrl = this;
-        ctrl.variantDetail = (ctrl.resolve && ctrl.resolve.details) || {};
-        console.log(ctrl.variantDetail)
         ctrl.init = function() {
-
-           ctrl.findDetail();
+            ctrl.orderDetail = (ctrl.resolve && ctrl.resolve.details) || {};
+            ctrl.$uibModal = $uibModal;
+            ctrl.$state = $state;
         };
 
-        ctrl.findDetail = function(){
-        	 $http({
-                url: "stock/getStockHistory?brandName=" + ctrl.variantDetail.brandName + "&variantName=" + ctrl.variantDetail.variantName,
-                method: "GET"
-            }).then(function(response) {
-                console.log(response)
-                ctrl.variantDetails = response.data.result.message;
-            }).catch(function(error) {
-                console.log("Error while displaying variant detail:");
-                console.log(error);
-            })
-        }
+        ctrl.viewFullOrderModal = function(order) {
+
+            ctrl.viewFullOrderPopUp(order);
+        };
 
         ctrl.cancel = function() {
 
-            ctrl.modalInstance.close({action : "update"});
+            ctrl.modalInstance.close({ action: "update" });
         };
 
         ctrl.init();
+
+        ctrl.viewFullOrderPopUp = function(details) {
+
+            var modalInstance = ctrl.$uibModal.open({
+                component: 'viewFullOrderModal',
+                windowClass: 'app-modal-window-large',
+                keyboard: false,
+                resolve: {
+                    details: function() {
+                        return (details || {});
+                    }
+                },
+                backdrop: 'static'
+            });
+
+            modalInstance.result.then(function(data) {
+                    //data passed when pop up closed.
+
+                    //if (data && data.action == "update");
+
+                }),
+                function(err) {
+                    console.log('Error in view-Full-Order-Modal');
+                    console.log(err);
+                }
+        }
     }
 
     angular.module('viewFullPdtDetail')
         .component('viewFullPdtDetail', {
             templateUrl: 'stock/stock-viewFullPdtDetail/stock-viewFullPdtDetail.template.html',
-            controller: ['$state', '$http', ViewFullPdtDetailController],
+            controller: ['$state', '$http','$uibModal', ViewFullPdtDetailController],
             bindings: {
                 modalInstance: '<',
                 resolve: '<'
