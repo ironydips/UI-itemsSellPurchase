@@ -9,7 +9,7 @@
                         <label style=" padding-left: 40px;">Date:</label>
                     </div>
                     <div class="col-sm-3">
-                        <label>{{$ctrl.placedOrderDetail.createdOn | date:'dd-MM-yyyy'}}</label>
+                        <label>{{$ctrl.placedOrderDetail.createdOn | date:'dd-MM-yyyy HH:mm a'}}</label>
                     </div>
                     <div class="col-sm-4">
                     </div>
@@ -51,25 +51,34 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="row">
-                                            <div class="col-sm-2"></div>
-                                            <div class="col-sm-2">
-                                                <h4 style="padding-left: 22px;"><b>Name:</b></h4></div>
+                                            <div class="col-sm-6">
+                                                <h5 class="pull-right"> Name:</h5>
+                                            </div>
                                             <div class="col-md-6">
-                                                <h4 style=" padding-right: 48px;">{{$ctrl.placedOrderDetail.purchaser_info[0].profile.name}}</h4></div>
+                                                <h5 class="pull-left"> 
+                                                    {{$ctrl.placedOrderDetail.purchaser_info[0].profile.name}}
+                                                </h5>
+                                            </div>
                                         </div>
                                         <div class="row" ng-show="$ctrl.showAddress">
-                                            <div class="col-sm-2"></div>
-                                            <div class="col-sm-2">
-                                                <h4><b>Address:</b></h4></div>
-                                            <div class="col-md-5">
-                                                <h4 style="padding-right: 50px;">{{$ctrl.placedOrderDetail.purchaser_info[0].profile.address}}</h4></div>
+                                            <div class="col-sm-6">
+                                                <h5 class="pull-right"> Address:</h5>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="pull-left"> 
+                                                    {{$ctrl.placedOrderDetail.purchaser_info[0].profile.address}}
+                                                </h5>
+                                            </div>
                                         </div>
                                         <div class="row" ng-show="$ctrl.showPhone">
-                                            <div class="col-sm-2"></div>
-                                            <div class="col-sm-2">
-                                                <h4 style="padding-left: 17px;"><b>Phone:</b></h4></div>
-                                            <div class="col-md-5">
-                                                <h4>{{$ctrl.purchaserNumber1}}{{$ctrl.purchaserNumber2}}</h4></div>
+                                            <div class="col-sm-6">
+                                                <h5 class="pull-right"> Phone:</h5>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="pull-left"> 
+                                                    {{$ctrl.purchaserNumber1}}{{$ctrl.purchaserNumber2}}
+                                                </h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -85,34 +94,54 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="row">
-                                            <div class="col-sm-5">
-                                                <h4 style="padding-left: 99px;"><b>Bill Amount:</b></h4></div>
-                                            <div class="col-md-5">
-                                                <h4></h4></div>
+                                            <div class="col-sm-6">
+                                                <h5 class="pull-right"> Bill Amount:</h5>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="pull-left"> 
+                                                    ₹{{$ctrl.placedOrderDetail.totalAmount - $ctrl.placedOrderDetail.previousBalance}}
+                                                </h5>
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-5">
-                                                <h4 style="padding-left: 20px;"><b>Previous Balance:</b></h4></div>
-                                            <div class="col-md-5">
-                                                <h4 style="padding-right: 17px;">{{$ctrl.placedOrderDetail.previousBalance}}</h4></div>
+                                            <div class="col-sm-6">
+                                                <h5 class="pull-right">Previous Balance:</h5>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="pull-left">
+                                                    ₹{{$ctrl.placedOrderDetail.previousBalance}}
+                                                </h5>
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-5">
-                                                <h4 style="padding-right: 17px;"><b>Total Amount({{$ctrl.placedOrderDetail.totalItems}}Item):</b></h4></div>
-                                            <div class="col-md-5">
-                                                <h4>{{$ctrl.placedOrderDetail.totalAmount}}</h4></div>
+                                            <div class="col-sm-6">
+                                                <h5 class="pull-right"> Total Amount:</h5>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="pull-left"> 
+                                                    ₹{{$ctrl.placedOrderDetail.totalAmount}}
+                                                </h5>
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-5">
-                                                <h4 style="padding-left: 60px;"><b>Amount Paid:</b></h4></div>
-                                            <div class="col-md-5">
-                                                <h4 style="padding-right: 17px;">{{$ctrl.placedOrderDetail.amountPaid}}</h4></div>
+                                            <div class="col-sm-6">
+                                                <h5 class="pull-right"> Amount Paid:</h5>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="pull-left"> 
+                                                    ₹{{$ctrl.placedOrderDetail.amountPaid}}
+                                                </h5>
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-5">
-                                                <h4 style="padding-left: 30px;"><b>Current Balance:</b></h4></div>
-                                            <div class="col-md-5">
-                                                <h4 style="padding-right: 17px;">{{$ctrl.placedOrderDetail.currentBalance}}</h4></div>
+                                            <div class="col-sm-6">
+                                                <h5 class="pull-right"> Current Balance:</h5>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 class="pull-left"> 
+                                                    ₹{{$ctrl.placedOrderDetail.currentBalance}}
+                                                </h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

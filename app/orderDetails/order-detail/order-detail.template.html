@@ -19,7 +19,7 @@
         Loading&#8230;
     </div>
     <div class="row">
-        <div class="col-sm-1">
+        <div class="col-sm-1" style="margin-top: 5px">
             <label>From Date:</label>
         </div>
         <div class="col-sm-3">
@@ -31,7 +31,7 @@
                 </div>
             </datepicker>
         </div>
-        <div class="col-sm-1">
+        <div class="col-sm-1" style="margin-top: 5px">
             <label>To Date:</label>
         </div>
         <div class="col-sm-3">
@@ -54,7 +54,7 @@
         <table class="table table-bordered text-center">
             <thead>
                 <tr>
-                    <th class="col-md-2">Seller Name</th>
+                    <th class="col-md-2">Name</th>
                     <th class="col-md-1">Date</th>
                     <th class="col-md-1">Bill Amount</th>
                     <th class="col-md-2">Previous Balance</th>
@@ -64,15 +64,15 @@
                 </tr>
             </thead>
             <tr ng-repeat="order in $ctrl.orders | filter: searchText">
-                <td>{{order.name}}</td>
-                <td>{{order.date | date:'dd-MM-yyyy'}}</td>
+                <td>{{order.name}} ({{order.isPurchaser ? 'Seller': 'Buyer'}} )</td>
+                <td>{{order.date | date:'dd-MM-yyyy HH:mm a'}}</td>
                 <td>{{order.billAmount}}</td>
                 <td>{{order.previousBalance}}</td>
                 <td>{{order.amountPaid}}</td>
-                <td></td>
+                <td>{{order.currentBalance}}</td>
                 <td><a href="" class="btn btn-sm btn-primary" ng-click="$ctrl.viewFullOrderModal(order)">View Full Order</a></td>
             </tr>
-            <tr ng-if="$ctrl.noDataMsg">
+            <tr ng-if="$ctrl.orders.length == 0">
                 <td></td>
                 <td></td>
                 <td></td>

@@ -50,60 +50,61 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
             }
         });
 
+        Object.defineProperty(ctrl, 'totalBill', {
+            get(){
+                return ctrl.productArr.reduce(function(accumulator, value){
+                    return accumulator + value.totalPrice
+                }, 0);
+            }
+        });
     };
 
     ctrl.initValues = function() {
         ctrl.itemCount = 0;
         ctrl.productArr = [];
         ctrl.productDetail = {};
-        ctrl.totalBill = 0;
         ctrl.paidByShop = 0;
         ctrl.paidByPrateek = 0;
         ctrl.paidByBharat = 0;
-        ctrl.price = 0;
-        ctrl.qty = 0;
         ctrl.selectedPurchaser = { balance: 0, profile: { name: '' } };
-    }
+        ctrl.selectedProduct = {productInfo: '', price: 0, qty: 0 };
+    };
 
-    ctrl.addProduct = function(BrandDetail, price, quantity) {
+    ctrl.addProduct = function() {
 
-        ctrl.totalPrice = parseFloat(quantity) * parseFloat(price);
-        ctrl.SelectedItem.price = parseFloat(price);
-        ctrl.SelectedItem.quantity = parseFloat(quantity);
-        ctrl.SelectedItem.totalPrice = ctrl.totalPrice;
-        ctrl.items = angular.copy(ctrl.SelectedItem)
+        ctrl.selectedProduct.totalPrice = ctrl.selectedProduct.price * ctrl.selectedProduct.qty;
+        
+        //delete existing product
+        //ctrl.deleteProduct(ctrl.selectedProduct);
 
-        var filterProduct = ctrl.productArr.filter(function(data) {
-            return data.productInfo == BrandDetail;
-        });
+        // push to array
+        ctrl.productArr.push(angular.copy(ctrl.selectedProduct));
 
-        if (filterProduct.length > 0) {
-            ctrl.productArr.splice(ctrl.productArr.indexOf(filterProduct[0]), 1);
-        }
-
-        ctrl.productArr.push(ctrl.items);
-        ctrl.productArr.reverse();
-        ctrl.price = 0;
-        ctrl.qty = 0;
-        ctrl.productDetail = {};
-        ctrl.totalBill = ctrl.totalBill + ctrl.totalPrice;
+        // initialise selected product
+        ctrl.selectedProduct = {productInfo: '', price: 0, qty: 0 };
+        
 
     };
 
-    ctrl.deleteProduct = function(pdt) {
+    ctrl.deleteProduct = function(index) {
+        // var productInfoArray = ctrl.productArr.map(function(data){
+        //     return data.productInfo;
+        // });
 
-        ctrl.totalBill = ctrl.totalBill - pdt.totalPrice;
-        ctrl.productArr.splice(ctrl.productArr.indexOf(pdt), 1)
+        // if(productInfoArray.indexOf(product.productInfo) > -1){
+        //     ctrl.productArr.splice(productInfoArray.indexOf(product.productInfo), 1)
+        // }
+
+        ctrl.productArr.splice(index, 1);
     };
 
-    ctrl.editProduct = function(pdt) {
+    ctrl.editProduct = function(index) {
 
-        $location.hash('top');
-        $anchorScroll();
-        ctrl.price = pdt.price;
-        ctrl.qty = pdt.quantity;
-        ctrl.productDetail.selected = pdt.productInfo;
-        ctrl.productArr.splice(ctrl.productArr.indexOf(pdt), 1)
+        // assign to selected product
+        ctrl.selectedProduct = angular.copy(ctrl.productArr[index]);
+
+        //remove from existing array.
+        ctrl.deleteProduct(index);
     }
 
     ctrl.onSelectCallback = function(item, model) {
@@ -117,17 +118,14 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
 
     ctrl.onSelectItem = function(item, model) {
 
-        ctrl.SelectedItem = item;
+        // Add 2 properties to selected item.
+        item.qty = 0;
+        item.price = 0;
+
+        ctrl.selectedProduct = angular.copy(item);
     }
 
     ctrl.placeOrder = function() {
-
-        // if(ctrl.amtPaid == 0){
-        //     //ctrl.viewAmtPaidModal(null);
-        //     SweetAlert.swal("Here's a message");
-        // }else{
-
-        // }
 
         ctrl.loader = true;
 
@@ -145,7 +143,7 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
             Items: ctrl.productArr,
             payment: ctrl.payment
         }
-
+        debugger;
         $http({
                 url: "purchaser/placeOrder",
                 method: "POST",

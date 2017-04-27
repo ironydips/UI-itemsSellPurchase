@@ -72,6 +72,11 @@ function OrderDetailController($state, $http, $timeout, $uibModal) {
 
             }
             ctrl.orders = response.data.result.message[0];
+            if(ctrl.orders){
+                ctrl.orders.forEach(function(data){
+                    data.date = new Date(data.date);
+                });
+            }
             $timeout(function() {
                 ctrl.loader = false;
             }, 500);
