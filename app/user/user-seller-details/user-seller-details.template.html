@@ -1,0 +1,82 @@
+<style>
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 100%;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    padding: 2px 16px;
+}
+</style>
+<div class="container">
+    <br>
+    <div class="loading" ng-show="$ctrl.loader">
+        Loading&#8230;
+    </div>
+    <div class="row">
+        <div class="col-sm-1" style="margin-top: 5px">
+            <label>From Date:</label>
+        </div>
+        <div class="col-sm-3">
+            <datepicker date-format="yyyy-MM-dd" selector="form-control">
+                <div class="input-group">
+                    <span class="input-group-addon" style="cursor: pointer">
+                        </span>
+                    <input ng-model="$ctrl.fromDate" class="form-control" placeholder="Select date from" />
+                </div>
+            </datepicker>
+        </div>
+        <div class="col-sm-1" style="margin-top: 5px">
+            <label>To Date:</label>
+        </div>
+        <div class="col-sm-3">
+            <datepicker date-format="yyyy-MM-dd" selector="form-control">
+                <div class="input-group">
+                    <span class="input-group-addon" style="cursor: pointer">
+                        </span>
+                    <input ng-model="$ctrl.todayDate" class="form-control" placeholder="Select till date" />
+                </div>
+            </datepicker>
+        </div>
+        <div class="col-sm-2">
+            <a href="" class="btn btn-sm btn-primary" >Show Seller</a>
+        </div>
+    </div>
+    <br>
+    <input type="text" class="form-control" ng-model="searchText" placeholder="Search">
+    <br>
+    <div style="max-height:470px;overflow:auto;">
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th class="col-md-2">Seller Name</th>
+                    <th class="col-md-1">Total Order</th>
+                    <th class="col-md-1">Current Balance</th>
+                    <th class="col-md-2">Action</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>abc</td>
+                <td>4</td>
+                <td>1234</td>
+                <td><a href="" class="btn btn-sm btn-primary">View Full Order</a></td>
+            </tr>
+            <tr ng-if="$ctrl.orders.length == 0">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><b>No Data Found</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>

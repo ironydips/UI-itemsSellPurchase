@@ -126,6 +126,29 @@ config(['$urlRouterProvider', '$stateProvider', '$httpProvider', 'ngToastProvide
                     }
                 }
             })
+            .state('user', {
+                url: '/user',
+                abstract: true,
+                views: {
+                    '': {
+                        template: '<admin-layout></admin-layout>'
+                    },
+                    'adminPanel@user': {
+                        template: '<admin-panel></admin-panel>'
+                    },
+                    'adminSubPanel@user': {
+                        template: '<user-sub-panel></user-sub-panel>'
+                    }
+                }
+            })
+            .state('user.sellerDetail', {
+                url: '/userSellerDetail',
+                views: {
+                    'contentSection@user': {
+                        template: '<user-seller-details></user-seller-details>'
+                    }
+                }
+            })
 
 
             

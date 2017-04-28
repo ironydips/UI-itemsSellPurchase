@@ -61,17 +61,18 @@ function StockController($state, $http, $uibModal) {
        
     };
 
-    ctrl.showStock = function(fromDate, todayDate){
+    ctrl.showStock = function(fromDate, todayDate){                                                      
 
          $http({
             url: "stock/getCurrentStockInfo?fromDate=2017-04-27&endDate=2017-04-28",
             method: "GET"
         }).then(function(response) {
-            console.log(response);
             ctrl.loader = false;
             ctrl.stockDetail = response.data.result.message;
             ctrl.stockDetail.forEach(function(data){
                 data.isReturned = 'No';
+                data.todayDate = todayDate;
+                data.fromDate = fromDate;
             })
 
         }).catch(function(error) {
@@ -81,6 +82,7 @@ function StockController($state, $http, $uibModal) {
     }
 
     ctrl.viewFullDetail = function(item) {
+        console.log(item)
         angular.bind(ctrl, viewFullPdtDetail, item)();
     }
 

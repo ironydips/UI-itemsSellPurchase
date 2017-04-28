@@ -12,6 +12,8 @@ angular.module('sellPurchaseApp', [
 	'ngAnimate',
 	'ngSanitize', 
 	'ui.select',
+	'ui.bootstrap.datetimepicker',
+
 	// For Notification
 	'ngToast',
 	//LightBox Library used as Image Viewer.
@@ -32,5 +34,8 @@ angular.module('sellPurchaseApp', [
 	'stockDetail',
 	//order details
 	'orderSubPanel',
-	'orderDetail'
+	'orderDetail',
+	//user
+	'userSubPanel',
+	'userSellerDetails'
 ]);

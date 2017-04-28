@@ -10,6 +10,8 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
         ctrl.$state = $state;
         ctrl.itemArr = [];
         ctrl.displayCartBtn = true;
+        ctrl.isOpen = false;
+
 
         ctrl.initValues();
         var totalSum = 0;
@@ -39,7 +41,7 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
             get() {
                 return parseToNumber(ctrl.totalBill) + parseToNumber(ctrl.selectedPurchaser.balance);
             },
-            set(val){
+            set(val) {
                 console.log(val)
             }
         });
@@ -51,12 +53,19 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
         });
 
         Object.defineProperty(ctrl, 'totalBill', {
-            get(){
-                return ctrl.productArr.reduce(function(accumulator, value){
+            get() {
+                return ctrl.productArr.reduce(function(accumulator, value) {
                     return accumulator + value.totalPrice
                 }, 0);
             }
         });
+    };
+
+    ctrl.openCalendar = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        ctrl.isOpen = true;
     };
 
     ctrl.initValues = function() {
@@ -67,25 +76,25 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
         ctrl.paidByPrateek = 0;
         ctrl.paidByBharat = 0;
         ctrl.selectedPurchaser = { balance: 0, profile: { name: '' } };
-        ctrl.selectedProduct = {productInfo: '', price: 0, qty: 0 };
+        ctrl.selectedProduct = { productInfo: '', price: 0, qty: 0 };
     };
 
     ctrl.addProduct = function() {
 
         //calculate total price
         ctrl.selectedProduct.totalPrice = parseToNumber(ctrl.selectedProduct.price) * parseToNumber(ctrl.selectedProduct.qty);
-        
+
         // push to array
         ctrl.productArr.push(angular.copy(ctrl.selectedProduct));
 
         // initialise selected product
-        ctrl.selectedProduct = {productInfo: '', price: 0, qty: 0 };
-        
+        ctrl.selectedProduct = { productInfo: '', price: 0, qty: 0 };
+
 
     };
 
     ctrl.deleteProduct = function(index) {
-        
+
         ctrl.productArr.splice(index, 1);
     };
 

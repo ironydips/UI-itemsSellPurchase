@@ -9,8 +9,7 @@
             <div class="col-sm-4">
                 <div class="panel panel-success">
                     <div class="panel-heading" style="background-color: transparent;padding: 0">
-                    
-                    <h3>Supplier Info</h3></div>
+                        <h3>Supplier Info</h3></div>
                     <div class="panel-body" style="height: 300px;">
                         <div class="row">
                             <div class="col-sm-8">
@@ -25,7 +24,8 @@
                                 <a href="" class="btn btn-sm btn-primary" ng-click="$ctrl.newPurchaser()">New</a>
                             </div>
                         </div>
-                        <br><br>
+                        <br>
+                        <br>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="row" ng-show="$ctrl.selectedPurchaser.profile.name">
@@ -64,48 +64,62 @@
             <div class="col-sm-8">
                 <div class="panel panel-success">
                     <div class="panel-heading" style="background-color: transparent;padding: 0">
-                        <h3>Product Detail</h3>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <h3>Product Detail</h3>
+                            </div>
+                            <div class="col-md-4">
+                                <br>
+                                <p class="input-group">
+                                    <input type="text" class="form-control" placeholder="Select Date" datetime-picker="dd MMM yyyy HH:mm" ng-model="myDate" is-open="$ctrl.isOpen" />
+                                    <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="$ctrl.openCalendar($event, prop)"><span class="glyphicon glyphicon-calendar"></span></button>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                     <div class="panel-body" style="height: 300px;">
                         <div style="height:250px;overflow:auto;">
-                        <table class="table table-hover" id="top" >
-                            <tr>
-                                <th style="font-size: 13px;" class="col-md-2">Item Name</th>
-                                <th style="font-size: 13px;" class="col-md-2"> Price</th>
-                                <th style="font-size: 13px;" class="col-md-2">Quantity</th>
-                                <th style="font-size: 13px;" class="col-md-2">Total(₹)</th>
-                                <th style="font-size: 13px;" class="col-md-2">Action</th>
-                            </tr>
-                            <tr class="text-center" >
-                                <td>
-                                    <ui-select name="productDetail" ng-model="$ctrl.selectedProduct" theme="selectize" on-select="$ctrl.onSelectItem($item, $model)" style="width: 160px;" title="Select Item">
-                                        <ui-select-match placeholder="Select Item">{{$select.selected.productInfo || 'Select Item'}}
-                                        </ui-select-match>
-                                        <ui-select-choices repeat="product in $ctrl.productDetails | filter: $select.search">
-                                            <span ng-bind-html="product.productInfo | highlight: $select.search"></span>
-                                        </ui-select-choices>
-                                    </ui-select>
-                                </td>
-                                <td>
-                                    <input type="number" name="price" ng-model="$ctrl.selectedProduct.price" class="form-control">
-                                </td>
-                                <td>
-                                    <input type="number"  name="quantity" ng-model="$ctrl.selectedProduct.qty" class="form-control">
-                                </td>
-                                <td>
-                                    {{$ctrl.selectedProduct.price * $ctrl.selectedProduct.qty}}
-                                </td>
-                                <td><a href="" ng-click="!$ctrl.selectedProduct.productInfo || $ctrl.addProduct()" class="btn btn-sm btn-primary">+</a></td>
-                            </tr>
-                            <tr ng-repeat="product in $ctrl.productArr track by $index" class="text-center">
-                                <td>{{product.productInfo}}</td>
-                                <td>{{product.price}}</td>
-                                <td>{{product.qty}}</td>
-                                <td>{{product.totalPrice}}</td>
-                                <td><a href="" class="btn btn-sm btn-primary" ng-click="$ctrl.editProduct($index)"><span class="glyphicon glyphicon-pencil"></span></a>
-                                <a href="" class="btn btn-sm btn-danger" ng-click="$ctrl.deleteProduct($index)"><span class="glyphicon glyphicon-trash"></span></a></td>
-                            </tr>
-                        </table>
+                            <table class="table table-hover" id="top">
+                                <tr>
+                                    <th style="font-size: 13px;" class="col-md-2">Item Name</th>
+                                    <th style="font-size: 13px;" class="col-md-2"> Price</th>
+                                    <th style="font-size: 13px;" class="col-md-2">Quantity</th>
+                                    <th style="font-size: 13px;" class="col-md-2">Total(₹)</th>
+                                    <th style="font-size: 13px;" class="col-md-2">Action</th>
+                                </tr>
+                                <tr class="text-center">
+                                    <td>
+                                        <ui-select name="productDetail" ng-model="$ctrl.selectedProduct" theme="selectize" on-select="$ctrl.onSelectItem($item, $model)" style="width: 160px;" title="Select Item">
+                                            <ui-select-match placeholder="Select Item">{{$select.selected.productInfo || 'Select Item'}}
+                                            </ui-select-match>
+                                            <ui-select-choices repeat="product in $ctrl.productDetails | filter: $select.search">
+                                                <span ng-bind-html="product.productInfo | highlight: $select.search"></span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="price" ng-model="$ctrl.selectedProduct.price" class="form-control">
+                                    </td>
+                                    <td>
+                                        <input type="number" name="quantity" ng-model="$ctrl.selectedProduct.qty" class="form-control">
+                                    </td>
+                                    <td>
+                                        {{$ctrl.selectedProduct.price * $ctrl.selectedProduct.qty}}
+                                    </td>
+                                    <td><a href="" ng-click="!$ctrl.selectedProduct.productInfo || $ctrl.addProduct()" class="btn btn-sm btn-primary">+</a></td>
+                                </tr>
+                                <tr ng-repeat="product in $ctrl.productArr track by $index" class="text-center">
+                                    <td>{{product.productInfo}}</td>
+                                    <td>{{product.price}}</td>
+                                    <td>{{product.qty}}</td>
+                                    <td>{{product.totalPrice}}</td>
+                                    <td><a href="" class="btn btn-sm btn-primary" ng-click="$ctrl.editProduct($index)"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a href="" class="btn btn-sm btn-danger" ng-click="$ctrl.deleteProduct($index)"><span class="glyphicon glyphicon-trash"></span></a></td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -178,8 +192,8 @@
                             <div class="col-sm-7">
                             </div>
                             <div class="col-sm-5 padding-left-22">
-                                <a href="" ng-click="$ctrl.placeOrder()" ng-disabled="!$ctrl.selectedPurchaser" class="btn btn-lg btn-primary">Place Order</a>
-                                <div ng-show="!$ctrl.selectedPurchaser">Please Select Seller</div>
+                                <a href="" ng-click="$ctrl.selectedPurchaser.profile.name && $ctrl.placeOrder()" ng-disabled="!$ctrl.selectedPurchaser.profile.name" class="btn btn-lg btn-primary">Place Order</a>
+                                <div ng-show="!$ctrl.selectedPurchaser.profile.name">Please Select Purchaser</div>
                             </div>
                         </div>
                     </div>
