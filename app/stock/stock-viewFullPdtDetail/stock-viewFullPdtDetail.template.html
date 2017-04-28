@@ -2,7 +2,7 @@
 <div class="profileComponent">
     <div class="container">
         <div class="profileBg">
-            <h2>Variant Detail</h2>
+            <h2> {{$ctrl.orderDetail.name}}</span></h2>
             <div class="inner-adjust">
                 <!-- <div class="row">
                     <div class="col-sm-1">
@@ -26,8 +26,13 @@
                 </div> -->
                 <br>
                 <div class="row">
-                    <h3>Product Info</h3>
-                    <div style="height:250px;overflow:auto;">
+                    <div class="col-md-9"><h5><label class="pull-right">Day Start Quantity:</label></h5></div>
+                    <div class="col-md-3">
+                         <h5><label style="margin-left: 18px;"> {{$ctrl.orderDetail.dayInStock}} </label></h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="max-height:250px;overflow:auto;">
                         <table class="table table-bordered text-center">
                             <thead>
                                 <tr>
@@ -41,7 +46,7 @@
                             </thead>
                             <tr ng-repeat="detail in $ctrl.orderDetail.orderItems | filter: searchText">
                                 <td>{{detail.userName}}(<span ng-show="detail.isPurchaser" style="color: black;">Purchaser</span><span ng-show="detail.isSeller">Seller</span>)</td>
-                                <td>{{detail.createdOn | date:'dd-MM-yyyy'}}</td>
+                                <td>{{detail.createdOn | date:'dd-MM-yyyy hh:mm a'}}</td>
                                 <td>{{detail.price}}</td>
                                 <td>{{$ctrl.orderDetail.isReturned}}</td>
                                 <td>+{{detail.quantity}}</td>
@@ -50,6 +55,12 @@
                             <tbody>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9"><h5><label class="pull-right">Day End Quantity:</label></h5></div>
+                    <div class="col-md-3">
+                         <h5><label style="margin-left: 18px;"> {{$ctrl.orderDetail.dayOutStock}} </label></h5>
                     </div>
                 </div>
                 <br>

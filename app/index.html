@@ -1,6 +1,16 @@
 <!doctype html>
 <html lang="en" ng-app="sellPurchaseApp">
+<script type="text/javascript">
+    
+    // Parses every input and results in a number. Purpose to avoid NaN 
+    Object.defineProperty(Object.prototype, 'parseToNumber',{
+      value : function(val) {
+        return parseFloat(val) || 0;
+      },
+      enumerable : false
+    });
 
+</script>
 <head>
     <meta charset="utf-8">
     <title>sell-purchase-items</title>
@@ -63,7 +73,7 @@
     <!-- Project Related JS END-->
     <!-- Angular Scripts Start-->
     <script src="app.module.js"></script>
-    <script src="util/config/config.staging.js"></script>
+    <script src="util/config/config.local.js"></script>
     <script src="app.services.js"></script>
     <script src="app.config.js"></script>
     <script src="app.run.js"></script>

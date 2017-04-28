@@ -87,15 +87,15 @@
                                     </ui-select>
                                 </td>
                                 <td>
-                                    <input type="text"  name="price" ng-model="$ctrl.selectedProduct.price" class="form-control">
+                                    <input type="number" name="price" ng-model="$ctrl.selectedProduct.price" class="form-control">
                                 </td>
                                 <td>
-                                    <input type="text"  name="quantity" ng-model="$ctrl.selectedProduct.qty" class="form-control">
+                                    <input type="number"  name="quantity" ng-model="$ctrl.selectedProduct.qty" class="form-control">
                                 </td>
                                 <td>
                                     {{$ctrl.selectedProduct.price * $ctrl.selectedProduct.qty}}
                                 </td>
-                                <td><a href="" ng-click="$ctrl.addProduct()" class="btn btn-sm btn-primary">+</a></td>
+                                <td><a href="" ng-click="!$ctrl.selectedProduct.productInfo || $ctrl.addProduct()" class="btn btn-sm btn-primary">+</a></td>
                             </tr>
                             <tr ng-repeat="product in $ctrl.productArr track by $index" class="text-center">
                                 <td>{{product.productInfo}}</td>
@@ -148,15 +148,15 @@
                             <div class="col-sm-8">
                                 <span>
                                     <span style="float:left; padding-top: 4px; padding-left: 5px">S =&nbsp;</span>
-                                <input type="text" name="s" ng-model="$ctrl.paidByShop" class="form-control small-input">
+                                <input type="number" name="s" ng-model="$ctrl.paidByShop" class="form-control small-input">
                                 </span>
                                 <span>
                                       <span style="float:left; padding-top: 4px; padding-left: 5px">B =&nbsp;</span>
-                                <input type="text" name="b" ng-model="$ctrl.paidByBharat" class="form-control small-input">
+                                <input type="number" name="b" ng-model="$ctrl.paidByBharat" class="form-control small-input">
                                 </span>
                                 <span>
                                     <span style="float:left; padding-top: 4px; padding-left: 5px">P =&nbsp;</span>
-                                <input type="text" name="p" ng-model="$ctrl.paidByPrateek" class="form-control small-input">
+                                <input type="number" name="p" ng-model="$ctrl.paidByPrateek" class="form-control small-input">
                                 </span>
                                 <label class="pull-right">Amount Paid:</label>
                             </div>

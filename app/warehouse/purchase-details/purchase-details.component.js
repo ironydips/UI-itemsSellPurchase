@@ -31,13 +31,13 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
         // ES5 style property definition.
         Object.defineProperty(ctrl, 'amtPaid', {
             get() {
-                return parseFloat(ctrl.paidByShop) + parseFloat(ctrl.paidByPrateek) + parseFloat(ctrl.paidByBharat);
+                return parseToNumber(ctrl.paidByShop) + parseToNumber(ctrl.paidByPrateek) + parseToNumber(ctrl.paidByBharat);
             }
         });
 
         Object.defineProperty(ctrl, 'totalAmt', {
             get() {
-                return parseFloat(ctrl.totalBill) + parseFloat(ctrl.selectedPurchaser.balance);
+                return parseToNumber(ctrl.totalBill) + parseToNumber(ctrl.selectedPurchaser.balance);
             },
             set(val){
                 console.log(val)
@@ -46,7 +46,7 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
 
         Object.defineProperty(ctrl, 'currentBal', {
             get() {
-                return parseFloat(ctrl.totalAmt) - parseFloat(ctrl.amtPaid);
+                return parseToNumber(ctrl.totalAmt) - parseToNumber(ctrl.amtPaid);
             }
         });
 
@@ -72,11 +72,9 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
 
     ctrl.addProduct = function() {
 
-        ctrl.selectedProduct.totalPrice = ctrl.selectedProduct.price * ctrl.selectedProduct.qty;
+        //calculate total price
+        ctrl.selectedProduct.totalPrice = parseToNumber(ctrl.selectedProduct.price) * parseToNumber(ctrl.selectedProduct.qty);
         
-        //delete existing product
-        //ctrl.deleteProduct(ctrl.selectedProduct);
-
         // push to array
         ctrl.productArr.push(angular.copy(ctrl.selectedProduct));
 
@@ -87,14 +85,7 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
     };
 
     ctrl.deleteProduct = function(index) {
-        // var productInfoArray = ctrl.productArr.map(function(data){
-        //     return data.productInfo;
-        // });
-
-        // if(productInfoArray.indexOf(product.productInfo) > -1){
-        //     ctrl.productArr.splice(productInfoArray.indexOf(product.productInfo), 1)
-        // }
-
+        
         ctrl.productArr.splice(index, 1);
     };
 
