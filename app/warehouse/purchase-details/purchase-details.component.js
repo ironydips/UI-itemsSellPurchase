@@ -11,7 +11,7 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
         ctrl.itemArr = [];
         ctrl.displayCartBtn = true;
         ctrl.isOpen = false;
-
+        ctrl.isReturnedOrder = false;
 
         ctrl.initValues();
         var totalSum = 0;
@@ -29,7 +29,6 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
             console.log(err);
         })
 
-
         // ES5 style property definition.
         Object.defineProperty(ctrl, 'amtPaid', {
             get() {
@@ -39,7 +38,12 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
 
         Object.defineProperty(ctrl, 'totalAmt', {
             get() {
-                return parseToNumber(ctrl.totalBill) + parseToNumber(ctrl.selectedPurchaser.balance);
+                if(ctrl.isReturnedOrder){
+                    return parseToNumber(ctrl.selectedPurchaser.balance) - parseToNumber(ctrl.totalBill);
+                }
+                else{
+                    return parseToNumber(ctrl.totalBill) + parseToNumber(ctrl.selectedPurchaser.balance);
+                }
             },
             set(val) {
                 console.log(val)
@@ -48,7 +52,12 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
 
         Object.defineProperty(ctrl, 'currentBal', {
             get() {
-                return parseToNumber(ctrl.totalAmt) - parseToNumber(ctrl.amtPaid);
+                if(ctrl.isReturnedOrder){
+                    return parseToNumber(ctrl.totalAmt) + parseToNumber(ctrl.amtPaidToShop);
+                }
+                else{
+                    return parseToNumber(ctrl.totalAmt) - parseToNumber(ctrl.amtPaid);
+                }
             }
         });
 
@@ -57,6 +66,12 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
                 return ctrl.productArr.reduce(function(accumulator, value) {
                     return accumulator + value.totalPrice
                 }, 0);
+            }
+        });
+
+        Object.defineProperty(ctrl, 'appendedText', {
+            get(){
+                return ctrl.isReturnedOrder ? 'Return' : ''
             }
         });
     };
@@ -75,6 +90,7 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
         ctrl.paidByShop = 0;
         ctrl.paidByPrateek = 0;
         ctrl.paidByBharat = 0;
+        ctrl.amtPaidToShop = 0;
         ctrl.selectedPurchaser = { balance: 0, profile: { name: '' } };
         ctrl.selectedProduct = { productInfo: '', price: 0, qty: 0 };
     };
@@ -131,25 +147,27 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
 
         ctrl.payment = {
             previousBalance: ctrl.selectedPurchaser.balance,
+            billAmount: ctrl.totalBill,
             totalAmount: ctrl.totalAmt,
             amountPaid: ctrl.amtPaid,
             currentBalance: ctrl.currentBal,
             paidByShop: ctrl.paidByShop,
             paidByPrateek: ctrl.paidByPrateek,
-            paidByBharat: ctrl.paidByBharat
+            paidByBharat: ctrl.paidByBharat,
+            amtPaidToShop: ctrl.amtPaidToShop
         }
-        var obj = {
+        var purchaseObj = {
             purchaser: { id: ctrl.selectedPurchaser._id, name: ctrl.selectedPurchaser.profile.name },
             Items: ctrl.productArr,
-            payment: ctrl.payment
+            payment: ctrl.payment,
+            otherInfo: { isReturned: ctrl.isReturnedOrder }
         }
-        debugger;
+
         $http({
                 url: "purchaser/placeOrder",
                 method: "POST",
-                data: JSON.stringify(obj),
+                data: JSON.stringify(purchaseObj),
                 dataType: JSON
-
             }).then(function(response) {
                 ctrl.initValues();
                 ctrl.orderDetail = response.data.result.message;

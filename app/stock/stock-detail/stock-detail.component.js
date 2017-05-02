@@ -64,7 +64,7 @@ function StockController($state, $http, $uibModal) {
     ctrl.showStock = function(fromDate, todayDate){                                                      
 
          $http({
-            url: "stock/getCurrentStockInfo?fromDate=2017-04-27&endDate=2017-04-28",
+            url: "stock/getCurrentStockInfo",
             method: "GET"
         }).then(function(response) {
             ctrl.loader = false;

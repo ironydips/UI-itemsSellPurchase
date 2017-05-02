@@ -21,7 +21,7 @@
                     <div class="col-md-9">
                         <h5><label class="pull-right">Day Start Quantity:</label></h5></div>
                     <div class="col-md-3">
-                        <h5><label style="margin-left: 18px;"> {{$ctrl.orderDetail.dayInStock}} </label></h5>
+                        <h5><label style="margin-left: 3px;"> {{$ctrl.orderDetail.dayInStock}} </label></h5>
                     </div>
                 </div>
                 <div class="row">
@@ -41,8 +41,8 @@
                                 <td>{{detail.userName}}(<span ng-show="detail.isPurchaser" style="color: black;">Purchaser</span><span ng-show="detail.isSeller">Seller</span>)</td>
                                 <td>{{detail.createdOn | date:'dd-MM-yyyy hh:mm a'}}</td>
                                 <td>{{detail.price}}</td>
-                                <td>{{$ctrl.orderDetail.isReturned}}</td>
-                                <td>+{{detail.quantity}}</td>
+                                <td>{{detail.isReturned || false}}</td>
+                                <td>{{detail.quantitySign}}{{detail.quantity}}</td>
                                 <td><a href="" class="btn btn-sm btn-primary" ng-click="$ctrl.viewFullOrderModal(detail.orderID)">View Full Order</a></td>
                             </tr>
                             <tbody>
@@ -54,7 +54,7 @@
                     <div class="col-md-9">
                         <h5><label class="pull-right">Day End Quantity:</label></h5></div>
                     <div class="col-md-3">
-                        <h5><label style="margin-left: 18px;"> {{$ctrl.orderDetail.dayOutStock}} </label></h5>
+                        <h5><label style="margin-left: 3px;"> {{$ctrl.orderDetail.dayOutStock}} </label></h5>
                     </div>
                 </div>
                 <br>

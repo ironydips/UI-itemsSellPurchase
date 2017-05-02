@@ -64,7 +64,7 @@
                 </tr>
             </thead>
             <tr ng-repeat="order in $ctrl.orders | filter: searchText">
-                <td>{{order.name}} ({{order.isPurchaser ? 'Seller': 'Buyer'}} )</td>
+                <td>{{order.name}} ({{order.isPurchaser ? 'Seller': 'Buyer'}}{{order.isReturned ? '-Returned': ''}})</td>
                 <td>{{order.date | date:'dd-MM-yyyy hh:mm a'}}</td>
                 <td>{{order.billAmount}}</td>
                 <td>{{order.previousBalance}}</td>

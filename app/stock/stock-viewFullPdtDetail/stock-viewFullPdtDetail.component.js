@@ -28,6 +28,8 @@
                 method: "GET"
             }).then(function(response) {
                 console.log(response);
+
+                
                 ctrl.loader = false;
                 ctrl.stockDetail = response.data.result.message;
 
