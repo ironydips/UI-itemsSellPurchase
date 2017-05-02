@@ -41,7 +41,7 @@
                                 <td>{{detail.userName}}(<span ng-show="detail.isPurchaser" style="color: black;">Purchaser</span><span ng-show="detail.isSeller">Seller</span>)</td>
                                 <td>{{detail.createdOn | date:'dd-MM-yyyy hh:mm a'}}</td>
                                 <td>{{detail.price}}</td>
-                                <td>{{detail.isReturned || false}}</td>
+                                <td>{{detail.isReturned | YesNo}}</td>
                                 <td>{{detail.quantitySign}}{{detail.quantity}}</td>
                                 <td><a href="" class="btn btn-sm btn-primary" ng-click="$ctrl.viewFullOrderModal(detail.orderID)">View Full Order</a></td>
                             </tr>

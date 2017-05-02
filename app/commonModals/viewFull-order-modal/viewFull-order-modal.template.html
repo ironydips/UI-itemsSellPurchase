@@ -32,7 +32,7 @@
                                 <th style="font-size: 13px;" class="col-md-2">Total</th>
                             </tr>
                             <tr ng-repeat="item in $ctrl.placedOrderDetail.order_items">
-                                <td>{{item.brandName}}-{{item.variantName}}</td>
+                                <td>{{item.productInfo}}</td>
                                 <td>{{item.price}}</td>
                                 <td>{{item.quantity}}</td>
                                 <td>{{item.quantity * item.price}}</td>
@@ -151,9 +151,14 @@
                 </div>
             </div>
             <br>
-            <br>
-            <div style="text-align:center">
-                <button type="button" ng-click="$ctrl.cancelBtn()" class="btn btn-lg btn-default">Cancel</button>
+            <div class="row">\
+                <div class="col-md-5"></div>
+                <div class="col-md-2">
+                    <button type="button" ng-click="$ctrl.cancelBtn()" class="btn btn-lg btn-default">Cancel</button>
+                </div>
+                <div class="col-md-1">
+                    <button type="button" ng-click="$ctrl.edit($ctrl.placedOrderDetail)" class="btn btn-lg btn-primary">Edit</button>
+                </div>
             </div>
         </div>
     </div>

@@ -4,8 +4,12 @@
 
     function AddBrandModalController($state, $http) {
         var ctrl = this;
-        ctrl.brandDetail = (ctrl.resolve && ctrl.resolve.details) || {};
 
+        ctrl.init = function() {
+
+            ctrl.brandDetail = (ctrl.resolve && ctrl.resolve.details) || {};
+            
+        }
         ctrl.save = function(brand) {
 
             var data = {
@@ -19,17 +23,18 @@
                     dataType: JSON
 
                 }).then(function(response) {
-                    debugger;
                     ctrl.modalInstance.close({ action: 'update'});
                 })
                 .catch(function(error) {
-                    console.log("Error while adding brand")
+                    console.log("Error while adding brand modal")
                 })
         }
 
         ctrl.cancel = function() {
             ctrl.modalInstance.close();
-        }
+        };
+
+        ctrl.init();
     }
 
     angular.module('addBrandModal')

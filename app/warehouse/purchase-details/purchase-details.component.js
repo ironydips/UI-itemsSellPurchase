@@ -1,7 +1,7 @@
 'use strict';
 
 //------------------------------Controller Start----------------------------------
-function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, $state, $uibModal, $http, $timeout, ngToast, checkoutService, moveItemToSaleService) {
+function PurchaseDetailController($rootScope, $scope, $location, $filter, $anchorScroll, $state, $uibModal, $http, $timeout, ngToast, checkoutService, moveItemToSaleService) {
     var ctrl = this;
 
     ctrl.init = function() {
@@ -13,6 +13,15 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
         ctrl.isOpen = false;
         ctrl.isReturnedOrder = false;
 
+        var d = new Date();
+        var month = (d.getMonth() + 1);
+
+        if (month < 10) {
+            ctrl.myDate = d.getDate() + "-" + "0" + (d.getMonth() + 1) + "-" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() ;
+        } else {
+            ctrl.myDate = d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() ;
+        }
+        
         ctrl.initValues();
         var totalSum = 0;
 
@@ -292,6 +301,6 @@ function PurchaseDetailController($rootScope, $scope, $location, $anchorScroll, 
 angular.module('purchaseDetail')
     .component('purchaseDetail', {
         templateUrl: 'warehouse/purchase-details/purchase-details.template.html',
-        controller: ['$rootScope', '$scope', '$location', '$anchorScroll', '$state', '$uibModal', '$http', '$timeout', 'ngToast', 'checkoutService', 'moveItemToSaleService', PurchaseDetailController]
+        controller: ['$rootScope', '$scope', '$location','$filter', '$anchorScroll', '$state', '$uibModal', '$http', '$timeout', 'ngToast', 'checkoutService', 'moveItemToSaleService', PurchaseDetailController]
     });
 //----------------------------Module END---------------------------------------------

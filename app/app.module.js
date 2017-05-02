@@ -20,6 +20,8 @@ angular.module('sellPurchaseApp', [
 	'bootstrapLightbox',
 	//Commmon modals
 	'viewFullOrderModal',
+	//Filters
+	'sellPurchaseApp.commonModule',
 	'sellPurchaseApp.services',
 	'adminLayout',
 	'adminPanel',

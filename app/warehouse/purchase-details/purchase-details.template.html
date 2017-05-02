@@ -65,17 +65,17 @@
                 <div class="panel panel-success">
                     <div class="panel-heading" style="background-color: transparent;padding: 0">
                         <div class="row">
-                            <div class="col-md-3"><br>
-                            <div class="row">
-                            <div class="col-md-2"></div>
-                                <div class="col-md-1">
-                                    <input type="checkbox" name="isReturned" ng-model="$ctrl.isReturnedOrder">
+                            <div class="col-md-3">
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-1">
+                                        <input type="checkbox" name="isReturned" ng-model="$ctrl.isReturnedOrder">
+                                    </div>
+                                    <div class="col-md-7">
+                                        <label style="padding-top: 4px;" for="isReturned">Is Returned</label>
+                                    </div>
                                 </div>
-                                <div class="col-md-7">
-                                    <label style="padding-top: 4px;" for="isReturned">Is Returned</label>
-                                </div>
-                            </div>
-                                
                                 <!-- <label for="isReturned">Is Returned</label> -->
                             </div>
                             <div class="col-md-4">
@@ -84,7 +84,7 @@
                             <div class="col-md-4">
                                 <br>
                                 <p class="input-group">
-                                    <input type="text" class="form-control" placeholder="Select Date" datetime-picker="dd MMM yyyy HH:mm" ng-model="myDate" is-open="$ctrl.isOpen" />
+                                    <input type="text" class="form-control" placeholder="Select Date" datetime-picker="dd-MM-yyyy HH:mm" ng-model="$ctrl.myDate" is-open="$ctrl.isOpen" />
                                     <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="$ctrl.openCalendar($event, prop)"><span class="glyphicon glyphicon-calendar"></span></button>
                                     </span>
@@ -191,11 +191,12 @@
                             </div>
                         </div>
                         <div class="row" ng-show="$ctrl.isReturnedOrder">
-                        <div class="col-sm-8">
+                            <div class="col-sm-8">
                                 <label class="pull-right">Amount Paid by {{$ctrl.selectedPurchaser.profile.name}}:</label>
                             </div>
                             <div class="col-sm-4 padding-left-22">
-                                <span style="float: left; margin-top: 4px;">₹</span> <input type="number" name="s" ng-model="$ctrl.amtPaidToShop" class="form-control small-input">
+                                <span style="float: left; margin-top: 4px;">₹</span>
+                                <input type="number" name="s" ng-model="$ctrl.amtPaidToShop" class="form-control small-input">
                             </div>
                         </div>
                         <br>
@@ -233,8 +234,9 @@
 .padding-left-22 {
     padding-left: 22px;
 }
-.paid-by{
-    float:left; 
+
+.paid-by {
+    float: left;
     padding-top: 4px;
     padding-left: 5px;
 }

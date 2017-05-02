@@ -3,7 +3,8 @@
 
 angular.module('viewFullPdtDetail',[
 		'ui.bootstrap',
-		'viewFullOrderModal'
+		'viewFullOrderModal',
+		'sellPurchaseApp.commonModule'
 	]);
 
 })(window.angular);
