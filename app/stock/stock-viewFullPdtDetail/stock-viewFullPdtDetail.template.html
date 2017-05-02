@@ -2,14 +2,14 @@
 <div class="profileComponent">
     <div class="container">
         <div class="profileBg">
-            <h2> {{$ctrl.orderDetail.name}}</span></h2>
+            <h2> {{$ctrl.itemDetail.name}}</span></h2>
             <div class="inner-adjust">
                 <div class="row">
                     <div class="col-sm-2">
                         <label style="padding-top: 10px;padding-left: 50px;">Select Product:</label>
                     </div>
                     <div class="col-sm-5">
-                        <ui-select name="purchaseDetail" ng-model="$ctrl.orderDetail" theme="selectize" style="width: 250px;" title="Choose a seller">
+                        <ui-select name="purchaseDetail" ng-model="$ctrl.itemDetail" theme="selectize" style="width: 250px;" title="Choose a seller">
                             <ui-select-match placeholder="Select Product">{{$select.selected.name || 'Select Product'}}</ui-select-match>
                             <ui-select-choices repeat="pdt in $ctrl.stockDetail | filter: $select.search">
                                 <span ng-bind-html="pdt.name | highlight: $select.search"></span>
@@ -21,7 +21,7 @@
                     <div class="col-md-9">
                         <h5><label class="pull-right">Day Start Quantity:</label></h5></div>
                     <div class="col-md-3">
-                        <h5><label style="margin-left: 3px;"> {{$ctrl.orderDetail.dayInStock}} </label></h5>
+                        <h5><label style="margin-left: 3px;"> {{$ctrl.itemDetail.dayInStock}} </label></h5>
                     </div>
                 </div>
                 <div class="row">
@@ -37,7 +37,7 @@
                                     <th class="col-md-1">Action</th>
                                 </tr>
                             </thead>
-                            <tr ng-repeat="detail in $ctrl.orderDetail.orderItems | filter: searchText">
+                            <tr ng-repeat="detail in $ctrl.itemDetail.orderItems | filter: searchText">
                                 <td>{{detail.userName}}(<span ng-show="detail.isPurchaser" style="color: black;">Purchaser</span><span ng-show="detail.isSeller">Seller</span>)</td>
                                 <td>{{detail.createdOn | date:'dd-MM-yyyy hh:mm a'}}</td>
                                 <td>{{detail.price}}</td>
@@ -54,7 +54,7 @@
                     <div class="col-md-9">
                         <h5><label class="pull-right">Day End Quantity:</label></h5></div>
                     <div class="col-md-3">
-                        <h5><label style="margin-left: 3px;"> {{$ctrl.orderDetail.dayOutStock}} </label></h5>
+                        <h5><label style="margin-left: 3px;"> {{$ctrl.itemDetail.dayOutStock}} </label></h5>
                     </div>
                 </div>
                 <br>

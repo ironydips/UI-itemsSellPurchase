@@ -65,11 +65,7 @@ function OrderDetailController($state, $http, $timeout, $uibModal) {
         }).then(function(response) {
             if (response.data.result.message[0].length == 0) {
                 ctrl.noDataMsg = true;
-
-                $timeout(function() {
-                    ctrl.loader = false;
-                }, 500);
-
+                ctrl.loader = false;
             }
             ctrl.orders = response.data.result.message[0];
             if(ctrl.orders){

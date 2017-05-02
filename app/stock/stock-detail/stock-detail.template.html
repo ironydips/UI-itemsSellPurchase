@@ -66,12 +66,9 @@
                 <td>{{stock.dayOutStock}}</td>
                 <td><a href="" class="btn btn-sm btn-primary" ng-click="$ctrl.viewFullDetail(stock)">View Full Transaction</a></td>
             </tr>
-            <tr ng-if="$ctrl.orders.length == 0">
-                <td></td>
-                <td></td>
+            <tr ng-if="$ctrl.stockDetail.length == 0">
                 <td></td>
                 <td><b>No Data Found</b></td>
-                <td></td>
                 <td></td>
                 <td></td>
             </tr>

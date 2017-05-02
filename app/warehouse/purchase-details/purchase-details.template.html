@@ -10,7 +10,7 @@
                 <div class="panel panel-success">
                     <div class="panel-heading" style="background-color: transparent;padding: 0">
                         <h3>Supplier Info</h3></div>
-                    <div class="panel-body" style="height: 300px;">
+                    <div class="panel-body" style="height: 306px;">
                         <div class="row">
                             <div class="col-sm-8">
                                 <ui-select name="purchaseDetail" ng-model="$ctrl.selectedPurchaser" theme="selectize" style="width: 250px;" title="Choose a seller">
@@ -65,9 +65,18 @@
                 <div class="panel panel-success">
                     <div class="panel-heading" style="background-color: transparent;padding: 0">
                         <div class="row">
-                            <div class="col-md-3">
-                                <input type="checkbox" name="isReturned" ng-model="$ctrl.isReturnedOrder">
-                                <label for="isReturned"></label> Is Returned
+                            <div class="col-md-3"><br>
+                            <div class="row">
+                            <div class="col-md-2"></div>
+                                <div class="col-md-1">
+                                    <input type="checkbox" name="isReturned" ng-model="$ctrl.isReturnedOrder">
+                                </div>
+                                <div class="col-md-7">
+                                    <label style="padding-top: 4px;" for="isReturned">Is Returned</label>
+                                </div>
+                            </div>
+                                
+                                <!-- <label for="isReturned">Is Returned</label> -->
                             </div>
                             <div class="col-md-4">
                                 <h3>Product Detail</h3>
