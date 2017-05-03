@@ -27,8 +27,11 @@
                     }).then(function(response) {
                         if (response.data.result.message.length >= 0) {
                             ctrl.placedOrderDetail = response.data.result.message[0];
+                            ctrl.placedOrderDetail.billAmt = ctrl.placedOrderDetail.totalAmount - ctrl.placedOrderDetail.previousBalance;
+                            console.log(ctrl.placedOrderDetail)
                             ctrl.placedOrderDetail.order_items.forEach(function(data) {
                             data.productInfo = data.brandName +"-"+data.variantName;
+                            data.totalPrice = data.price * data.quantity;
                         });
                             if (ctrl.placedOrderDetail.purchaser_info[0].profile.address) {
                                 ctrl.showAddress = true;
@@ -72,7 +75,7 @@
             ctrl.edit = function(items) {
                 console.log(items)
 
-                ctrl.editPopUP(items);
+                ctrl.editPopUP(angular.copy(items));
             }
 
             ctrl.init();

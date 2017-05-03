@@ -17,9 +17,9 @@ function PurchaseDetailController($rootScope, $scope, $location, $filter, $ancho
         var month = (d.getMonth() + 1);
 
         if (month < 10) {
-            ctrl.myDate = d.getDate() + "-" + "0" + (d.getMonth() + 1) + "-" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() ;
+            $scope.myDate = d.getDate() + "-" + "0" + (d.getMonth() + 1) + "-" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() ;
         } else {
-            ctrl.myDate = d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() ;
+            $scope.myDate = d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() ;
         }
         
         ctrl.initValues();
@@ -73,6 +73,7 @@ function PurchaseDetailController($rootScope, $scope, $location, $filter, $ancho
         Object.defineProperty(ctrl, 'totalBill', {
             get() {
                 return ctrl.productArr.reduce(function(accumulator, value) {
+                    console.log(accumulator)
                     return accumulator + value.totalPrice
                 }, 0);
             }

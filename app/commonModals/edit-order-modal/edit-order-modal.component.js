@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-//--------------------------CONTROLLER START-----------------------------------------
+    //--------------------------CONTROLLER START-----------------------------------------
 
     function EditOrderModalController($state, $http) {
         var ctrl = this;
@@ -28,9 +28,12 @@
         ctrl.addProduct = function() {
 
             //calculate total price
-            ctrl.selectedProduct.totalPrice = parseToNumber(ctrl.selectedProduct.price) * parseToNumber(ctrl.selectedProduct.qty);
+            ctrl.selectedProduct.totalPrice = parseToNumber(ctrl.selectedProduct.price) * parseToNumber(ctrl.selectedProduct.quantity);
+
             // push to array
             ctrl.productDetail.order_items.push(angular.copy(ctrl.selectedProduct));
+
+            ctrl.productDetail.billAmt += ctrl.selectedProduct.totalPrice;
 
             // initialise selected product
             ctrl.selectedProduct = { productInfo: '', price: 0, quantity: 0 };
@@ -40,22 +43,20 @@
 
         ctrl.deleteProduct = function(index) {
 
+            ctrl.productDetail.billAmt -= ctrl.productDetail.order_items[index].totalPrice;
             ctrl.productDetail.order_items.splice(index, 1);
+            if (isNaN(ctrl.productDetail.billAmt)) {
+                ctrl.productDetail.billAmt = 0;
+            }
+
         };
 
-        ctrl.editProduct = function(index) {
-
-            // assign to selected product
-            ctrl.selectedProduct = angular.copy(ctrl.productDetail.order_items[index]);
-            //remove from existing array.
-            ctrl.deleteProduct(index);
-        };
         ctrl.onSelectItem = function(item, model) {
 
             // Add 2 properties to selected item.
             item.quantity = 0;
-            item.price =0 ;
-            
+            item.price = 0;
+
             ctrl.selectedProduct = angular.copy(item);
         }
 
@@ -66,7 +67,7 @@
 
         ctrl.init();
 
-   //-------------------------------CONTROLLER END-----------------------------------     
+        //-------------------------------CONTROLLER END-----------------------------------     
     }
 
     angular.module('editOrderModalModule')
