@@ -29,7 +29,7 @@ config(['$urlRouterProvider', '$stateProvider', '$httpProvider', 'ngToastProvide
                 abstract: true,
                 views: {
                     '': {
-                        template: '<admin-layout></admin-layout>'
+                        template: '<admin-layout-component></admin-layout-component>'
                     },
                     'adminPanel@adminLayout': {
                         template: '<admin-panel></admin-panel>'
@@ -43,7 +43,7 @@ config(['$urlRouterProvider', '$stateProvider', '$httpProvider', 'ngToastProvide
                 url: '/addBrandDetails',
                 views: {
                     'contentSection@adminLayout': {
-                        template: '<admin-add-brand-details></admin-add-brand-details>'
+                        template: '<admin-add-brand-details-component></admin-add-brand-details-component>'
                     }
                 }
             })

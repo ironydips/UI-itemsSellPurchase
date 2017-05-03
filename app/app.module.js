@@ -23,10 +23,10 @@ angular.module('sellPurchaseApp', [
 	//Filters
 	'sellPurchaseApp.commonModule',
 	'sellPurchaseApp.services',
-	'adminLayout',
+	'adminLayoutModule',
 	'adminPanel',
 	'adminSubPanel',
-	'adminAddBrandDetails',
+	'adminBrandDetailsModule',
 	// 'sellPurchase',
 	'warehouseSubPanel',
 	'purchaseDetail',

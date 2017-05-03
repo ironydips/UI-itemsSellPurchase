@@ -1,12 +1,22 @@
 <!-- / profileComponent \ -->
+<style>
+.select2 > .select2-choice.ui-select-match {
+    /* Because of the inclusion of Bootstrap */
+    height: 29px;
+}
+
+.selectize-control > .selectize-dropdown {
+    top: 36px;
+}
+</style>
 <div class="profileComponent">
     <div class="container">
         <div class="profileBg">
             <h3>Edit Product Detail</h3>
             <div class="panel panel-success">
-                <div class="panel-body" style="height: 300px;">
-                    <div style="height:250px;overflow:auto;">
-                        <table class="table table-hover" id="top">
+                <div class="panel-body">
+                    <div style="max-height:250px;overflow: auto;">
+                        <table class="table table-hover" id="top" style="overflow:visible;">
                             <tr>
                                 <th style="font-size: 13px;" class="col-md-2">Item Name</th>
                                 <th style="font-size: 13px;" class="col-md-2"> Price</th>
@@ -16,7 +26,7 @@
                             </tr>
                             <tr class="text-center">
                                 <td>
-                                    <ui-select name="productDetail" ng-model="$ctrl.selectedProduct" theme="selectize" style="width: 160px;" title="Select Item" on-select="$ctrl.onSelectItem($item, $model)">
+                                    <ui-select name="productDetail" ng-model="$ctrl.selectedProduct" theme="select2" style="width: 166px;" title="Select Item" on-select="$ctrl.onSelectItem($item, $model)">
                                         <ui-select-match placeholder="Select Item">{{$select.selected.brandName || 'Select Item'}}-{{$select.selected.variantName}}
                                         </ui-select-match>
                                         <ui-select-choices repeat="product in $ctrl.allProductsInfo | filter: $select.search">
@@ -35,9 +45,9 @@
                                 </td>
                                 <td><a href="" ng-click="!$ctrl.selectedProduct.productInfo || $ctrl.addProduct()" class="btn btn-sm btn-primary">+</a></td>
                             </tr>
-                            <tr  ng-repeat="pdt in $ctrl.productDetail.order_items track by $index" class="text-center">
+                            <tr ng-repeat="pdt in $ctrl.productDetail.order_items track by $index" class="text-center">
                                 <td>
-                                    <ui-select name="productDetail" ng-model="pdt" theme="selectize" style="width: 160px;" title="Select Item">
+                                    <ui-select name="productDetail" ng-model="pdt" theme="select2" style="width: 160px;" title="Select Item">
                                         <ui-select-match placeholder="Select Item">{{$select.selected.productInfo || 'Select Item'}}
                                         </ui-select-match>
                                         <ui-select-choices repeat="product in $ctrl.allProductsInfo | filter: $select.search">
@@ -60,31 +70,33 @@
                 </div>
             </div>
             <br>
-            <div class="panel panel-success">
-                <div class="panel-body">
-                    <div class="col-sm-4">
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="row">
-                            <div class="col-sm-8">
-                                <label class="pull-right">Bill Amount({{$ctrl.productDetail.order_items.length}} items):</label>
-                            </div>
-                            <div class="col-sm-4 padding-left-22">
-                                ₹{{$ctrl.productDetail.billAmt}}
-                            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <label class="pull-right">Bill Amount({{$ctrl.productDetail.order_items.length}} items):</label>
                         </div>
-                        <br>
+                        <div class="col-sm-4 padding-left-22">
+                            ₹{{$ctrl.productDetail.billAmt}}
+                        </div>
                     </div>
+                    <br>
                 </div>
             </div>
-            <div class="row">\
-                <div class="col-md-5"></div>
-                <div class="col-md-2">
-                    <button type="button" ng-click="$ctrl.cancelBtn()" class="btn btn-lg btn-default">Cancel</button>
+            <div class="row">
+                <div class="col-sm-2">
                 </div>
-                <div class="col-md-1">
+                <div class="col-sm-2">
+                </div>
+                <div class="col-sm-1">
+                </div>
+                <div class="btn-main">
+                    <button type="button" ng-click="$ctrl.cancelBtn()" class="btn btn-lg btn-default">Cancel</button>
                     <button type="button" ng-click="$ctrl.edit()" class="btn btn-lg btn-primary">Save</button>
                 </div>
+                <br>
             </div>
         </div>
     </div>

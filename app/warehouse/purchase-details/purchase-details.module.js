@@ -7,7 +7,6 @@ angular.module('purchaseDetail',[
 	'viewFullOrderModal',
 	'newPurchaserModal',
 	'purchaseCheckout',
-	'addBrandModal', 
 	'amountPaidModalModule',
 	'sellPurchaseApp.services'
 ]);

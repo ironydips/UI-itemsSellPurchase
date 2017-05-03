@@ -2,10 +2,10 @@
 
 'use strict';
 
-angular.module('adminAddBrandDetails',[
+angular.module('adminBrandDetailsModule',[
 		'ui.bootstrap',
-		'addBrandModal',
-		'addBrandDetails',
+		'addBrandModalModule',
+		'addBrandDetailsModule',
 		'sellPurchaseApp.services'
 	]);
 

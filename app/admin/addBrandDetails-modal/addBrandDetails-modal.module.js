@@ -1,4 +1,4 @@
 'use strict';
 
-angular.module('addBrandDetails',[]);
+angular.module('addBrandDetailsModule',[]);
 

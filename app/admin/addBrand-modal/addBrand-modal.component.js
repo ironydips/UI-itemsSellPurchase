@@ -2,6 +2,8 @@
 
     'use strict';
 
+    //-----------------------------Controller Start------------------------------------
+
     function AddBrandModalController($state, $http) {
         var ctrl = this;
 
@@ -35,10 +37,12 @@
         };
 
         ctrl.init();
+
+//------------------------------------Controller End------------------------------------
     }
 
-    angular.module('addBrandModal')
-        .component('addBrandModal', {
+    angular.module('addBrandModalModule')
+        .component('addBrandModalComponent', {
             templateUrl: 'admin/addBrand-modal/addBrand-modal.template.html',
             controller: ['$state', '$http', AddBrandModalController],
             bindings: {

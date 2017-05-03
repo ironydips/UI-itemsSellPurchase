@@ -1,6 +1,6 @@
 (function(angular) {
 'use strict';
 
-angular.module('adminLayout',[]);
+angular.module('adminLayoutModule',[]);
 
 })(window.angular);

@@ -5,8 +5,8 @@ function AdminLayoutController($state) {
 	var ctrl = this;
 }
 
-angular.module('adminLayout')
-.component('adminLayout',{
+angular.module('adminLayoutModule')
+.component('adminLayoutComponent',{
 	templateUrl: 'admin/admin-layout/admin-layout.template.html',
 	controller:['$state', AdminLayoutController]
 });

@@ -3,6 +3,9 @@
 
     'use strict';
 
+//-----------------------------Controller Start------------------------------------
+
+
     function AddBrandDetailsController($state, $http) {
         var ctrl = this;
         ctrl.brandDetail = (ctrl.resolve && ctrl.resolve.details) || {};
@@ -31,11 +34,14 @@
 
         ctrl.cancel = function() {
             ctrl.modalInstance.close();
-        }
+        };
+
+//------------------------------------Controller End------------------------------------
+
     }
 
-    angular.module('addBrandDetails')
-        .component('addBrandDetails', {
+    angular.module('addBrandDetailsModule')
+        .component('addBrandDetailsComponent', {
             templateUrl: 'admin/addBrandDetails-modal/addBrandDetails-modal.template.html',
             controller: ['$state', '$http', AddBrandDetailsController],
             bindings: {
